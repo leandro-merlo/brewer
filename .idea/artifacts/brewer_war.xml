@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="brewer:war">
+    <output-path>$PROJECT_DIR$/../brewer/target</output-path>
+    <root id="archive" name="brewer-1.0.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="brewer:war exploded" />
+    </root>
+  </artifact>
+</component>
