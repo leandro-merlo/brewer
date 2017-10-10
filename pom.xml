@@ -18,6 +18,7 @@
         <servlet.version>3.1.0</servlet.version>
         <spring.version>5.0.0.RELEASE</spring.version>
         <thymeleaf.version>3.0.8.RELEASE</thymeleaf.version>
+        <hibernate-validator.version>6.0.2.Final</hibernate-validator.version>
     </properties>
 
     <dependencyManagement>
@@ -59,6 +60,13 @@
             <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf-spring5</artifactId>
             <version>${thymeleaf.version}</version>
+        </dependency>
+
+        <!-- Hibernate Validador -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate-validator.version}</version>
         </dependency>
 
     </dependencies>

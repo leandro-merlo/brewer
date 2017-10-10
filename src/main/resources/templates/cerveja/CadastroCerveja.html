@@ -5,14 +5,20 @@
     <title></title>
 </head>
 <body>
-<h1>Cramunhão  Enfermeira!!! Thymeleaf Configurado!</h1>
+<h1>Olá - Thymeleaf Configurado!</h1>
    
-<form method="post">
-    <div th:utext="${mensagem}">Mensagem</div>
+<form method="post" th:object="${cerveja}">
+
+    <div th:each="erro : ${(#fields.detailedErrors())}">
+        <span th:text="${erro.message}"></span>
+    </div>
+    <span th:text="${mensagem}"></span>
     <label for="sku">SKU</label>
-    <input type="text" name="sku" id="sku" /><br>
+    <input type="text" name="sku" id="sku" th:field="*{sku}"/><br>
     <label for="nome">Nome</label>
-    <input type="text" name="nome" id="nome"/><br>
+    <input type="text" name="nome" id="nome" th:field="*{nome}"/><br>
+    <label for="descricao">Descrição</label>
+    <textarea name="descricao" id="descricao" th:field="*{descricao}"></textarea><br>
     <button type="submit">Enviar!</button>
 </form>
 </body>
