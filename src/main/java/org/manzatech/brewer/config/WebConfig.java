@@ -49,8 +49,11 @@ public class WebConfig extends WebMvcConfigurationSupport {
         resolver.setApplicationContext(getApplicationContext());
         resolver.setPrefix("classpath:/templates/");
         resolver.setTemplateMode(TemplateMode.HTML);
+        resolver.setCharacterEncoding("UTF-8");
         resolver.setSuffix(".html");
         return resolver;
     }
+
+
 
 }
