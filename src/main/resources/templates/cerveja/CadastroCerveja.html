@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title></title>
 </head>
 <body>
-<h1>Thymeleaf Configurado!</h1>
-
+<h1>Cramunhão  Enfermeira!!! Thymeleaf Configurado!</h1>
+   
 <form method="post">
+    <div th:utext="${mensagem}">Mensagem</div>
     <label for="sku">SKU</label>
-    <input type="text" name="sku" /><br>
+    <input type="text" name="sku" id="sku" /><br>
     <label for="nome">Nome</label>
-    <input type="text" name="nome" /><br>
-    <button type="submit">Enviar Teste</button>
+    <input type="text" name="nome" id="nome"/><br>
+    <button type="submit">Enviar!</button>
 </form>
 </body>
 </html>
