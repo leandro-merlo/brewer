@@ -13,6 +13,11 @@ import javax.validation.Valid;
 @Controller
 public class CervejasController {
 
+    @GetMapping("/")
+    public String index(){
+        return "starter";
+    }
+
     @GetMapping("/cervejas/novo")
     public String novo(Cerveja cerveja)
     {

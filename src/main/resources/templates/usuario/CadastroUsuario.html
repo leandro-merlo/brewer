@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/DefaultLayout"
+>
+<head>
+    <title>Cadastro de Usuário</title>
+</head>
+<!-- Main content -->
+
+<h1 layout:fragment="headerTitle">
+    Cadastro de usuário
+    <small>{Novo}</small>
+</h1>
+
+<section layout:fragment="conteudo" >
+
+    <form method="POST" th:object="${cerveja}" class="form-vertical  js-form-loading  cadastro-cerveja-form">
+        <div class="form-group">
+            <label for="input-usuario-nome" class="control-label">Nome</label>
+            <input id="input-usuario-nome" type="text" class="form-control">
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-6">
+                <label for="input-usuario-email" class="control-label">E-mail</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                    <input id="input-usuario-email" type="email" class="form-control">
+                </div>
+            </div>
+            <div class="form-group col-sm-3 date" data-provide="datepicker">
+                <label for="input-usuario-dob" class="control-label">Data de Nascimento</label>
+                <div class="input-group">
+                    <input id="input-usuario-dob" type="text" class="form-control js-datepicker pointer" >
+                    <span class="input-group-addon pointer"><i class="glyphicon glyphicon-th"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-3">
+                <label for="input-usuario-senha" class="control-label">Senha</label>
+                <input id="input-usuario-senha" type="password" class="form-control js-password">
+            </div>
+            <div class="form-group col-sm-2">
+                <label for="input-usuario-status" class="control-label">Status</label>
+                <div>
+                    <input id="input-usuario-status" type="checkbox" class="form-control js-status" checked>
+                </div>
+            </div>
+            <div class="form-group col-sm-7">
+                <label class="control-label">Grupos</label>
+                <div>
+                    <div class="btn-group checkbox-tipo-pessoa">
+                        <label>
+                            <input type="checkbox" autocomplete="off" data-value="Administrador">
+                        </label> Administrador
+                        <label>
+                            <input type="checkbox" autocomplete="off" data-value="Vendedor">
+                        </label> Vendedor
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+    </form>
+
+</section>
+<!-- /.content -->
+
+<div layout:fragment="additional-styles" th:remove="tag">
+    <link type="text/css" rel="stylesheet" th:href="@{/layout/vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css}" />
+    <link type="text/css" rel="stylesheet" th:href="@{/layout/vendor/bootstrap-switch/css/bootstrap-switch.min.css}" />
+</div>
+
+<div layout:fragment="footer-scripts" th:remove="tag">
+    <script th:src="@{/layout/vendor/inputmask/inputmask.min.js}"></script>
+    <script th:src="@{/layout/vendor/inputmask/jquery.inputmask.min.js}"></script>
+    <script th:src="@{/layout/vendor/inputmask/inputmask.date.extensions.min.js}"></script>
+    <script th:src="@{/layout/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js}"></script>
+    <script th:src="@{/layout/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js}"></script>
+    <script th:src="@{/layout/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js}"></script>
+    <script th:src="@{/layout/vendor/bootstrap-show-password/bootstrap-show-password.min.js}"></script>
+    <script th:src="@{/layout/vendor/bootstrap-switch/js/bootstrap-switch.min.js}"></script>
+</div>
+
+</body>
+</html>

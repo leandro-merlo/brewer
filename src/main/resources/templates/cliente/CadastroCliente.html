@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/DefaultLayout"
+>
+<head>
+    <title>Cadastro de Cliente</title>
+</head>
+<!-- Main content -->
+
+<h1 layout:fragment="headerTitle">
+    Cadastro de cliente
+    <small>{Novo}</small>
+</h1>
+
+<section layout:fragment="conteudo" >
+
+    <form method="POST" class="form-vertical">
+
+        <div class="form-group">
+            <label for="input-cliente-nome" class="control-label">Nome</label>
+            <input type="text" id="input-cliente-nome" class="form-control">
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6 col-md-4">
+                <label>Tipo pessoa</label>
+                <div class="btn-group radio-tipo-pessoa js-tipo-pessoa" data-toggle="buttons">
+                    <label class="btn btn-default active checked" > Pessoa Física
+                        <input type="radio" autocomplete="off" data-value="Pessoa Física">
+                    </label>
+                    <label class="btn btn-default">
+                        <input type="radio" autocomplete="off" data-value="Pessoa Jurídica"> Pessoa Jurídica
+                    </label>
+                </div>
+            </div>
+            <div class="form-group col-sm-6 col-md-8">
+                <label for="input-cliente-documento" class="control-label js-label-documento">CPF</label>
+                <input type="text" id="input-cliente-documento" class="form-control js-cpf-cnpj">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4 form-group">
+                <label for="input-cliente-telefone" class="control-label">Telefone</label>
+                <input type="text" id="input-cliente-telefone" class="form-control js-telefone-celular">
+            </div>
+            <div class="form-group col-sm-8">
+                <label for="input-cliente-email" class="control-label">Email</label>
+                <input type="email" id="input-cliente-email" class="form-control">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4 form-group">
+                <label for="input-cliente-logradouro" class="control-label">Logradouro</label>
+                <input type="text" id="input-cliente-logradouro" class="form-control">
+            </div>
+            <div class="col-sm-4 form-group">
+                <label for="input-cliente-numero" class="control-label">Número</label>
+                <input type="text" id="input-cliente-numero" class="form-control">
+            </div>
+            <div class="col-sm-4 form-group">
+                <label for="input-cliente-complemento" class="control-label">Complemento</label>
+                <input type="text" id="input-cliente-complemento" class="form-control">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4 form-group">
+                <label for="input-cliente-cep" class="control-label">CEP</label>
+                <input type="text" id="input-cliente-cep" class="form-control js-cep">
+            </div>
+            <div class="col-sm-4 form-group">
+                <label for="input-cliente-estado" class="control-label">Estado</label>
+                <select id="input-cliente-estado" class="form-control">
+                    <option value="">Selecione um estado</option>
+                </select>
+            </div>
+            <div class="col-sm-4 form-group">
+                <label for="input-cliente-cidade" class="control-label">Cidade</label>
+                <select id="input-cliente-cidade" class="form-control">
+                    <option value="">Selecione uma Cidade</option>
+                </select>
+            </div>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+    </form>
+
+</section>
+
+<div layout:fragment="footer-scripts" th:remove="tag">
+    <script th:src="@{/layout/vendor/inputmask/inputmask.min.js}"></script>
+    <script th:src="@{/layout/vendor/inputmask/jquery.inputmask.min.js}"></script>
+    <script th:src="@{/layout/vendor/inputmask/inputmask.numeric.extensions.min.js}"></script>
+</div>
+
+
+</body>
+
+</html>
