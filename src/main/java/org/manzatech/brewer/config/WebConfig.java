@@ -1,12 +1,19 @@
 package org.manzatech.brewer.config;
 
+import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.manzatech.brewer.controller.CervejasController;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.resource.PathResourceResolver;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.spring5.ISpringTemplateEngine;
 import org.thymeleaf.spring5.SpringTemplateEngine;
@@ -18,7 +25,9 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 @ComponentScan( basePackageClasses = {CervejasController.class})
 @Configuration
 @EnableWebMvc
-public class WebConfig extends WebMvcConfigurationSupport {
+public class WebConfig implements WebMvcConfigurer, ApplicationContextAware {
+
+    protected ApplicationContext applicationContext;
 
     @Bean
     public ViewResolver viewResolver() {
@@ -26,6 +35,11 @@ public class WebConfig extends WebMvcConfigurationSupport {
         viewResolver.setTemplateEngine((ISpringTemplateEngine) templateEngine());
         viewResolver.setCharacterEncoding("UTF-8");
         return viewResolver;
+    }
+
+    @Bean
+    public LayoutDialect layoutDialect(){
+        return new LayoutDialect();
     }
 
     /**
@@ -37,6 +51,11 @@ public class WebConfig extends WebMvcConfigurationSupport {
         SpringTemplateEngine engine = new SpringTemplateEngine();
         engine.setEnableSpringELCompiler(true);
         engine.setTemplateResolver(templateResolver());
+        /**
+         * Registrando o Layout Dialect para poder extender os Templates
+         * numa estrutura hierarquica
+         */
+        engine.addDialect(layoutDialect());
         return engine;
     }
 
@@ -54,6 +73,21 @@ public class WebConfig extends WebMvcConfigurationSupport {
         return resolver;
     }
 
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/**")
+        	.addResourceLocations("classpath:/static/")
+        	.setCachePeriod(3600)
+        	.resourceChain(true)
+        	.addResolver(new PathResourceResolver());
+    }
 
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
 
+    public ApplicationContext getApplicationContext() {
+        return applicationContext;
+    }
 }
