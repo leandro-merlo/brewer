@@ -1,0 +1,45 @@
+section.content-header.content-header-background {
+    padding: 15px;
+    border-bottom: 1px solid #dedede;
+    background-color: #fff;
+}
+
+.logo-lg .brewer-logo img{
+    height: 25px;
+    margin-top: -6px;
+    padding-right: 4px;
+}
+
+.logo-mini img {
+    height: 25px;
+    margin-top: -6px;
+}
+
+.cadastro-cerveja-form  .radio.radio-inline {
+    padding: 0;
+    margin: auto 12px auto 0;
+}
+
+.cadastro-cerveja-form input[type=radio]{
+    margin: 4px auto;
+}
+
+.bw-field-style-action {
+    display: flex;
+}
+
+.bw-field-style-action__icon {
+    margin: 5px 0 0 5px;
+    font-size: 20px;
+    display: inline;
+}
+
+div[class^="radio-"], div[class*=" radio-"] {
+    display: block;
+    min-height: 34px;
+    margin-bottom: 15px;
+}
+
+.pointer {
+    cursor: pointer;
+}
