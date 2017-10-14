@@ -1,6 +1,8 @@
 package org.manzatech.brewer.controller;
 
 import org.manzatech.brewer.model.Cerveja;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,10 +15,6 @@ import javax.validation.Valid;
 @Controller
 public class CervejasController {
 
-    @GetMapping("/")
-    public String index(){
-        return "starter";
-    }
 
     @GetMapping("/cervejas/novo")
     public String novo(Cerveja cerveja)
