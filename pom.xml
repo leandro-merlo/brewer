@@ -15,6 +15,8 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <java.version>1.8</java.version>
         <maven-compiler-plugin.version>3.2</maven-compiler-plugin.version>
+        <flayway-maven-plugin.version>4.2.0</flayway-maven-plugin.version>
+        <mysql.version>5.1.44</mysql.version>
         <servlet.version>3.1.0</servlet.version>
         <spring.version>5.0.0.RELEASE</spring.version>
         <thymeleaf.version>3.0.8.RELEASE</thymeleaf.version>
@@ -22,6 +24,9 @@
         <hibernate-validator.version>6.0.2.Final</hibernate-validator.version>
         <log4j.version>2.9.1</log4j.version>
         <slf4j-log4j.version>1.7.25</slf4j-log4j.version>
+        <hibernate.version>5.2.11.Final</hibernate.version>
+        <spring-data-jpa.version>2.0.0.RELEASE</spring-data-jpa.version>
+        <c3p0.version>0.9.5.2</c3p0.version>
     </properties>
 
     <dependencyManagement>
@@ -35,6 +40,17 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <repositories>
+        <repository>
+            <id>spring-libs-release</id>
+            <name>Spring Releases</name>
+            <url>https://repo.spring.io/libs-release</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
     <dependencies>
         <!-- Spring MVC -->
@@ -110,6 +126,37 @@
             <version>${slf4j-log4j.version}</version>
         </dependency>
 
+        <!-- Implementação JPA - Hibernate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+
+        <!-- Spring Data - JPA -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>${spring-data-jpa.version}</version>
+        </dependency>
+
+        <!-- MySQL Connector -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Connection Pool -->
+        <dependency>
+            <groupId>com.mchange</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>${c3p0.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+
     </dependencies>
 
     <build>
@@ -120,6 +167,14 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>${flayway-maven-plugin.version}</version>
+                <configuration>
+                    <driver>org.mysql.jdbc.Driver</driver>
                 </configuration>
             </plugin>
             <plugin>

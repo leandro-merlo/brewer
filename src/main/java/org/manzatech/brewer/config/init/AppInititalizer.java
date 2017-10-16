@@ -1,5 +1,6 @@
 package org.manzatech.brewer.config.init;
 
+import org.manzatech.brewer.config.PersistenceJPAConfig;
 import org.manzatech.brewer.config.WebConfig;
 import org.springframework.lang.Nullable;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -14,11 +15,12 @@ public class AppInititalizer extends AbstractAnnotationConfigDispatcherServletIn
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[0];
+        return new Class[] { PersistenceJPAConfig.class };
     }
 
     /**
-     * Informa quais são os arquivos de configuração
+     * Informa quais são os arquivos de configuração no contexto Servlet - são carregados após
+     * o Root Config Classes
      * @return
      */
     @Override

@@ -35,7 +35,7 @@ public class LoggingConfig extends ConfigurationFactory {
         AppenderRefComponentBuilder appenderRef =  builder.newAppenderRef("Stdout");
         rootBuilder.add(appenderRef);
 
-        LoggerComponentBuilder loggerBuilder = builder.newLogger("org.manzatech.brewer.controller", Level.INFO);
+        LoggerComponentBuilder loggerBuilder = builder.newLogger("org.hibernate.SQL", Level.DEBUG);
         builder.add(loggerBuilder);
 
         builder.add(rootBuilder);
