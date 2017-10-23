@@ -4,7 +4,7 @@ public enum Sabor {
     ADOCICADA("Adocicada"),
     AMARGA("Amarga"),
     FORTE("Forte"),
-    FRUTADA("frutada"),
+    FRUTADA("Frutada"),
     SUAVE("Suave")
     ;
 

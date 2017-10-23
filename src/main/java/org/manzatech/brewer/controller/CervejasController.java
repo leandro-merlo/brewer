@@ -1,6 +1,8 @@
 package org.manzatech.brewer.controller;
 
 import org.manzatech.brewer.model.Cerveja;
+import org.manzatech.brewer.model.Origem;
+import org.manzatech.brewer.model.Sabor;
 import org.manzatech.brewer.repository.Cervejas;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,29 +12,35 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
+@RequestMapping("/cervejas")
 @Controller
 public class CervejasController {
 
     @Autowired
     private Cervejas cervejasRepository;
 
-    @GetMapping("/cervejas/novo")
-    public String novo(Cerveja cerveja)
+    @GetMapping("/nova")
+    public ModelAndView novo(Cerveja cerveja)
     {
-        cervejasRepository.findAll();
-        return "cerveja/CadastroCerveja";
+        ModelAndView mv = new ModelAndView("cerveja/CadastroCerveja");
+        mv.addObject("sabores", Sabor.values());
+        mv.addObject("origens", Origem.values());
+        mv.addObject("estilos", cervejasRepository.findAll());
+        return mv;
     }
 
-    @PostMapping("/cervejas/novo")
-    public String cadastrar(@Valid Cerveja cerveja, BindingResult result, Model model, RedirectAttributes redirectAttributes){
+    @PostMapping("/nova")
+    public ModelAndView cadastrar(@Valid Cerveja cerveja, BindingResult result, RedirectAttributes redirectAttributes){
         if (result.hasErrors()) {
             return novo(cerveja);
         }
         redirectAttributes.addFlashAttribute("mensagem", "Cerveja adicionada com sucesso!");
-        return "redirect:/cervejas/novo";
+        return new ModelAndView("redirect:/cervejas/nova");
     }
 }
