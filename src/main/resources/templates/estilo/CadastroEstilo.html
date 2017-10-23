@@ -18,13 +18,13 @@
 </h1>
 
 <section layout:fragment="conteudo">
-    <form class="form-vertical">
+    <form th:object="${estilo}" class="form-vertical" method="post">
         <div class="form-group">
             <label for="input-estilo-rapido-nome" class="control-label ">Nome</label>
-            <input type="text" id="input-estilo-rapido-nome" class="form-control"/>
+            <input type="text" id="input-estilo-rapido-nome" class="form-control" th:field="*{nome}"/>
         </div>
         <div>
-            <button type="button" class="btn btn-primary">Salvar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
         </div>
     </form>
 </section>

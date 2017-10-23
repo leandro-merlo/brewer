@@ -52,14 +52,11 @@ public class Estilo implements Serializable {
 
         Estilo estilo = (Estilo) o;
 
-        if (!getId().equals(estilo.getId())) return false;
-        return getNome().equals(estilo.getNome());
+        return id != null ? id.equals(estilo.id) : estilo.id == null;
     }
 
     @Override
     public int hashCode() {
-        int result = getId().hashCode();
-        result = 31 * result + getNome().hashCode();
-        return result;
+        return id != null ? id.hashCode() : 0;
     }
 }

@@ -35,7 +35,7 @@ public class LoggingConfig extends ConfigurationFactory {
         AppenderRefComponentBuilder appenderRef =  builder.newAppenderRef("Stdout");
         rootBuilder.add(appenderRef);
 
-        LoggerComponentBuilder loggerBuilder = builder.newLogger("org.hibernate.SQL", Level.DEBUG);
+        LoggerComponentBuilder loggerBuilder = builder.newLogger("org.hibernate.*", Level.DEBUG);
         builder.add(loggerBuilder);
 
         builder.add(rootBuilder);

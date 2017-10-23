@@ -1,21 +1,21 @@
 package org.manzatech.brewer.config.init;
 
+import javax.servlet.Filter;
+
 import org.manzatech.brewer.config.PersistenceJPAConfig;
+import org.manzatech.brewer.config.ServiceConfig;
 import org.manzatech.brewer.config.WebConfig;
-import org.springframework.lang.Nullable;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-import sun.awt.CharsetString;
-import sun.misc.CharacterEncoder;
-
-import javax.servlet.Filter;
-import java.nio.charset.Charset;
 
 public class AppInititalizer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[] { PersistenceJPAConfig.class };
+        return new Class<?>[] {
+            PersistenceJPAConfig.class,
+            ServiceConfig.class
+        };
     }
 
     /**

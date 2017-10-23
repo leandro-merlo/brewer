@@ -132,11 +132,11 @@ public class Cerveja implements Serializable {
 
         Cerveja cerveja = (Cerveja) o;
 
-        return getId().equals(cerveja.getId());
+        return id != null ? id.equals(cerveja.id) : cerveja.id == null;
     }
 
     @Override
     public int hashCode() {
-        return getId().hashCode();
+        return id != null ? id.hashCode() : 0;
     }
 }
