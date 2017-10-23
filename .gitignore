@@ -200,3 +200,4 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/java,linux,maven,eclipse,windows,intellij
+/src/main/resources/rebel.xml
