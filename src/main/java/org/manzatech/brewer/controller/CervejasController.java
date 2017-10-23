@@ -30,6 +30,7 @@ public class CervejasController {
     {
         ModelAndView mv = new ModelAndView("cerveja/CadastroCerveja");
         mv.addObject("sabores", Sabor.values());
+        mv.addObject("firstOption", Origem.NACIONAL);
         mv.addObject("origens", Origem.values());
         mv.addObject("estilos", cervejasRepository.findAll());
         return mv;

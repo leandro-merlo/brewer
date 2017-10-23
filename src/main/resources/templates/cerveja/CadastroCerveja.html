@@ -40,6 +40,7 @@
                 <div class="bw-field-style-action">
                     <select id="input-produto-estilo" class="form-control">
                         <option value="">Selecione o estilo</option>
+                        <option th:each="estilo : ${estilos}" th:value="${estilo.id}" th:text="${estilo.nome}"></option>
                     </select>
                     <div class="bw-field-style-action__icon">
                         <a href="#" data-toggle="modal" data-target="#modalCadastroRapidoEstilo">
@@ -65,12 +66,17 @@
             <div class="form-group  col-sm-6  col-lg-3">
                 <label for="input-produto-origem">Origem</label>
                 <div class="btn-group radio-origem" data-toggle="buttons">
-                    <label class="btn btn-primary active checked" data-value="Nacional" style="display: inline-block"> Nacional
+                    <label th:each="o : ${origens}" class="btn btn-primary" th:classappend="*{origem} == ${o} or (*{id == null} and ${o == firstOption})? 'active'" th:data-value="${o}" style="display: inline-block">
+                        <span th:text="${o.descricao}"></span>
                         <input type="radio" autocomplete="off">
                     </label>
-                    <label class="btn btn-primary">
-                        <input type="radio" autocomplete="off" data-value="Internacional"> Internacional
-                    </label>
+
+                    <!--<label class="btn btn-primary active checked" data-value="Nacional" style="display: inline-block"> Nacional-->
+                        <!--<input type="radio" autocomplete="off">-->
+                    <!--</label>-->
+                    <!--<label class="btn btn-primary">-->
+                        <!--<input type="radio" autocomplete="off" data-value="Internacional"> Internacional-->
+                    <!--</label>-->
                 </div>
             </div>
         </div>
