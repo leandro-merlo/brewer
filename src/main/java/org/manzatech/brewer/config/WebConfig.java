@@ -2,12 +2,16 @@ package org.manzatech.brewer.config;
 
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.manzatech.brewer.controller.CervejasController;
+import org.manzatech.brewer.controller.converter.EstilosConverter;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.number.NumberStyleFormatter;
+import org.springframework.format.support.DefaultFormattingConversionService;
+import org.springframework.format.support.FormattingConversionService;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -21,6 +25,8 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
+
+import java.math.BigDecimal;
 
 @ComponentScan( basePackageClasses = {CervejasController.class})
 @Configuration
@@ -89,5 +95,16 @@ public class WebConfig implements WebMvcConfigurer, ApplicationContextAware {
 
     public ApplicationContext getApplicationContext() {
         return applicationContext;
+    }
+
+    @Bean
+    public FormattingConversionService mvcConversionService() {
+        DefaultFormattingConversionService service = new DefaultFormattingConversionService();
+        NumberStyleFormatter bigDecimalConverter = new NumberStyleFormatter("#,##0.00");
+        NumberStyleFormatter integerConverter = new NumberStyleFormatter("#,##0");
+        service.addConverter(new EstilosConverter());
+        service.addFormatterForFieldType(BigDecimal.class, bigDecimalConverter);
+        service.addFormatterForFieldType(Integer.class, integerConverter);
+        return service;
     }
 }

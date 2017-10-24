@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement()
-@EnableJpaRepositories(basePackageClasses = { Cervejas.class, EstiloService.class })
+@EnableJpaRepositories(basePackageClasses = { Cervejas.class, EstiloService.class }, enableDefaultTransactions = false)
 public class PersistenceJPAConfig{
 
 	@Bean

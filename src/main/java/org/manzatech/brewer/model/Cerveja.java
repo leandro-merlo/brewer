@@ -1,5 +1,7 @@
 package org.manzatech.brewer.model;
 
+import org.manzatech.brewer.validation.SKU;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -16,6 +18,7 @@ public class Cerveja implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @SKU()
     @NotBlank(message = "O SKU é obrigatório")
     private String sku;
     @NotBlank(message = "O Nome é obrigatório")

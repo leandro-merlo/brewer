@@ -4,6 +4,8 @@ import org.manzatech.brewer.model.Cerveja;
 import org.manzatech.brewer.model.Origem;
 import org.manzatech.brewer.model.Sabor;
 import org.manzatech.brewer.repository.Cervejas;
+import org.manzatech.brewer.repository.Estilos;
+import org.manzatech.brewer.service.CervejaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +25,10 @@ import javax.validation.Valid;
 public class CervejasController {
 
     @Autowired
-    private Cervejas cervejasRepository;
+    private Estilos estilos;
+
+    @Autowired
+    private CervejaService service;
 
     @GetMapping("/nova")
     public ModelAndView novo(Cerveja cerveja)
@@ -32,7 +37,7 @@ public class CervejasController {
         mv.addObject("sabores", Sabor.values());
         mv.addObject("firstOption", Origem.NACIONAL);
         mv.addObject("origens", Origem.values());
-        mv.addObject("estilos", cervejasRepository.findAll());
+        mv.addObject("estilos", estilos.findAll());
         return mv;
     }
 
@@ -41,6 +46,7 @@ public class CervejasController {
         if (result.hasErrors()) {
             return novo(cerveja);
         }
+        service.salvar(cerveja);
         redirectAttributes.addFlashAttribute("mensagem", "Cerveja adicionada com sucesso!");
         return new ModelAndView("redirect:/cervejas/nova");
     }
