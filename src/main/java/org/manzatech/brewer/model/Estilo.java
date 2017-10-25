@@ -2,6 +2,7 @@ package org.manzatech.brewer.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class Estilo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Size(min = 3, max = 30, message = "O nome do estilo deve conter entre {min} e {max} caractéres")
     private String nome;
 
     @OneToMany(mappedBy = "estilo")
@@ -28,7 +30,6 @@ public class Estilo implements Serializable {
         this.id = id;
     }
 
-    @NotBlank
     public String getNome() {
         return nome;
     }

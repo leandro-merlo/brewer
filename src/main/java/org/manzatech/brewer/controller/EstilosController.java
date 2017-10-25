@@ -3,13 +3,14 @@ package org.manzatech.brewer.controller;
 import org.manzatech.brewer.model.Estilo;
 import org.manzatech.brewer.repository.Estilos;
 import org.manzatech.brewer.service.EstiloService;
+import org.manzatech.brewer.service.exception.NomeEstiloJaCadastradoException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -39,8 +40,27 @@ public class EstilosController {
         if (result.hasErrors()){
             return novo(estilo);
         }
-        service.salvar(estilo);
+        try {
+            service.salvar(estilo);
+        } catch (NomeEstiloJaCadastradoException ex){
+            result.rejectValue("nome", ex.getMessage(), ex.getMessage());
+            return novo(estilo);
+        }
         attributes.addFlashAttribute("mensagem", "Cerveja adicionada com sucesso!");
         return new ModelAndView("redirect:/estilos/novo");
+    }
+
+    @PostMapping(value = "", consumes =  { MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<?> cadastroRapido(@RequestBody @Valid Estilo estilo, BindingResult result) {
+        if (result.hasErrors()){
+            return ResponseEntity.badRequest().body(result.getFieldError("nome").getDefaultMessage());
+        }
+        try {
+            estilo = service.salvar(estilo);
+        } catch (NomeEstiloJaCadastradoException ex){
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+
+        return ResponseEntity.ok(estilo);
     }
 }
