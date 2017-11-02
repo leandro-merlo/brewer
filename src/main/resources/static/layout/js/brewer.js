@@ -1,59 +1,73 @@
-$(function () {
-    if (typeof $(".js-masked-decimal").inputmask === 'function') {
-        var maskedDecimal = $(".js-masked-decimal");
-        if (maskedDecimal) {
-            maskedDecimal.inputmask('decimal', {
-                placeholder: '0,00',
-                radixPoint: ',',
-                groupSeparator: '.',
-                groupSize: 3,
-                autoGroup: true,
-                rightAlign: false,
-                digits: 2,
-                digitsOptional: false,
-                allowMinus: false,
-                integerOptional: false,
-                max: 100,
-                min: 0,
-            });
+$(document).ready(function () {
+    if ($.fn.datepicker !== undefined) {
+        $.fn.datepicker.defaults.language = "pt-BR";
+    }
+});
+
+var Brewer = Brewer || {};
+
+Brewer.Components = (function () {
+    function Components() {
+        this.decimal = $(".js-masked-decimal");
+        this.integer = $(".js-masked-integer");
+        this.zip = $(".js-cep");
+        this.doc = $(".js-cpf-cnpj");
+        this.phone = $(".js-telefone-celular");
+        this.date = $('.js-datepicker');
+        this.radioTipoPessoa = $('.js-tipo-pessoa');
+        this.password = $('.js-password');
+        this.status = $('.js-status');
+    }
+    Components.prototype.enable = function () {
+        if (this.decimal){
+            var decimal = new Brewer.NumericMask(this.decimal);
+            if (decimal) {
+                decimal.placeholder = '0,00';
+                decimal.min = 0;
+                decimal.enable();
+            }
         }
-        var maskedInteger = $(".js-masked-integer");
-        if (maskedInteger) {
-            maskedInteger.inputmask('integer', {
-                placeholder: '0',
-                groupSeparator: '.',
-                groupSize: 3,
-                autoGroup: true,
-                rightAlign: false,
-                integerOptional: false,
-                max: 100,
-                min: 0,
-            });
+        if (this.integer) {
+            var integer = new Brewer.NumericMask(this.integer);
+            if (integer) {
+                integer.placeholder = '0';
+                integer.min = 0;
+                integer.digits = 0;
+                integer.enable();
+            }
         }
-        var maskedCPFCNPJ = $('.js-cpf-cnpj');
-        if (maskedCPFCNPJ) {
-            maskedCPFCNPJ.inputmask('999.999.999-99', {
-                clearIncomplete: true,
-            });
+        if (this.zip) {
+            var zip = new Brewer.ZipMask(this.zip);
+            zip.enable();
         }
-        var radioTipoPessoa = $('.js-tipo-pessoa');
-        if (radioTipoPessoa) {
-            $(radioTipoPessoa).find('input[type="radio"]').on('change', function () {
-                var radios = $(radioTipoPessoa).find('input[type="radio"]');
+        if (this.doc) {
+            var doc = new Brewer.CPFCNPJMask(this.doc);
+            doc.enable();
+        }
+        if (this.phone) {
+            var phone = new Brewer.PhoneMask(this.phone);
+            phone.enable();
+        }
+        if (this.date) {
+            var date = new Brewer.DatePicker(this.date);
+            date.enable();
+        }
+        if (this.radioTipoPessoa) {
+            this.radioTipoPessoa.find('input[type="radio"]').on('change', function () {
+                var radios = $(this).find('input[type="radio"]');
                 $(radios).each(function () {
                     $(this).prop('checked', false);
                 });
                 $(this).prop('checked', true);
                 var value = $(this).data('value');
-                var doc = $('.js-cpf-cnpj');
-                doc.inputmask('remove');
-                doc.val(null);
+                this.doc.inputmask('remove');
+                this.doc.val(null);
                 if (value.indexOf('Física') > 0) {
                     $('.js-label-documento').text('CPF');
-                    doc.inputmask('999.999.999-99');
+                    this.doc.inputmask('999.999.999-99');
                 } else {
                     $('.js-label-documento').text('CNPJ');
-                    doc.inputmask({
+                    this.doc.inputmask({
                         mask: '99[9].999.999/9999-99',
                         skipOptionalPartCharacter: '',
                         clearMaskOnLostFocus: true,
@@ -63,67 +77,19 @@ $(function () {
                 }
             });
         }
-
-        var maskedPhone = $('.js-telefone-celular');
-        if (maskedPhone) {
-            maskedPhone.inputmask({
-                mask: '(99) 9999[9]-9999',
-                clearIncomplete: true,
-            });
+        if (this.password){
+            var password = new Brewer.Password(this.password);
+            password.enable();
         }
-
-        var maskedZip = $('.js-cep');
-        if (maskedZip) {
-            maskedZip.inputmask({
-                mask: '99999-999',
-                clearIncomplete: true,
-            });
+        if (this.status){
+            var status = new Brewer.Status(this.status);
+            status.enable();
         }
     }
-    $(document).ready(function () {
-        if ($.fn.datepicker !== undefined) {
-            $.fn.datepicker.defaults.language = "pt-BR";
-        }
-    });
-    $(document).ready(function () {
-        var datepicker = $(".js-datepicker");
-        if (datepicker) {
-            if (typeof datepicker.datepicker === 'function') {
-                if (datepicker) {
-                    datepicker.datepicker({
-                        format: "dd/mm/yyyy",
-                        language: 'pt-BR'
-                    });
-                }
-            }
-            if (typeof datepicker.inputmask === 'function') {
-                datepicker.inputmask('date', {
-                    placeholder: 'dd/mm/aaaa',
-                    dateFormat: 'dd/mm/yyyy',
-                    clearIncomplete: true,
-                });
-            }
-        }
-    });
+    return Components;
+}());
 
-    var password = $('.js-password');
-    if (password) {
-        if (typeof password.password === 'function'){
-            password.password();
-        }
-    }
-
-    var status = $('.js-status');
-    if (status) {
-        if (typeof status.bootstrapSwitch === 'function'){
-            status.bootstrapSwitch({
-                onColor: 'success',
-                offColor: 'danger',
-                onText: 'Ativo',
-                offText: 'Inativo',
-                labelWidth: '0',
-                handleWidth: 'auto',
-            });
-        }
-    }
+$(function () {
+    var Components = new Brewer.Components();
+    Components.enable();
 });

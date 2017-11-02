@@ -1,51 +1,65 @@
-$(function(){
-    var modal = $('#modalCadastroRapidoEstilo');
-    var botaoSalvar = modal.find('.js-btn-salvar-cadastro-estilo-rapido');
-    var form = modal.find('form');
-    var input = $('#input-estilo-rapido-nome');
-    var mensagemErro = modal.find('.js-mensagem-erro-estilo-rapido');
-    form.on('submit', function(evt){
-        evt.preventDefault();
-    });
-    var action = form.attr('action');
+var Brewer = Brewer || {};
 
-    modal.on('shown.bs.modal', onModalShow);
-    modal.on('hide.bs.modal', onModalClose);
-    botaoSalvar.on('click', onBotaoSalvarClick);
+Brewer.EstiloCadastroRapido = (function () {
+    function EstiloCadastroRapido() {
+        this.modal = $('#modalCadastroRapidoEstilo');
+        this.botaoSalvar = this.modal.find('.js-btn-salvar-cadastro-estilo-rapido');
+        this.form = this.modal.find('form');
+        this.input = $('#input-estilo-rapido-nome');
+        this.mensagemErro = this.modal.find('.js-mensagem-erro-estilo-rapido');
+        this.action = this.form.attr('action');
+        this.combo = $('#input-produto-estilo');
+    }
+
+    EstiloCadastroRapido.prototype.iniciar = function() {
+        this.form.on('submit', function(evt){
+            evt.preventDefault();
+        });
+        this.modal.on('shown.bs.modal', onModalShow.bind(this));
+        this.modal.on('hide.bs.modal', onModalClose.bind(this));
+        this.botaoSalvar.on('click', onBotaoSalvarClick.bind(this));
+    }
 
     function onModalShow() {
-        input.focus();
+        this.input.focus();
     }
 
     function onModalClose(){
-        input.val("");
-        mensagemErro.addClass('hidden');
-        form.find('.form-group').removeClass('has-error');
+        this.input.val("");
+        this.mensagemErro.addClass('hidden');
+        this.form.find('.form-group').removeClass('has-error');
     }
-    
+
     function onBotaoSalvarClick() {
-        var nome = input.val().trim();
+        var nome = this.input.val().trim();
         $.ajax({
-            url: action,
+            url: this.action,
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({ nome: nome }),
-            error: onErroSalvandoEstilo,
-            success: onEstiloSalvo
+            error: onErroSalvandoEstilo.bind(this),
+            success: onEstiloSalvo.bind(this)
         });
     }
-    
+
     function onErroSalvandoEstilo(obj) {
         var msgErro = obj.responseText;
-        mensagemErro.html(msgErro);
-        mensagemErro.removeClass('hidden');
-        form.find('.form-group').addClass('has-error');
+        this.mensagemErro.html(msgErro);
+        this.mensagemErro.removeClass('hidden');
+        this.form.find('.form-group').addClass('has-error');
     }
-    
+
     function onEstiloSalvo(estilo) {
-        var combo = $('#input-produto-estilo');
-        combo.append('<option value=' + estilo.id +'>' + estilo.nome + '</option>')
-        combo.val(estilo.id);
-        modal.modal('hide');
+        this.combo.append('<option value=' + estilo.id +'>' + estilo.nome + '</option>')
+        this.combo.val(estilo.id);
+        this.modal.modal('hide');
     }
+    return EstiloCadastroRapido;
+}());
+
+$(function(){
+
+    var estiloCadastroRapido = new estiloCadastroRapido();
+    estiloCadastroRapido.iniciar();
+
 });
