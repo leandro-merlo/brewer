@@ -40,6 +40,11 @@ public class Cerveja implements Serializable {
     @JoinColumn(name = "id_estilo")
     private Estilo estilo;
 
+    @PrePersist @PreUpdate
+    private void prePersistUpdate(){
+        this.sku = this.sku.toUpperCase();
+    }
+
     public String getSku() {
         return sku;
     }
