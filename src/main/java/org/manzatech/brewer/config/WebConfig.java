@@ -3,6 +3,7 @@ package org.manzatech.brewer.config;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.manzatech.brewer.controller.CervejasController;
 import org.manzatech.brewer.controller.converter.EstilosConverter;
+import org.manzatech.brewer.thymeleaf.BrewerDialect;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -48,6 +49,9 @@ public class WebConfig implements WebMvcConfigurer, ApplicationContextAware {
         return new LayoutDialect();
     }
 
+    @Bean
+    public BrewerDialect brewerDialect() { return new BrewerDialect(); }
+
     /**
      * Define qual é o Template Engine a ser utilizado
      * @return
@@ -62,6 +66,7 @@ public class WebConfig implements WebMvcConfigurer, ApplicationContextAware {
          * numa estrutura hierarquica
          */
         engine.addDialect(layoutDialect());
+        engine.addDialect(brewerDialect());
         return engine;
     }
 

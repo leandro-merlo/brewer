@@ -3,8 +3,7 @@ package org.manzatech.brewer.model;
 import org.manzatech.brewer.validation.SKU;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -25,19 +24,39 @@ public class Cerveja implements Serializable {
     private String nome;
     @Size(max = 50, min = 1, message = "O tamanho da descrição deve estar entre 1 e 50 caractéres")
     private String descricao;
+
+    @NotNull(message = "O valor é obrigatório")
+    @DecimalMin(value = "0.50")
+    @DecimalMax(value = "9999.99")
     private BigDecimal valor;
+
+    @NotNull(message = "O teor alcoólico é obrigatório")
+    @DecimalMin(value = "0", message = "O teor alcoólico deve ser maior ou igual a 0")
+    @DecimalMax(value = "100.0", message = "O teor alcoólico deve ser menor ou igual a 100")
     @Column(name = "teor_alcoolico")
     private BigDecimal teorAlcoolico;
+
+    @NotNull(message = "A comissão é obrigatória")
+    @DecimalMin(value = "0", message = "A comissão deve ser maior ou igual a 0")
+    @DecimalMax(value = "100.0", message = "A comissão deve ser menor ou igual a 100")
     private BigDecimal comissao;
+
+    @NotNull(message = "A quantidade em estoque é obrigatória")
+    @Max(value = 9999, message = "A quantidade em estoque dever ser menor ou igual a 9999")
     @Column(name = "quantidade_estoque")
     private Integer quantidadeEstoque;
+
+    @NotNull(message = "A origem é obrigatória")
     @Enumerated(value = EnumType.STRING)
     private Origem origem;
+
+    @NotNull(message = "O sabor é obrigatório")
     @Enumerated(value = EnumType.STRING)
     private Sabor sabor;
 
+    @NotNull(message = "O estilo é obrigatório")
     @ManyToOne
-    @JoinColumn(name = "id_estilo")
+    @JoinColumn(name = "id_estilo", nullable = false)
     private Estilo estilo;
 
     @PrePersist @PreUpdate

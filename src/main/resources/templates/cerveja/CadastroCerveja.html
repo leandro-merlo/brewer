@@ -3,6 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/DefaultLayout}"
+      xmlns:brewer="http://brewer.manzatech.org/"
 >
 <head>
     <title>Cadastro de Cerveja</title>
@@ -16,30 +17,29 @@
 
 <section layout:fragment="conteudo" >
 
-    <th:block th:include="fragments/ValidationSuccessMessage"></th:block>
 
     <form method="POST" th:object="${cerveja}" class="form-vertical  js-form-loading  cadastro-cerveja-form">
 
-        <th:block th:include="fragments/ValidationErrorMessages"></th:block>
+        <brewer:message />
 
         <div class="row">
-            <div class="form-group  col-sm-2">
+            <div class="form-group  col-sm-2" brewer:classforerror="sku">
                 <label for="input-produto-sku" class="control-label">SKU</label>
                 <input type="text" id="input-produto-sku" class="form-control" th:field="*{sku}"/>
             </div>
-            <div class="form-group  col-sm-10">
+            <div class="form-group  col-sm-10" brewer:classforerror="nome">
                 <label for="input-produto-nome" class="control-label">Nome</label>
                 <input type="text" id="input-produto-nome" class="form-control" th:field="*{nome}"/>
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" brewer:classforerror="descricao">
             <label for="input-produto-descricao" class="control-label">Descrição</label>
             <textarea type="text" id="input-produto-descricao" class="form-control" th:field="*{descricao}"></textarea>
         </div>
 
         <div class="row">
-            <div class="form-group  col-md-3 col-sm-6">
+            <div class="form-group  col-md-3 col-sm-6" brewer:classforerror="estilo">
                 <label for="input-produto-estilo" class="control-label">Estilo</label>
                 <div class="bw-field-style-action">
                     <select id="input-produto-estilo" class="form-control" th:field="*{estilo}">
@@ -53,53 +53,46 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group  col-md-3 col-sm-6">
+            <div class="form-group  col-md-3 col-sm-6" brewer:classforerror="sabor">
                 <label for="input-produto-sabor" class="control-label">Sabor</label>
                 <select id="input-produto-sabor" class="form-control" th:field="*{sabor}">
                     <option value="">Selecione o sabor</option>
                     <option th:each="sabor: ${sabores}" th:value="${sabor}" th:text="${sabor.descricao}"></option>
                 </select>
             </div>
-            <div class="form-group  col-md-3 col-sm-6">
+            <div class="form-group  col-md-3 col-sm-6" brewer:classforerror="teorAlcoolico">
                 <label for="input-produto-teor-alcoolico" class="control-label">Teor Alcoólico</label>
                 <div class="input-group">
                     <input type="text" id="input-produto-teor-alcoolico" class="form-control js-masked-decimal" th:field="*{teorAlcoolico}"/>
                     <span class="input-group-addon">%</span>
                 </div>
             </div>
-            <div class="form-group  col-sm-6  col-lg-3">
+            <div class="form-group  col-sm-6  col-lg-3" brewer:classforerror="origem">
                 <label for="input-produto-origem">Origem</label>
                 <div class="btn-group radio-origem" data-toggle="buttons">
                     <label th:each="o : ${origens}" class="btn btn-primary" th:classappend="*{origem} == ${o} or (*{id == null} and ${o == firstOption})? 'active'" th:data-value="${o}" style="display: inline-block">
                         <span th:text="${o.descricao}"></span>
                         <input type="radio" autocomplete="off" th:value="${o}" th:field="*{origem}">
                     </label>
-
-                    <!--<label class="btn btn-primary active checked" data-value="Nacional" style="display: inline-block"> Nacional-->
-                        <!--<input type="radio" autocomplete="off">-->
-                    <!--</label>-->
-                    <!--<label class="btn btn-primary">-->
-                        <!--<input type="radio" autocomplete="off" data-value="Internacional"> Internacional-->
-                    <!--</label>-->
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="form-group  col-sm-4">
+            <div class="form-group  col-sm-4" brewer:classforerror="valor">
                 <label for="input-produto-valor" class="control-label">Valor</label>
                 <div class="input-group">
                     <span class="input-group-addon">R$</span>
                     <input type="text" id="input-produto-valor" class="form-control js-masked-decimal" th:field="*{valor}"/>
                 </div>
             </div>
-            <div class="form-group  col-sm-4">
+            <div class="form-group  col-sm-4" brewer:classforerror="comissao">
                 <label for="input-produto-comissao" class="control-label">Comissão</label>
                 <div class="input-group">
                     <input type="text" id="input-produto-comissao" class="form-control js-masked-decimal" th:field="*{comissao}"/>
                     <span class="input-group-addon">%</span>
                 </div>
             </div>
-            <div class="form-group  col-sm-4">
+            <div class="form-group  col-sm-4" brewer:classforerror="quantidadeEstoque">
                 <label for="input-produto-quantidade-estoque" class="control-label">Quantidade em estoque</label>
                 <input type="text" id="input-produto-quantidade-estoque" class="form-control js-masked-integer" th:field="*{quantidadeEstoque}"/>
             </div>
@@ -120,6 +113,17 @@
     <script th:src="@{/layout/vendor/inputmask/jquery.inputmask.min.js}"></script>
     <script th:src="@{/layout/vendor/inputmask/inputmask.numeric.extensions.min.js}"></script>
     <script th:src="@{/layout/js/cadastro-estilo-rapido.js}"></script>
+    <script>
+        $(document).ready(function () {
+            var radio = $('.radio-origem');
+            var labels = radio.find('label');
+            $.each(labels, function (idx, val) {
+               if ($(val).hasClass('active')){
+                   $(val).find("input[type='radio']").attr('checked', 'checked');
+               }
+            });
+        });
+    </script>
 </div>
 
 </body>
