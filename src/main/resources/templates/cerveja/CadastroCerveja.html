@@ -15,6 +15,10 @@
     <small>{Nova}</small>
 </h1>
 
+<section layout:fragment="additional-styles">
+    <link rel="stylesheet" type="text/css" th:href="@{/layout/vendor/uikit/css/uikit.min.css}">
+</section>
+
 <section layout:fragment="conteudo" >
 
 
@@ -98,6 +102,20 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-sm-12 form-group">
+                <label for="" class="control-label">Foto</label>
+                <div class="js-upload uk-placeholder uk-text-center">
+                    <span uk-icon="icon: cloud-upload"></span>
+                    <span class="uk-text-middle">Arraste a foto aqui ou</span>
+                    <div uk-form-custom>
+                        <input type="file" multiple>
+                        <span class="uk-link">selecione</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div>
             <button class="btn btn-primary">Salvar</button>
         </div>
@@ -113,6 +131,8 @@
     <script th:src="@{/layout/vendor/inputmask/jquery.inputmask.min.js}"></script>
     <script th:src="@{/layout/vendor/inputmask/inputmask.numeric.extensions.min.js}"></script>
     <script th:src="@{/layout/js/cadastro-estilo-rapido.js}"></script>
+    <script th:src="@{/layout/vendor/uikit/js/uikit.min.js}"></script>
+    <script th:src="@{/layout/vendor/uikit/js/uikit-icons.min.js}"></script>
     <script>
         $(document).ready(function () {
             var radio = $('.radio-origem');
@@ -122,6 +142,13 @@
                    $(val).find("input[type='radio']").attr('checked', 'checked');
                }
             });
+        });
+        UIkit.upload('.js-upload', {
+            type: 'POST',
+            url: '',
+           'data-type': 'json',
+            multiple: false,
+            allow: '*.(jpg|jpeg|png|gif|bmp)'
         });
     </script>
 </div>

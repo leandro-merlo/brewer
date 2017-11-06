@@ -43,3 +43,7 @@ div[class^="radio-"], div[class*=" radio-"] {
 .pointer {
     cursor: pointer;
 }
+
+.cadastro-cerveja-form .uk-placeholder {
+    padding: 10px;
+}
