@@ -1,6 +1,8 @@
 package org.manzatech.brewer.config.init;
 
 import javax.servlet.Filter;
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletRegistration;
 
 import org.manzatech.brewer.config.PersistenceJPAConfig;
 import org.manzatech.brewer.config.ServiceConfig;
@@ -45,5 +47,14 @@ public class AppInititalizer extends AbstractAnnotationConfigDispatcherServletIn
         return new Filter[]{
             encodingFilter,
         };
+    }
+
+    /**
+     * Configuração necessária para poder enviar upload de arquivos
+     * @param registration
+     */
+    @Override
+    protected void customizeRegistration(ServletRegistration.Dynamic registration) {
+        registration.setMultipartConfig(new MultipartConfigElement(""));
     }
 }

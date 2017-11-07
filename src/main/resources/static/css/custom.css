@@ -46,4 +46,5 @@ div[class^="radio-"], div[class*=" radio-"] {
 
 .cadastro-cerveja-form .uk-placeholder {
     padding: 10px;
+    margin: 0px;
 }
