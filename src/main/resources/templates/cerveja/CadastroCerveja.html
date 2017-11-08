@@ -104,6 +104,9 @@
 
         <div class="row">
             <div class="col-sm-12 form-group">
+                <input type="hidden" th:field="*{foto}" />
+                <input type="hidden" th:field="*{contentType}" />
+
                 <label for="" class="control-label">Foto</label>
                 <div class="js-upload uk-placeholder uk-text-center">
                     <span uk-icon="icon: cloud-upload"></span>
@@ -149,6 +152,11 @@
            'data-type': 'json',
             multiple: false,
             allow: '*.(jpg|jpeg|png|gif|bmp)',
+            complete: function(response){
+                var json = JSON.parse(response.response);
+                $("input[name=foto]").val(json.nome);
+                $("input[name=contentType]").val(json.contentType);
+            }
          });
     </script>
 </div>
