@@ -108,12 +108,14 @@
                 <input type="hidden" th:field="*{contentType}" />
 
                 <label for="" class="control-label">Foto</label>
-                <div class="js-upload uk-placeholder uk-text-center">
-                    <span uk-icon="icon: cloud-upload"></span>
-                    <span class="uk-text-middle">Arraste a foto aqui ou</span>
-                    <div uk-form-custom>
-                        <input type="file" multiple>
-                        <span class="uk-link">selecione</span>
+                <div class="js-foto-cerveja">
+                    <div class="js-upload uk-placeholder uk-text-center">
+                        <span uk-icon="icon: cloud-upload"></span>
+                        <span class="uk-text-middle">Attach binaries by dropping them here or</span>
+                        <div uk-form-custom>
+                            <input type="file" multiple>
+                            <span class="uk-link">selecting one</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -125,6 +127,7 @@
 
     </form>
 
+    <th:block th:replace="hbs/foto-cerveja.html"></th:block>
 </section>
 <!-- /.content -->
 
@@ -136,6 +139,7 @@
     <script th:src="@{/layout/js/cadastro-estilo-rapido.js}"></script>
     <script th:src="@{/layout/vendor/uikit/js/uikit.min.js}"></script>
     <script th:src="@{/layout/vendor/uikit/js/uikit-icons.min.js}"></script>
+    <script th:src="@{/layout/vendor/handlebars/handlebars-v4.0.11.min.js}"></script>
     <script>
         $(document).ready(function () {
             var radio = $('.radio-origem');
@@ -156,6 +160,18 @@
                 var json = JSON.parse(response.response);
                 $("input[name=foto]").val(json.nome);
                 $("input[name=contentType]").val(json.contentType);
+
+                var source = $('#foto-cerveja').html();
+                var template = Handlebars.compile(source);
+                var html = template({nomeFoto: json.nome});
+
+                $('.js-upload').addClass("hidden");
+                var container = $('.js-foto-cerveja');
+                container.append(html);
+
+                $('.js-remove-foto').on('click', function () {
+
+                })
             }
          });
     </script>
