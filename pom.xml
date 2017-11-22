@@ -30,6 +30,7 @@
         <jackson-core.version>2.9.2</jackson-core.version>
         <flyway-core.version>4.2.0</flyway-core.version>
         <javafaker.version>0.14</javafaker.version>
+        <thumbnailator.version>0.4.8</thumbnailator.version>
     </properties>
 
     <dependencyManagement>
@@ -178,6 +179,20 @@
             <artifactId>javafaker</artifactId>
             <version>${javafaker.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>${thumbnailator.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-jpamodelgen</artifactId>
+            <version>${hibernate.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

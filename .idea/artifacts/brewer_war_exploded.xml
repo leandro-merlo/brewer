@@ -58,6 +58,7 @@
           <element id="library" level="project" name="Maven: org.yaml:snakeyaml:android:1.19" />
           <element id="library" level="project" name="Maven: com.github.mifmif:generex:1.0.2" />
           <element id="library" level="project" name="Maven: dk.brics.automaton:automaton:1.11-8" />
+          <element id="library" level="project" name="Maven: net.coobird:thumbnailator:0.4.8" />
         </element>
       </element>
       <element id="directory" name="META-INF">

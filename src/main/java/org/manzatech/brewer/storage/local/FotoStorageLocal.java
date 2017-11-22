@@ -1,5 +1,8 @@
 package org.manzatech.brewer.storage.local;
 
+import net.bytebuddy.implementation.bytecode.Throw;
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.name.Rename;
 import org.manzatech.brewer.storage.FotoStorage;
 import org.manzatech.brewer.utils.RandomString;
 import org.slf4j.Logger;
@@ -64,12 +67,41 @@ public class FotoStorageLocal implements FotoStorage {
         return null;
     }
 
+    private byte[] recuperar(String nome, boolean tempFile) throws IOException {
+        Path path = tempFile ? this.localTemporario : this.local;
+        return Files.readAllBytes(path.resolve(nome));
+    }
+
     @Override
     public byte[] recuperarFotoTemporaria(String nome) {
         try {
-            return Files.readAllBytes(this.localTemporario.resolve(nome));
+            return recuperar(nome, true);
         } catch (IOException e) {
             throw new RuntimeException("Erro lendo a foto temporária", e);
+        }
+    }
+
+
+    @Override
+    public byte[] recuperarFoto(String nome) {
+        try {
+            return recuperar(nome, false);
+        } catch (IOException e) {
+            throw new RuntimeException("Erro lendo a foto", e);
+        }
+    }
+
+    @Override
+    public void salvar(String foto) {
+        try {
+            Files.move(this.localTemporario.resolve(foto), this.local.resolve(foto));
+        } catch (IOException e) {
+            throw new RuntimeException("Erro movendo a foto para destino final", e);
+        }
+        try {
+            Thumbnails.of(this.local.resolve(foto).toString()).size(40,68).toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+        } catch (IOException e) {
+            throw new RuntimeException("Erro ao criar miniatura da foto", e);
         }
     }
 

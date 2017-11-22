@@ -2,10 +2,14 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default">
+        <processor name="org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor" />
+      </profile>
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <processor name="org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor" />
         <module name="brewer" />
       </profile>
     </annotationProcessing>

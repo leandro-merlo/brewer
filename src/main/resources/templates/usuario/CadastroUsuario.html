@@ -17,19 +17,19 @@
 <section layout:fragment="conteudo" >
 
     <form method="POST" th:object="${cerveja}" class="form-vertical  js-form-loading  cadastro-cerveja-form">
-        <div class="form-group">
+        <div class="form-group  required">
             <label for="input-usuario-nome" class="control-label">Nome</label>
             <input id="input-usuario-nome" type="text" class="form-control">
         </div>
         <div class="row">
-            <div class="form-group col-sm-6">
+            <div class="form-group col-sm-6  required">
                 <label for="input-usuario-email" class="control-label">E-mail</label>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
                     <input id="input-usuario-email" type="email" class="form-control">
                 </div>
             </div>
-            <div class="form-group col-sm-3 date" data-provide="datepicker">
+            <div class="form-group col-sm-3 date  required" data-provide="datepicker">
                 <label for="input-usuario-dob" class="control-label">Data de Nascimento</label>
                 <div class="input-group">
                     <input id="input-usuario-dob" type="text" class="form-control js-datepicker pointer" >
@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="form-group col-sm-3">
+            <div class="form-group col-sm-3  required">
                 <label for="input-usuario-senha" class="control-label">Senha</label>
                 <input id="input-usuario-senha" type="password" class="form-control js-password">
             </div>

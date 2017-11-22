@@ -23,7 +23,7 @@
 
     <form th:object="${estilo}" class="form-vertical" method="post">
         <th:block th:include="fragments/ValidationErrorMessages"></th:block>
-        <div class="form-group">
+        <div class="form-group  required">
             <label for="input-estilo-rapido-nome" class="control-label ">Nome</label>
             <input type="text" id="input-estilo-rapido-nome" class="form-control" th:field="*{nome}"/>
         </div>

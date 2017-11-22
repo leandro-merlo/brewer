@@ -1,6 +1,7 @@
 package org.manzatech.brewer.model;
 
 import org.manzatech.brewer.validation.SKU;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -161,6 +162,10 @@ public class Cerveja implements Serializable {
 
     public String getFoto() {
         return foto;
+    }
+
+    public String getFotoOrMock() {
+        return StringUtils.isEmpty(foto) ? "cerveja-mock.png" : foto;
     }
 
     public void setFoto(String foto) {

@@ -48,3 +48,52 @@ div[class^="radio-"], div[class*=" radio-"] {
     padding: 10px;
     margin: 0px;
 }
+
+.required > .control-label:after {
+    content: "*";
+}
+
+.table-cervejas-col-foto {
+    min-width: 50px;
+    width: 50px;
+}
+
+.table-cervejas-col-sku {
+    width: 90px;
+    text-align: center;
+}
+
+.table-cervejas-col-nome {
+}
+
+.table-cervejas-col-estilo {
+    width: 150px;
+}
+
+.col-cervejas-estilo{
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.table-cervejas-col-origem {
+    width: 100px;
+}
+
+.table-cervejas-col-valor {
+    width: 100px;
+    text-align: right;
+}
+
+.table-cervejas-col-acoes {
+    width: 80px;
+}
+
+.bw-simple-table {
+    margin-bottom: 0px;
+}
+
+.bw-simple-table.table td {
+    vertical-align: middle;
+}

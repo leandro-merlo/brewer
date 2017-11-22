@@ -10,6 +10,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.format.number.NumberStyleFormatter;
 import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.format.support.FormattingConversionService;
@@ -32,6 +33,7 @@ import java.math.BigDecimal;
 @ComponentScan( basePackageClasses = {CervejasController.class})
 @Configuration
 @EnableWebMvc
+@EnableSpringDataWebSupport
 public class WebConfig implements WebMvcConfigurer, ApplicationContextAware {
 
     protected ApplicationContext applicationContext;

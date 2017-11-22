@@ -18,13 +18,13 @@
 
     <form method="POST" th:object="${cerveja}" class="form-vertical  js-form-loading  cadastro-cerveja-form">
         <div class="row">
-            <div class="form-group col-sm-4">
+            <div class="form-group  col-sm-4  required">
                 <label for="input-cidade-estado" class="control-label">Estado</label>
                 <select id="input-cidade-estado" class="form-control">
                     <option>Selecione um Estado</option>
                 </select>
             </div>
-            <div class="form-group col-sm-8">
+            <div class="form-group  col-sm-8  required">
                 <label for="input-cidade-nome" class="control-label">Nome</label>
                 <input id="input-cidade-nome" type="text" class="form-control" >
             </div>
