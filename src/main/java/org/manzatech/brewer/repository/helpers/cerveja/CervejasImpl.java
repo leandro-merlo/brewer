@@ -6,6 +6,7 @@ import org.manzatech.brewer.repository.filters.CervejaFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
@@ -29,10 +30,17 @@ public class CervejasImpl implements CervejasQueries {
         root.fetch(Cerveja_.estilo);
 
         criteria.where(filter(cervejaFilter, builder, root));
+        Sort sort = pageable.getSort();
+        if (sort.isSorted()){
+            Sort.Order order = sort.iterator().next();
+            String field = order.getProperty();
+            criteria.orderBy(order.isAscending() ? builder.asc(root.get(field)) : builder.desc(root.get(field)));
+        }
 
         TypedQuery<Cerveja> query = entityManager.createQuery(criteria);
         query.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
         query.setMaxResults(pageable.getPageSize());
+
         PageImpl<Cerveja> page = new PageImpl<Cerveja>(query.getResultList(), pageable, count(cervejaFilter));
         return page;
     }

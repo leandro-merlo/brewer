@@ -89,8 +89,22 @@
                 <thead>
                     <tr>
                         <th class="table-cervejas-col-foto"></th>
-                        <th class="table-cervejas-col-sku">SKU</th>
-                        <th class="table-cervejas-col-nome">Nome</th>
+                        <th class="table-cervejas-col-sku">
+                            <a th:href="${pagina.urlOrdenada('sku')}" th:remove="${pagina.empty} ? tag">
+                                <span>SKU</span>
+                                <span class="dropup" th:remove="${!pagina.isAscending('sku')} ? tag" th:if="${pagina.isOrdered('sku')}">
+                                    <span class="caret"></span>
+                                </span>
+                            </a>
+                        </th>
+                        <th class="table-cervejas-col-nome">
+                            <a th:href="${pagina.urlOrdenada('nome')}" th:remove="${pagina.empty} ? tag">
+                                <span>Nome</span>
+                                <span class="dropup" th:remove="${!pagina.isAscending('nome')} ? tag" th:if="${pagina.isOrdered('nome')}">
+                                    <span class="caret"></span>
+                                </span>
+                            </a>
+                        </th>
                         <th class="table-cervejas-col-estilo">Estilo</th>
                         <th class="table-cervejas-col-origem">Origem</th>
                         <th class="table-cervejas-col-valor">Valor</th>

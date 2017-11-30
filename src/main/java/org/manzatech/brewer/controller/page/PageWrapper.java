@@ -1,6 +1,7 @@
 package org.manzatech.brewer.controller.page;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -56,5 +57,31 @@ public class PageWrapper<T> {
          * ser traduzidos novamente para a página.
          */
         return uriComponentsBuilder.replaceQueryParam("page", page).build(true).encode(Charset.forName("UTF-8")).toUriString();
+    }
+
+    public String urlOrdenada(String field){
+        UriComponentsBuilder uriComponentsBuilderOrder = UriComponentsBuilder.fromUriString(
+                uriComponentsBuilder.build(true).encode(Charset.forName("UTF-8")).toUriString());
+
+        String sort = String.format("%s,%s", field, inverterDirecao(field));
+
+        return uriComponentsBuilderOrder.replaceQueryParam("sort", sort).build(true).encode(Charset.forName("UTF-8")).toUriString();
+    }
+
+    private String inverterDirecao(String field){
+        String direcao = "asc";
+        Sort.Order order = page.getSort().isSorted() ? page.getSort().getOrderFor(field) : null;
+        if (order != null) {
+            direcao = Sort.Direction.ASC.equals(order.getDirection()) ? "desc" : "asc";
+        }
+        return direcao;
+    }
+
+    public boolean isAscending(String field){
+        return inverterDirecao(field).equals("asc");
+    }
+
+    public boolean isOrdered(String field){
+        return !page.getSort().isSorted() ? false : page.getSort().getOrderFor(field) != null;
     }
 }
