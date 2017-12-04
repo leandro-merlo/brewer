@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/DefaultLayout}"
+      xmlns:brewer="http://brewer.manzatech.org/"
+>
+<head>
+    <title>Pesquisar Estilos</title>
+</head>
+
+<!-- Main content -->
+
+<h1 layout:fragment="headerTitle">
+    Pesquisar Estilos
+    <div style="margin-left: 10px; display: inline-block">
+        <a th:href="@{/estilos/novo}" class="btn btn-default">
+            <span class="glyphicon glyphicon-plus-sign"></span> Novo</a>
+    </div>
+</h1>
+
+<section layout:fragment="conteudo" >
+    <form method="GET" th:object="${estiloFilter}">
+        <div class="row">
+            <div class="form-group col-sm-6">
+                <label for="nome" class="control-label">Nome</label>
+                <input type="text" class="form-control" id="nome" th:field="*{nome}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-12">
+                <button class="btn btn-primary" type="submit">Pesquisar</button>
+            </div>
+        </div>
+    </form>
+    <div class="box" style="margin-top: 15px">
+        <div class="box-header">
+            <h3 class="box-title">Cervejas</h3>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover bw-simple-table">
+                <thead>
+                <tr>
+                    <th class="table-estilos-col-codigo">
+                        Código
+                    </th>
+                    <th class="table-estilos-col-nome">
+                        <brewer:order page="${pagina}" field="nome" text="Nome" />
+                    </th>
+                    <th class="table-estilos-col-acoes"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="estilo : ${pagina.content}">
+                    <td th:text="${estilo.id}"></td>
+                    <td th:text="${estilo.nome}"></td>
+                    <td class="text-center">
+                        <a href="" class="btn btn-link btn-xs" title="Editar">
+                            <i class="glyphicon glyphicon-pencil"></i>
+                        </a>
+                        <a href="" class="btn btn-link btn-xs" title="Excluir">
+                            <i class="glyphicon glyphicon-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                <tr th:if="${pagina.empty}">
+                    <td colspan="7" class="text-center">Nenhum estilo encontrada</td>
+                </tr>
+                </tbody>
+            </table>
+            <brewer:pagination page="${pagina}" />
+        </div>
+    </div>
+
+</section>
+
+<div layout:fragment="footer-scripts" th:remove="tag">
+    <script th:src="@{/layout/vendor/inputmask/inputmask.min.js}" src="../../static/layout/vendor/inputmask/inputmask.min.js"></script>
+    <script th:src="@{/layout/vendor/inputmask/jquery.inputmask.min.js}" src="../../static/layout/vendor/inputmask/jquery.inputmask.min.js"></script>
+    <script th:src="@{/layout/vendor/inputmask/inputmask.numeric.extensions.min.js}" src="../../static/layout/vendor/inputmask/inputmask.numeric.extensions.min.js"></script>
+</div>

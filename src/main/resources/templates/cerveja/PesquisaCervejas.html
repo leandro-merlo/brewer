@@ -90,20 +90,10 @@
                     <tr>
                         <th class="table-cervejas-col-foto"></th>
                         <th class="table-cervejas-col-sku">
-                            <a th:href="${pagina.urlOrdenada('sku')}" th:remove="${pagina.empty} ? tag">
-                                <span>SKU</span>
-                                <span class="dropup" th:remove="${!pagina.isAscending('sku')} ? tag" th:if="${pagina.isOrdered('sku')}">
-                                    <span class="caret"></span>
-                                </span>
-                            </a>
+                            <brewer:order page="${pagina}" field="sku" text="SKU" />
                         </th>
                         <th class="table-cervejas-col-nome">
-                            <a th:href="${pagina.urlOrdenada('nome')}" th:remove="${pagina.empty} ? tag">
-                                <span>Nome</span>
-                                <span class="dropup" th:remove="${!pagina.isAscending('nome')} ? tag" th:if="${pagina.isOrdered('nome')}">
-                                    <span class="caret"></span>
-                                </span>
-                            </a>
+                            <brewer:order page="${pagina}" field="nome" text="Nome" />
                         </th>
                         <th class="table-cervejas-col-estilo">Estilo</th>
                         <th class="table-cervejas-col-origem">Origem</th>
@@ -135,37 +125,7 @@
                     </tr>
                 </tbody>
             </table>
-            <div th:if="${not pagina.empty }" class="col-sm-12 text-center">
-                <nav>
-                    <ul class="pagination pagination-sm">
-                        <li th:classappend="${ pagina.first } ? disabled" title="Primeira Página">
-                            <a th:href="${pagina.urlForPage(0)}" th:remove="${ pagina.first } ? tag">
-                                <span>&laquo;&laquo;</span>
-                            </a>
-                        </li>
-                        <li th:classappend="${ pagina.first } ? disabled"  title="Primeira Anterior">
-                            <a th:remove="${ pagina.first } ? tag" th:href="${pagina.urlForPage(pagina.number-1)}">
-                                <span>&laquo;</span>
-                            </a>
-                        </li>
-                        <th:block th:each="p : ${#numbers.sequence(1, pagina.totalPages)}">
-                            <li th:classappend="${p-1 == pagina.number} ? active">
-                                <a th:href="${pagina.urlForPage(p-1)}">[[${p}]]</a>
-                            </li>
-                        </th:block>
-                        <li th:classappend="${ pagina.last } ? disabled"  title="Página Seguinte">
-                            <a th:remove="${ pagina.last } ? tag" th:href="${pagina.urlForPage(pagina.number+1)}">
-                                <span>&raquo;</span>
-                            </a>
-                        </li>
-                        <li th:classappend="${ pagina.last } ? disabled"  title="Última Página">
-                            <a th:remove="${ pagina.last } ? tag" th:href="${pagina.urlForPage(pagina.totalPages-1)}">
-                                <span>&raquo;&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+            <brewer:pagination  page="${pagina}" />
         </div>
     </div>
 

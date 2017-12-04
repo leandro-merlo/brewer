@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<body>
+
+<th:block th:fragment="order(pagina)">
+    <div th:if="${not pagina.empty }" class="col-sm-12 text-center">
+        <nav>
+            <ul class="pagination pagination-sm">
+                <li th:classappend="${ pagina.first } ? disabled" title="Primeira Página">
+                    <a th:href="${pagina.urlForPage(0)}" th:remove="${ pagina.first } ? tag">
+                        <span>&laquo;&laquo;</span>
+                    </a>
+                </li>
+                <li th:classappend="${ pagina.first } ? disabled"  title="Primeira Anterior">
+                    <a th:remove="${ pagina.first } ? tag" th:href="${pagina.urlForPage(pagina.number-1)}">
+                        <span>&laquo;</span>
+                    </a>
+                </li>
+                <th:block th:each="p : ${#numbers.sequence(1, pagina.totalPages)}">
+                    <li th:classappend="${p-1 == pagina.number} ? active">
+                        <a th:href="${pagina.urlForPage(p-1)}">[[${p}]]</a>
+                    </li>
+                </th:block>
+                <li th:classappend="${ pagina.last } ? disabled"  title="Página Seguinte">
+                    <a th:remove="${ pagina.last } ? tag" th:href="${pagina.urlForPage(pagina.number+1)}">
+                        <span>&raquo;</span>
+                    </a>
+                </li>
+                <li th:classappend="${ pagina.last } ? disabled"  title="Última Página">
+                    <a th:remove="${ pagina.last } ? tag" th:href="${pagina.urlForPage(pagina.totalPages-1)}">
+                        <span>&raquo;&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</th:block>
+
+</body>
+
+</html>

@@ -53,29 +53,7 @@ Brewer.Components = (function () {
             date.enable();
         }
         if (this.radioTipoPessoa) {
-            this.radioTipoPessoa.find('input[type="radio"]').on('change', function () {
-                var radios = $(this).find('input[type="radio"]');
-                $(radios).each(function () {
-                    $(this).prop('checked', false);
-                });
-                $(this).prop('checked', true);
-                var value = $(this).data('value');
-                this.doc.inputmask('remove');
-                this.doc.val(null);
-                if (value.indexOf('Física') > 0) {
-                    $('.js-label-documento').text('CPF');
-                    this.doc.inputmask('999.999.999-99');
-                } else {
-                    $('.js-label-documento').text('CNPJ');
-                    this.doc.inputmask({
-                        mask: '99[9].999.999/9999-99',
-                        skipOptionalPartCharacter: '',
-                        clearMaskOnLostFocus: true,
-                        clearIncomplete: true,
-                        autoUnmask: true,
-                    });
-                }
-            });
+            this.radioTipoPessoa.find('input[type="radio"]').on('change', onRadioTipoPessoaChange.bind(this));
         }
         if (this.password){
             var password = new Brewer.Password(this.password);
@@ -86,8 +64,34 @@ Brewer.Components = (function () {
             status.enable();
         }
     }
+
+    function onRadioTipoPessoaChange(evt){
+        var radios = this.radioTipoPessoa.find('input[type="radio"]');
+        $(radios).each(function () {
+            $(this).prop('checked', false);
+        });
+        $(evt.target).prop('checked', true);
+        var value = $(evt.target).data('value');
+        this.doc.inputmask('remove');
+        this.doc.val(null);
+        if (value.indexOf('Física') > 0) {
+            $('.js-label-documento').text('CPF');
+            this.doc.inputmask('999.999.999-99');
+        } else {
+            $('.js-label-documento').text('CNPJ');
+            this.doc.inputmask({
+                mask: '99[9].999.999/9999-99',
+                skipOptionalPartCharacter: '',
+                clearMaskOnLostFocus: true,
+                clearIncomplete: true,
+                autoUnmask: true,
+            });
+        }
+    }
     return Components;
 }());
+
+
 
 $(function () {
     var Components = new Brewer.Components();

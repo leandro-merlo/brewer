@@ -97,3 +97,10 @@ div[class^="radio-"], div[class*=" radio-"] {
 .bw-simple-table.table td {
     vertical-align: middle;
 }
+
+.table-estilos-col-nome {
+    width: auto;
+}
+.table-estilos-col-codigo, .table-estilos-col-acoes {
+    width: 80px;
+}

@@ -3,6 +3,8 @@ package org.manzatech.brewer.repository.helpers.cerveja;
 import org.manzatech.brewer.model.Cerveja;
 import org.manzatech.brewer.model.Cerveja_;
 import org.manzatech.brewer.repository.filters.CervejaFilter;
+import org.manzatech.brewer.repository.pagination.PaginationUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -21,26 +23,17 @@ public class CervejasImpl implements CervejasQueries {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Autowired
+    private PaginationUtil paginationUtil;
+
     @Override
     public Page<Cerveja> filtrar(CervejaFilter cervejaFilter, Pageable pageable) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Cerveja> criteria = builder.createQuery(Cerveja.class);
-
         Root<Cerveja> root = criteria.from(Cerveja.class);
         root.fetch(Cerveja_.estilo);
-
         criteria.where(filter(cervejaFilter, builder, root));
-        Sort sort = pageable.getSort();
-        if (sort.isSorted()){
-            Sort.Order order = sort.iterator().next();
-            String field = order.getProperty();
-            criteria.orderBy(order.isAscending() ? builder.asc(root.get(field)) : builder.desc(root.get(field)));
-        }
-
-        TypedQuery<Cerveja> query = entityManager.createQuery(criteria);
-        query.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
-        query.setMaxResults(pageable.getPageSize());
-
+        TypedQuery query = paginationUtil.preparar(criteria, pageable, builder, root, entityManager);
         PageImpl<Cerveja> page = new PageImpl<Cerveja>(query.getResultList(), pageable, count(cervejaFilter));
         return page;
     }

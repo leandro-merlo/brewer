@@ -1,10 +1,15 @@
 package org.manzatech.brewer.controller;
 
+import org.manzatech.brewer.controller.page.PageWrapper;
+import org.manzatech.brewer.model.Cerveja;
 import org.manzatech.brewer.model.Estilo;
 import org.manzatech.brewer.repository.Estilos;
+import org.manzatech.brewer.repository.filters.EstiloFilter;
 import org.manzatech.brewer.service.EstiloService;
 import org.manzatech.brewer.service.exception.NomeEstiloJaCadastradoException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -50,6 +56,13 @@ public class EstilosController {
         return new ModelAndView("redirect:/estilos/novo");
     }
 
+    @GetMapping("")
+    public ModelAndView pesquisar(EstiloFilter estiloFilter, BindingResult bindingResult, @PageableDefault(size = 10) Pageable pageable, HttpServletRequest request){
+        ModelAndView mv = new ModelAndView("estilo/PesquisaEstilos");
+        mv.addObject("pagina", new PageWrapper<Estilo>(estilos.filtrar(estiloFilter, pageable), request));
+        return mv;
+    }
+
     @PostMapping(value = "", consumes =  { MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<?> cadastroRapido(@RequestBody @Valid Estilo estilo, BindingResult result) {
         if (result.hasErrors()){
@@ -58,4 +71,5 @@ public class EstilosController {
         estilo = service.salvar(estilo);
         return ResponseEntity.ok(estilo);
     }
+
 }
