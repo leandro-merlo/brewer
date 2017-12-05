@@ -20,7 +20,7 @@ public abstract class AbstractSeeder<T> {
         this.data = new ArrayList<>();
     }
 
-    abstract void seed();
+    abstract public void seed();
 
     public List<T> getData() {
         return data;

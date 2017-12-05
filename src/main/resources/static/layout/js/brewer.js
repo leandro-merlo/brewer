@@ -70,17 +70,22 @@ Brewer.Components = (function () {
         $(radios).each(function () {
             $(this).prop('checked', false);
         });
-        $(evt.target).prop('checked', true);
-        var value = $(evt.target).data('value');
+        var target = $(evt.target);
+        target.prop('checked', true);
+        var value = target.data('value');
         this.doc.inputmask('remove');
         this.doc.val(null);
-        if (value.indexOf('Física') > 0) {
-            $('.js-label-documento').text('CPF');
-            this.doc.inputmask('999.999.999-99');
+
+        var label = target.data('documento');
+        var mask = target.data('mascara');
+
+        if (value == 0) {
+            $('.js-label-documento').text(label);
+            this.doc.inputmask(mask);
         } else {
-            $('.js-label-documento').text('CNPJ');
+            $('.js-label-documento').text(label);
             this.doc.inputmask({
-                mask: '99[9].999.999/9999-99',
+                mask: mask,
                 skipOptionalPartCharacter: '',
                 clearMaskOnLostFocus: true,
                 clearIncomplete: true,

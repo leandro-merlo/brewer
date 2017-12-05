@@ -27,12 +27,13 @@
             <div class="col-sm-6 col-md-4  required">
                 <label class="control-label">Tipo pessoa</label>
                 <div class="btn-group radio-tipo-pessoa js-tipo-pessoa" data-toggle="buttons">
-                    <label class="btn btn-default active checked" > Pessoa Física
-                        <input type="radio" autocomplete="off" data-value="Pessoa Física">
-                    </label>
-                    <label class="btn btn-default">
-                        <input type="radio" autocomplete="off" data-value="Pessoa Jurídica"> Pessoa Jurídica
-                    </label>
+                    <th:block th:each="tipoPessoa : ${tiposPessoa}">
+                        <label class="btn btn-default">
+                            <span th:text="${tipoPessoa.nome}">Pessoa Física</span>
+                            <input type="radio" autocomplete="off" th:value="${tipo}"
+                                   th:data-mascara="${tipoPessoa.mascara}" th:data-documento="${tipoPessoa.documento}" />
+                        </label>
+                    </th:block>
                 </div>
             </div>
             <div class="form-group col-sm-6 col-md-8  required">
@@ -76,6 +77,9 @@
                 <label for="input-cliente-estado" class="control-label">Estado</label>
                 <select id="input-cliente-estado" class="form-control">
                     <option value="">Selecione um estado</option>
+                    <th:block th:each="estado : ${estados}">
+                        <option th:value="${estado.id}" th:text="${estado.nome}">Nome qualquer</option>
+                    </th:block>
                 </select>
             </div>
             <div class="col-sm-4 form-group  required">

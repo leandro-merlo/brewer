@@ -1,5 +1,6 @@
 package org.manzatech.brewer.migration;
 
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Environment;
+import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 
 /**
  * @author imssbora
@@ -17,6 +19,7 @@ import org.hibernate.cfg.Environment;
 public class HibernateUtil {
     private static StandardServiceRegistry registry;
     private static SessionFactory sessionFactory;
+    private static Connection connection;
 
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
@@ -50,8 +53,13 @@ public class HibernateUtil {
                 // Create Metadata
                 Metadata metadata = sources.getMetadataBuilder().build();
 
+
                 // Create SessionFactory
                 sessionFactory = metadata.getSessionFactoryBuilder().build();
+
+                sessionFactory.
+                        getSessionFactoryOptions().getServiceRegistry().
+                        getService(ConnectionProvider.class).getConnection();
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -61,6 +69,10 @@ public class HibernateUtil {
             }
         }
         return sessionFactory;
+    }
+
+    public static Connection getConnection() {
+        return connection;
     }
 
     public static void shutdown() {
