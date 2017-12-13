@@ -41,7 +41,7 @@ Brewer.Components = (function () {
             zip.enable();
         }
         if (this.doc) {
-            var doc = new Brewer.CPFCNPJMask(this.doc);
+            var doc = new Brewer.CPFCNPJMask(this.doc, this.radioTipoPessoa);
             doc.enable();
         }
         if (this.phone) {
@@ -54,6 +54,10 @@ Brewer.Components = (function () {
         }
         if (this.radioTipoPessoa) {
             this.radioTipoPessoa.find('input[type="radio"]').on('change', onRadioTipoPessoaChange.bind(this));
+            var tipoPessoaSelecionada =  this.radioTipoPessoa.find('input[type="radio"]').filter(':checked')[0];
+            if (tipoPessoaSelecionada) {
+                aplicarMascara.call(this, tipoPessoaSelecionada);
+            }
         }
         if (this.password){
             var password = new Brewer.Password(this.password);
@@ -72,14 +76,20 @@ Brewer.Components = (function () {
         });
         var target = $(evt.target);
         target.prop('checked', true);
-        var value = target.data('value');
-        this.doc.inputmask('remove');
         this.doc.val(null);
+        this.doc.removeAttr('disabled');
+        aplicarMascara.call(this, target);
+    }
+    
+    function aplicarMascara(tipoPessoaSelecionada) {
+        var target = $(tipoPessoaSelecionada);
+        var value = target.val();
+        this.doc.inputmask('remove');
 
         var label = target.data('documento');
         var mask = target.data('mascara');
 
-        if (value == 0) {
+        if (value == 'FISICA') {
             $('.js-label-documento').text(label);
             this.doc.inputmask(mask);
         } else {
@@ -98,7 +108,7 @@ Brewer.Components = (function () {
 
 
 
-$(function () {
+$(document).ready(function () {
     var Components = new Brewer.Components();
     Components.enable();
 });

@@ -1,1 +1,1 @@
-ALTER TABLE cerveja ADD COLUMN `quantidade_estoque` INTEGER NOT NULL AFTER `origem`;
+ALTER TABLE cliente MODIFY COLUMN cpf_cnpj VARCHAR(30) NOT NULL;

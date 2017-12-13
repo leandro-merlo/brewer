@@ -30,8 +30,8 @@ public class HibernateUtil {
 
                 // Hibernate settings equivalent to hibernate.cfg.xml's properties
                 Map<String, String> settings = new HashMap<>();
-                settings.put(Environment.DRIVER, "com.mysql.jdbc.Driver");
-                settings.put(Environment.URL, "jdbc:mysql://localhost/brewer?useSSL=false");
+                settings.put(Environment.DRIVER, "org.mariadb.jdbc.Driver");
+                settings.put(Environment.URL, "jdbc:mariadb://localhost/brewer?useSSL=false");
                 settings.put(Environment.USER, "root");
                 settings.put(Environment.PASS, "1010");
                 settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");

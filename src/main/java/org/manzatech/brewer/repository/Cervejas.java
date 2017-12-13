@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface Cervejas extends JpaRepository<Cerveja, Long>, CervejasQueries{
 
-    public Optional<Cerveja> findBySku(String sky);
+    public Optional<Cerveja> findBySku(String sku);
 }
