@@ -4,6 +4,7 @@ import org.manzatech.brewer.model.Cliente;
 import org.manzatech.brewer.model.Estado_;
 import org.manzatech.brewer.model.TipoPessoa;
 import org.manzatech.brewer.repository.Estados;
+import org.manzatech.brewer.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,9 @@ public class ClientesController {
     @Autowired
     private Estados estados;
 
+    @Autowired
+    private ClienteService service;
+
     @GetMapping("/novo")
     public ModelAndView novo(Cliente cliente)
     {
@@ -37,6 +41,7 @@ public class ClientesController {
         if (result.hasErrors()){
             return novo(cliente);
         }
+        service.salvar(cliente);
         attributes.addFlashAttribute("mensagem", "Cliente salvo com sucesso");
         return new ModelAndView("redirect:/clientes/novo");
     }

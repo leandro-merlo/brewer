@@ -114,4 +114,9 @@ public class Cliente implements Serializable{
 
         return Objects.hash(id);
     }
+
+    @PrePersist @PreUpdate
+    private void prePersistAndUpdate(){
+        this.CPFCNPJ = this.CPFCNPJ.replaceAll("\\.|-|/", "");
+    }
 }

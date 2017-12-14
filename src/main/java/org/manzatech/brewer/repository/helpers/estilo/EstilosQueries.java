@@ -1,4 +1,4 @@
-package org.manzatech.brewer.repository.helpers.cerveja;
+package org.manzatech.brewer.repository.helpers.estilo;
 
 import org.manzatech.brewer.model.Estilo;
 import org.manzatech.brewer.repository.filters.EstiloFilter;
