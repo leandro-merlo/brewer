@@ -1,7 +1,7 @@
 package org.manzatech.brewer.repository;
 
 import org.manzatech.brewer.model.Estilo;
-import org.manzatech.brewer.repository.helpers.cerveja.EstilosQueries;
+import org.manzatech.brewer.repository.helpers.estilo.EstilosQueries;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

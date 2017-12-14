@@ -2,7 +2,10 @@ package org.manzatech.brewer.config;
 
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.manzatech.brewer.controller.CervejasController;
+import org.manzatech.brewer.controller.converter.CidadeConverter;
+import org.manzatech.brewer.controller.converter.EstadoConverter;
 import org.manzatech.brewer.controller.converter.EstilosConverter;
+import org.manzatech.brewer.model.Estado;
 import org.manzatech.brewer.thymeleaf.BrewerDialect;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -110,6 +113,8 @@ public class WebConfig implements WebMvcConfigurer, ApplicationContextAware {
         NumberStyleFormatter bigDecimalConverter = new NumberStyleFormatter("#,##0.00");
         NumberStyleFormatter integerConverter = new NumberStyleFormatter("#,##0");
         service.addConverter(new EstilosConverter());
+        service.addConverter(new CidadeConverter());
+        service.addConverter(new EstadoConverter());
         service.addFormatterForFieldType(BigDecimal.class, bigDecimalConverter);
         service.addFormatterForFieldType(Integer.class, integerConverter);
         return service;

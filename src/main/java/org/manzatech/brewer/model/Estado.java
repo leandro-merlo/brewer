@@ -1,9 +1,12 @@
 package org.manzatech.brewer.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "estado")
@@ -20,7 +23,8 @@ public class Estado  {
     @Size(min = 2, max = 2)
     private String sigla;
 
-    @OneToMany(mappedBy = "estado", targetEntity = Cidade.class, fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(mappedBy = "estado", targetEntity = Cidade.class)
     private List<Cidade> cidades;
 
     public Long getId() {
@@ -49,5 +53,19 @@ public class Estado  {
 
     public List<Cidade> getCidades(){
         return this.cidades;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Estado estado = (Estado) o;
+        return Objects.equals(id, estado.id);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id);
     }
 }

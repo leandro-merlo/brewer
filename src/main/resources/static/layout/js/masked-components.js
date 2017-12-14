@@ -39,14 +39,38 @@ Brewer.NumericMask = (function () {
 }());
 
 Brewer.CPFCNPJMask = (function () {
-    function CPFCNPJMask(el) {
+    function CPFCNPJMask(el, radioTipoPessoa) {
         this.element = el;
+        this.radioTipoPessoa = radioTipoPessoa;
     }
     CPFCNPJMask.prototype.enable = function () {
         if (typeof this.element.inputmask === 'function') {
-            this.element.inputmask('999.999.999-99', {
-                clearIncomplete: true,
-            });
+            var tipo = this.radioTipoPessoa.find('input[type="radio"]').filter(":checked");
+            var label = $(tipo).data('documento');
+            var mask = $(tipo).data('mascara');
+
+            if (tipo.length > 0) {
+                var value = $(tipo).val();
+                if (value == 'FISICA') {
+                    $('.js-label-documento').text(label);
+                    this.element.inputmask(mask, {
+                        clearIncomplete: true,
+                    });
+                } else {
+                    $('.js-label-documento').text(label);
+                    this.element.inputmask({
+                        mask: mask,
+                        skipOptionalPartCharacter: '',
+                        clearMaskOnLostFocus: true,
+                        clearIncomplete: true,
+                        autoUnmask: true,
+                    });
+                }
+            } else {
+                this.element.inputmask('999.999.999-99', {
+                    clearIncomplete: true,
+                });
+            }
         }
     }
     return CPFCNPJMask;

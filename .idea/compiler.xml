@@ -3,6 +3,7 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default">
+        <outputRelativeToContentRoot value="true" />
         <processor name="org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor" />
       </profile>
       <profile name="Maven default annotation processors profile" enabled="true">

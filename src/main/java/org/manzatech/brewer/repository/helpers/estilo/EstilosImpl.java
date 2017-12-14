@@ -1,8 +1,9 @@
-package org.manzatech.brewer.repository.helpers.cerveja;
+package org.manzatech.brewer.repository.helpers.estilo;
 
 import org.manzatech.brewer.model.Estilo;
 import org.manzatech.brewer.model.Estilo_;
 import org.manzatech.brewer.repository.filters.EstiloFilter;
+import org.manzatech.brewer.repository.helpers.estilo.EstilosQueries;
 import org.manzatech.brewer.repository.pagination.PaginationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,7 +17,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
 
-public class EstilosImpl implements EstilosQueries{
+public class EstilosImpl implements EstilosQueries {
 
     @PersistenceContext
     private EntityManager entityManager;

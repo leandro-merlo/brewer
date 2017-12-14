@@ -16,7 +16,7 @@
         <java.version>1.8</java.version>
         <maven-compiler-plugin.version>3.2</maven-compiler-plugin.version>
         <flyway-maven-plugin.version>4.2.0</flyway-maven-plugin.version>
-        <mysql.version>5.1.44</mysql.version>
+        <mariadb.version>2.2.0</mariadb.version>
         <servlet.version>3.1.0</servlet.version>
         <spring.version>5.0.0.RELEASE</spring.version>
         <thymeleaf.version>3.0.8.RELEASE</thymeleaf.version>
@@ -146,9 +146,9 @@
 
         <!-- MySQL Connector -->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.version}</version>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <version>${mariadb.version}</version>
             <scope>compile</scope>
         </dependency>
 
@@ -210,7 +210,7 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>${flyway-maven-plugin.version}</version>
                 <configuration>
-                    <driver>org.mysql.jdbc.Driver</driver>
+                    <driver>org.mariadb.jdbc.Driver</driver>
                 </configuration>
             </plugin>
             <plugin>

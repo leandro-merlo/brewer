@@ -1,6 +1,9 @@
 package org.manzatech.brewer.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "cidade")
@@ -12,7 +15,9 @@ public class Cidade {
 
     private String nome;
 
-    @ManyToOne(targetEntity = Estado.class, optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Estado.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "estado_id")
+    @JsonIgnore
     private Estado estado;
 
     public Long getId() {
@@ -37,5 +42,19 @@ public class Cidade {
 
     public void setEstado(Estado estado) {
         this.estado = estado;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cidade cidade = (Cidade) o;
+        return Objects.equals(id, cidade.id);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id);
     }
 }
