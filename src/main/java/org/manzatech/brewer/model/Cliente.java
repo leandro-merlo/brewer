@@ -3,9 +3,6 @@ package org.manzatech.brewer.model;
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
 import org.hibernate.validator.group.GroupSequenceProvider;
-import org.manzatech.brewer.model.Cidade;
-import org.manzatech.brewer.model.Endereco;
-import org.manzatech.brewer.model.TipoPessoa;
 import org.manzatech.brewer.model.validation.ClienteGroupSequenceProvider;
 import org.manzatech.brewer.model.validation.group.CNPJGroup;
 import org.manzatech.brewer.model.validation.group.CPFGroup;
@@ -35,7 +32,7 @@ public class Cliente implements Serializable{
     @CPF(groups = {CPFGroup.class})
     @CNPJ(groups = {CNPJGroup.class})
     @Column(name = "cpf_cnpj")
-    private String CPFCNPJ;
+    private String cpfCnpj;
 
     private String telefone;
 
@@ -69,12 +66,12 @@ public class Cliente implements Serializable{
         this.tipoPessoa = tipoPessoa;
     }
 
-    public String getCPFCNPJ() {
-        return CPFCNPJ;
+    public String getCpfCnpj() {
+        return cpfCnpj;
     }
 
-    public void setCPFCNPJ(String CPFCNPJ) {
-        this.CPFCNPJ = CPFCNPJ;
+    public void setCpfCnpj(String cpfCnpj) {
+        this.cpfCnpj = cpfCnpj;
     }
 
     public String getTelefone() {
@@ -101,6 +98,10 @@ public class Cliente implements Serializable{
         this.endereco = endereco;
     }
 
+    public String getCpfCnpjSemFormatacao(){
+        return TipoPessoa.removerFormatacao(this.cpfCnpj);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -117,6 +118,6 @@ public class Cliente implements Serializable{
 
     @PrePersist @PreUpdate
     private void prePersistAndUpdate(){
-        this.CPFCNPJ = this.CPFCNPJ.replaceAll("\\.|-|/", "");
+        this.cpfCnpj = TipoPessoa.removerFormatacao(this.cpfCnpj);
     }
 }

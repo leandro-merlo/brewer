@@ -5,6 +5,7 @@ import org.manzatech.brewer.model.Estado_;
 import org.manzatech.brewer.model.TipoPessoa;
 import org.manzatech.brewer.repository.Estados;
 import org.manzatech.brewer.service.ClienteService;
+import org.manzatech.brewer.service.exception.DocumentoClienteJaCadastradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -41,7 +42,12 @@ public class ClientesController {
         if (result.hasErrors()){
             return novo(cliente);
         }
-        service.salvar(cliente);
+        try {
+            service.salvar(cliente);
+        }catch (DocumentoClienteJaCadastradoException ex){
+            result.rejectValue("cpfCnpj", ex.getMessage(), ex.getMessage());
+            return novo(cliente);
+        }
         attributes.addFlashAttribute("mensagem", "Cliente salvo com sucesso");
         return new ModelAndView("redirect:/clientes/novo");
     }

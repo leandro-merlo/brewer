@@ -6,10 +6,11 @@
         <outputRelativeToContentRoot value="true" />
         <processor name="org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor" />
       </profile>
-      <profile name="Maven default annotation processors profile" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+      <profile name="Annotation profile for brewer" enabled="true">
+        <sourceOutputDir name="target/generated-sources/apt" />
+        <sourceTestOutputDir name="target/generated-sources/apt-test" />
         <outputRelativeToContentRoot value="true" />
+        <processor name="org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor" />
         <module name="brewer" />
       </profile>
     </annotationProcessing>

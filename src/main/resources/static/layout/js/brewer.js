@@ -57,6 +57,7 @@ Brewer.Components = (function () {
             var tipoPessoaSelecionada =  this.radioTipoPessoa.find('input[type="radio"]').filter(':checked')[0];
             if (tipoPessoaSelecionada) {
                 aplicarMascara.call(this, tipoPessoaSelecionada);
+                this.doc.removeAttr('disabled');
             }
         }
         if (this.password){

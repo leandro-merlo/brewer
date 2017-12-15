@@ -59,6 +59,7 @@
           <element id="library" level="project" name="Maven: com.github.mifmif:generex:1.0.2" />
           <element id="library" level="project" name="Maven: dk.brics.automaton:automaton:1.11-8" />
           <element id="library" level="project" name="Maven: net.coobird:thumbnailator:0.4.8" />
+          <element id="library" level="project" name="Maven: org.hibernate:hibernate-jpamodelgen:5.2.11.Final" />
         </element>
       </element>
       <element id="directory" name="META-INF">
