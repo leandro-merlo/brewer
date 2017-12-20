@@ -1,5 +1,7 @@
 package org.manzatech.brewer.model;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -61,6 +63,11 @@ public class Endereco implements Serializable {
         this.cidade = cidade;
     }
 
+    public boolean temCidade(){
+        return this.cidade != null;
+    }
+
+    @Transactional
     public Estado getEstado() {
         return estado;
     }
@@ -68,4 +75,6 @@ public class Endereco implements Serializable {
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
+
+
 }
