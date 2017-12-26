@@ -120,4 +120,9 @@ public class Cliente implements Serializable{
     private void prePersistAndUpdate(){
         this.cpfCnpj = TipoPessoa.removerFormatacao(this.cpfCnpj);
     }
+
+    @PostLoad
+    private void postLoad(){
+        this.cpfCnpj = this.tipoPessoa.formatarDocumento(this.cpfCnpj);
+    }
 }

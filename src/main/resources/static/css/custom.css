@@ -112,3 +112,33 @@ div[class^="radio-"], div[class*=" radio-"] {
 .fiel-action__icon {
     margin: 6px 0 0 5px;
 }
+
+.table-clientes-col-tipo-pessoa {
+    width: 120px;
+    text-align: center;
+}
+
+.table-clientes-col-cpfcnpj {
+    width: 160px;
+    text-align: right;
+}
+
+.table-clientes-col-estado {
+    width: 64px;
+    text-align: center;
+}
+
+.table-clientes-col-cidade {
+    width: 200px;
+    text-align: left;
+}
+
+.table-clientes-col-telefone {
+    width: 176px;
+    text-align: right;
+}
+
+.table-clientes-col-acoes {
+    width: 90px;
+    text-align: center;
+}

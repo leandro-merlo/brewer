@@ -6,6 +6,8 @@ import org.hibernate.proxy.HibernateProxy;
 import org.hibernate.proxy.HibernateProxyHelper;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -16,9 +18,11 @@ public class Cidade {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "O nome é obrigatório")
     private String nome;
 
-    @ManyToOne(targetEntity = Estado.class, fetch = FetchType.LAZY)
+    @NotNull(message = "O estado é obrigatório")
+    @ManyToOne(targetEntity = Estado.class, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "estado_id")
     @JsonIgnore
     private Estado estado;

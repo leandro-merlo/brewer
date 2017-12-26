@@ -6,29 +6,32 @@
       xmlns:brewer="http://brewer.manzatech.org/"
 >
 <head>
-    <title>Pesquisar Clientes</title>
+    <title>Pesquisar Cidades</title>
 </head>
 
 <!-- Main content -->
 
 <h1 layout:fragment="headerTitle">
-    Pesquisar Clientes
+    Pesquisar Cidades
     <div style="margin-left: 10px; display: inline-block">
-        <a th:href="@{/clientes/novo}" class="btn btn-default">
-            <span class="glyphicon glyphicon-plus-sign"></span> Novo</a>
+        <a th:href="@{/cidades/nova}" class="btn btn-default">
+            <span class="glyphicon glyphicon-plus-sign"></span> Nova</a>
     </div>
 </h1>
 
 <section layout:fragment="conteudo" >
-    <form method="GET" th:object="${clienteFilter}">
+    <form method="GET" th:object="${cidadeFilter}">
         <div class="row">
             <div class="form-group col-sm-8">
                 <label for="nome" class="control-label">Nome</label>
                 <input type="text" class="form-control" id="nome" th:field="*{nome}">
             </div>
             <div class="form-group col-sm-4">
-                <label for="documento" class="control-label">CPF / CNPJ</label>
-                <input type="text" class="form-control" id="documento" autofocus="autofocus" th:field="*{documento}">
+                <label for="estado" class="control-label">Estado</label>
+                <select type="text" class="form-control" id="estado" autofocus="autofocus" th:field="*{estado}">
+                    <option value="">Nenhum estado selecionado</option>
+                    <option th:each="estado : ${estados}" th:value="${estado.id}" th:text="${estado.nome}"></option>
+                </select>
             </div>
         </div>
         <div >
@@ -37,33 +40,25 @@
     </form>
     <div class="box" style="margin-top: 15px">
         <div class="box-header">
-            <h3 class="box-title">Clientes</h3>
+            <h3 class="box-title">Cidades</h3>
         </div>
         <div class="table-responsive">
             <table class="table table-hover bw-simple-table">
                 <thead>
                     <tr>
-                        <th class="table-clientes-col-nome">
+                        <th class="table-cidades-col-nome">
                             <brewer:order page="${pagina}" field="nome" text="Nome" />
                         </th>
-                        <th class="table-clientes-col-tipo-pessoa">
-                            <brewer:order page="${pagina}" field="tipoPessoa" text="Tipo Pessoa" />
+                        <th class="table-cidades-col-estado">
+                            <brewer:order page="${pagina}" field="estado" text="Estado" />
                         </th>
-                        <th class="table-clientes-col-cpfcnpj">CPF / CNPJ</th>
-                        <th class="table-clientes-col-estado">Estado</th>
-                        <th class="table-clientes-col-cidade">Cidade</th>
-                        <th class="table-clientes-col-telefone">Telefone</th>
-                        <th class="table-clientes-col-acoes"></th>
+                        <th class="table-cidades-col-acoes"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="cliente : ${pagina.content}">
-                        <td th:text="${cliente.nome}"></td>
-                        <td class="text-center" th:text="${cliente.tipoPessoa}"></td>
-                        <td class="text-right" th:text="${cliente.cpfCnpj}"></td>
-                        <td class="text-center" th:text="${cliente.endereco.temCidade() ? cliente.endereco.cidade.estado.sigla : 'NC'}"></td>
-                        <td th:text="${cliente.endereco.temCidade() ? cliente.endereco.cidade.nome : 'Não cadastrado'}"></td>
-                        <td class="text-right" th:text="${cliente.telefone}"></td>
+                    <tr th:each="cidade : ${pagina.content}">
+                        <td th:text="${cidade.nome}"></td>
+                        <td th:text="${cidade.estado.nome}"></td>
                         <td class="text-center">
                             <a href="" class="btn btn-link btn-xs" title="Editar">
                                 <i class="glyphicon glyphicon-pencil"></i>
@@ -74,7 +69,7 @@
                         </td>
                     </tr>
                     <tr th:if="${pagina.empty}">
-                        <td colspan="7" class="text-center">Nenhum cliente encontrado</td>
+                        <td colspan="7" class="text-center">Nenhum cidade encontrada</td>
                     </tr>
                 </tbody>
             </table>

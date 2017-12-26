@@ -31,11 +31,6 @@ public class ClientesImpl implements ClientesQueries {
 
         Join<Cliente, Endereco>  end = root.join(Cliente_.endereco);
         end.fetch(Endereco_.cidade, JoinType.LEFT).fetch(Cidade_.estado, JoinType.LEFT);
-//        Join<Endereco, Cidade> cid = end.join(Endereco_.cidade, JoinType.LEFT);
-//        Join<Cidade, Estado> est = cid.join(Cidade_.estado, JoinType.LEFT);
-//        cid.isNotNull();
-//        cid.get(Cidade_.estado).;
-//        cid.fetch(Cidade_.estado);
 
         criteria.where(filter(cervejaFilter, builder, root));
         TypedQuery query = paginationUtil.preparar(criteria, pageable, builder, root, entityManager);
@@ -68,11 +63,6 @@ public class ClientesImpl implements ClientesQueries {
         CriteriaQuery<Long> criteria = builder.createQuery(Long.class);
 
         Root<Cliente> root = criteria.from(Cliente.class);
-
-//
-//        Fetch<Cliente, Endereco> end = root.fetch(Cliente_.endereco, JoinType.LEFT);
-//        Fetch<Endereco, Cidade> cid = end.fetch(Endereco_.cidade, JoinType.INNER);
-//        cid.fetch(Cidade_.estado, JoinType.LEFT);
 
         criteria.where(filter(clienteFilter, builder, root));
         criteria.select(builder.count(root.get(Cliente_.id)));
