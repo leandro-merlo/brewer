@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:brewer="http://manzatech.com.br"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/DefaultLayout}"
 >
@@ -16,48 +17,50 @@
 
 <section layout:fragment="conteudo" >
 
-    <form method="POST" th:object="${cerveja}" class="form-vertical  js-form-loading  cadastro-cerveja-form">
-        <div class="form-group  required">
+    <form method="POST" th:object="${usuario}" class="form-vertical  js-form-loading  cadastro-usuario-form">
+
+        <brewer:message />
+
+        <div class="form-group  required" brewer:classforerror="nome">
             <label for="input-usuario-nome" class="control-label">Nome</label>
-            <input id="input-usuario-nome" type="text" class="form-control">
+            <input id="input-usuario-nome" type="text" class="form-control" th:field="*{nome}" />
         </div>
         <div class="row">
-            <div class="form-group col-sm-6  required">
+            <div class="form-group col-sm-6  required" brewer:classforerror="email">
                 <label for="input-usuario-email" class="control-label">E-mail</label>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                    <input id="input-usuario-email" type="email" class="form-control">
+                    <input id="input-usuario-email" type="text" class="form-control" th:field="*{email}">
                 </div>
             </div>
-            <div class="form-group col-sm-3 date  required" data-provide="datepicker">
+            <div class="form-group col-sm-3 date" data-provide="datepicker" brewer:classforerror="dataNascimento">
                 <label for="input-usuario-dob" class="control-label">Data de Nascimento</label>
                 <div class="input-group">
-                    <input id="input-usuario-dob" type="text" class="form-control js-datepicker pointer" >
+                    <input id="input-usuario-dob" type="text" class="form-control pointer js-datepicker" th:field="*{dataNascimento}">
                     <span class="input-group-addon pointer"><i class="glyphicon glyphicon-th"></i></span>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="form-group col-sm-3  required">
-                <label for="input-usuario-senha" class="control-label">Senha</label>
-                <input id="input-usuario-senha" type="password" class="form-control js-password">
+            <div class="form-group col-sm-3" th:classappend="${usuario.novo} ? required" brewer:classforerror="senha">
+                <label for="input-usuario-senha" class="control-label" >Senha</label>
+                <input id="input-usuario-senha"   type="password" class="form-control js-password" th:field="*{senha}">
             </div>
             <div class="form-group col-sm-2">
-                <label for="input-usuario-status" class="control-label">Status</label>
+                <label for="input-usuario-status" class="control-label" >Status</label>
                 <div>
-                    <input id="input-usuario-status" type="checkbox" class="form-control js-status" checked>
+                    <input id="input-usuario-status" type="checkbox" class="form-control js-status" checked th:field="*{ativo}" >
                 </div>
             </div>
-            <div class="form-group col-sm-7">
+            <div class="form-group col-sm-7 required" brewer:classforerror="grupos">
                 <label class="control-label">Grupos</label>
                 <div>
-                    <div class="btn-group checkbox-tipo-pessoa">
-                        <label>
-                            <input type="checkbox" autocomplete="off" data-value="Administrador">
-                        </label> Administrador
-                        <label>
-                            <input type="checkbox" autocomplete="off" data-value="Vendedor">
-                        </label> Vendedor
+                    <div class="btn-group checkbox-grupo">
+                        <th:block th:each="grupo : ${grupos}">
+                            <label class="control-label">
+                                <input type="checkbox" autocomplete="off" data-value="Administrador" th:value="${grupo.id}" th:field="*{grupos}" >
+                            </label> <label th:for="${#ids.prev('grupos')}" th:text="${grupo.nome}">Administrador</label>
+                        </th:block>
                     </div>
                 </div>
             </div>
@@ -81,7 +84,6 @@
     <script th:src="@{/layout/vendor/inputmask/inputmask.date.extensions.min.js}"></script>
     <script th:src="@{/layout/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js}"></script>
     <script th:src="@{/layout/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js}"></script>
-    <script th:src="@{/layout/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js}"></script>
     <script th:src="@{/layout/vendor/bootstrap-show-password/bootstrap-show-password.min.js}"></script>
     <script th:src="@{/layout/vendor/bootstrap-switch/js/bootstrap-switch.min.js}"></script>
 </div>

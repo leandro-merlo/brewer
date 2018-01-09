@@ -142,3 +142,7 @@ div[class^="radio-"], div[class*=" radio-"] {
     width: 90px;
     text-align: center;
 }
+
+.datepicker {
+    z-index: 10000 !important;
+}

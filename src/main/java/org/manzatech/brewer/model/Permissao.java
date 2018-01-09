@@ -1,28 +1,22 @@
 package org.manzatech.brewer.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "cidade")
-public class Cidade {
+@Table(name = "permissao")
+public class Permissao implements Serializable{
+
+    private static final long serialVersionUID = -3104891560524734100L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @NotBlank(message = "O nome é obrigatório")
+    @NotBlank(message = "Nome é obrigatório")
+    @Column(length = 50)
     private String nome;
-
-    @NotNull(message = "O estado é obrigatório")
-    @ManyToOne(targetEntity = Estado.class, fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "estado_id")
-    @JsonIgnore
-    private Estado estado;
 
     public Long getId() {
         return id;
@@ -40,29 +34,17 @@ public class Cidade {
         this.nome = nome;
     }
 
-    public Estado getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Estado estado) {
-        this.estado = estado;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Cidade cidade = (Cidade) o;
-        return Objects.equals(id, cidade.id);
+        Permissao permissao = (Permissao) o;
+        return Objects.equals(id, permissao.id);
     }
 
     @Override
     public int hashCode() {
 
         return Objects.hash(id);
-    }
-
-    public boolean temEstado(){
-        return estado != null;
     }
 }

@@ -11,6 +11,8 @@ import org.manzatech.brewer.repository.filters.CidadeFilter;
 import org.manzatech.brewer.service.CidadeService;
 import org.manzatech.brewer.service.exception.NomeCidadeJaCadastradaException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -55,6 +57,7 @@ public class CidadesController {
         return mv;
     }
 
+    @CacheEvict(value = "cidades", key = "#cidade.estado.id", condition = "#cidade.temEstado()")
     @PostMapping("/nova")
     public ModelAndView cadastrar(@Valid Cidade cidade, BindingResult result, RedirectAttributes attributes){
         if (result.hasErrors()){
@@ -70,6 +73,7 @@ public class CidadesController {
         return new ModelAndView("redirect:/cidades/nova");
     }
 
+    @Cacheable(value = "cidades", key = "#estadoId")
     @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody List<Cidade> pesquisarPorCodigoEstado(@RequestParam(name = "estado", defaultValue = "-1") Long estadoId){
         List<Cidade> ret = cidades.findByEstadoId(estadoId);

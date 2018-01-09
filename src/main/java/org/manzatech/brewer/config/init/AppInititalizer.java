@@ -4,7 +4,9 @@ import javax.servlet.Filter;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletRegistration;
 
+import org.hibernate.validator.HibernateValidatorConfiguration;
 import org.manzatech.brewer.config.PersistenceJPAConfig;
+import org.manzatech.brewer.config.SecurityConfig;
 import org.manzatech.brewer.config.ServiceConfig;
 import org.manzatech.brewer.config.WebConfig;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -16,7 +18,8 @@ public class AppInititalizer extends AbstractAnnotationConfigDispatcherServletIn
     protected Class<?>[] getRootConfigClasses() {
         return new Class<?>[] {
             PersistenceJPAConfig.class,
-            ServiceConfig.class
+            ServiceConfig.class,
+            SecurityConfig.class,
         };
     }
 

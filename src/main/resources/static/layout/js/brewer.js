@@ -1,6 +1,7 @@
 $(document).ready(function () {
     if ($.fn.datepicker !== undefined) {
         $.fn.datepicker.defaults.language = "pt-BR";
+        $.fn.datepicker.defaults.autoclose = true;
     }
 });
 

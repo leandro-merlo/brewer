@@ -7,6 +7,7 @@ import javax.sql.DataSource;
 import org.manzatech.brewer.model.Cerveja;
 import org.manzatech.brewer.repository.Cervejas;
 import org.manzatech.brewer.service.EstiloService;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

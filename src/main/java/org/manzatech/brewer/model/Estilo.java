@@ -1,7 +1,6 @@
 package org.manzatech.brewer.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;

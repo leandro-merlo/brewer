@@ -114,7 +114,7 @@ Brewer.DatePicker = (function () {
         if (typeof this.element.datepicker === 'function') {
             this.element.datepicker({
                 format: "dd/mm/yyyy",
-                language: 'pt-BR'
+                language: 'pt-BR',
             });
         }
         if (typeof this.element.inputmask === 'function') {
