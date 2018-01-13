@@ -5,6 +5,7 @@ import org.manzatech.brewer.repository.Usuarios;
 import org.manzatech.brewer.service.exception.EmailUsuarioJaCadastradoException;
 import org.manzatech.brewer.service.exception.SenhaObrigatoriaParaUsuarioNovoException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
