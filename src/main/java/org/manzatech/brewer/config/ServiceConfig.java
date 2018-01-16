@@ -1,6 +1,7 @@
 package org.manzatech.brewer.config;
 
 import org.manzatech.brewer.repository.Estilos;
+import org.manzatech.brewer.security.AppUserDetailsService;
 import org.manzatech.brewer.service.EstiloService;
 import org.manzatech.brewer.storage.FotoStorage;
 import org.manzatech.brewer.storage.local.FotoStorageLocal;
