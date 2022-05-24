@@ -1,0 +1,7 @@
+<div class="alert alert-dismissible" role="alert" th:fragment="message" 
+    th:classappend="${messageType} != null ? |alert-${ messageType }| : ''">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <p th:text="${ message }" class="mb-0"></p>
+</div>

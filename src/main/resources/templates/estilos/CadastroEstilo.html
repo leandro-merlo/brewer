@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/LayoutPadrao}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Cadastro de Estilos</title>
+</head>
+
+<body>
+	<section layout:fragment="conteudo">
+	
+		<th:block th:if="${message} != null">
+			<th:block th:replace="/layout/fragments/mensagem :: message"  />
+		</th:block>
+	
+		<form method="POST"  th:object="${estilo}">
+			<div class="row">
+				<div class="form-group col-sm-12 bw-required">
+					<label for="nome" class="control-label" th:classappend="${#fields.hasErrors('nome')} ? 'bw-invalid-label'">Nome</label>
+					<input type="text" class="form-control" th:field="*{nome}" th:errorclass="is-invalid"/>
+					<div class="invalid-feedback" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>					
+				</div>
+			</div>
+			<div class="row">
+                <div class="col-sm-12">
+                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                </div>
+			</div> 
+		</form>
+	</section>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalCadastroRapidoEstilo" tabindex="-1" aria-labelledby="modalCadastroRapidoEstiloLabel" aria-hidden="true" th:fragment="modal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCadastroRapidoEstiloLabel">Cadastro Rápido de Estilo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">                    
+                    <form th:action="@{/estilos}" class="form-horizontal">
+                        <div class="form-group bw-required">
+                            <label for="nomeEstilo" class="control-label">Nome</label>
+                            <input type="text" id="nomeEstilo" class="form-control">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary js-botao-salvar-cadastro-estilo-rapido">Cadastrar</button>
+                </div>
+            </div>
+        </div>
+    </div>    
+</html>

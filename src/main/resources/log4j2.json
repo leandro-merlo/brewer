@@ -1,0 +1,32 @@
+{
+    "configuration": {
+		"status": "WARN",
+		"appenders": {
+            "Console": {
+                "name": "Console",
+                "target": "SYSTEM_OUT",
+                "PatternLayout": {
+                    "pattern": "%d{HH:mm:ss:SSS} %-5level %logger{36}: %msg%n"
+                }
+            }
+		},
+        "loggers": {
+            "logger": [
+            	{
+	                "name": "br.com.manzatech.brewer",
+	                "level": "debug"
+            	},
+            	{
+	                "name": "org.hibernate.SQL",
+	                "level": "debug"
+            	}
+            ],
+            "root": {
+                "level": "error",
+                "AppenderRef": {
+                    "ref": "Console"
+                }
+            }
+        }
+    }
+}

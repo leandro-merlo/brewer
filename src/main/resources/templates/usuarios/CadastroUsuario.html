@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/LayoutPadrao}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Cadastro de Usuários</title>
+</head>
+
+<body>
+	<section layout:fragment="conteudo">
+		<form method="POST"  >
+			<div class="row">
+				<div class="form-group col-sm-12 bw-required">
+					<label for="nome" class="control-label" >Nome</label>
+					<input type="text" name="nome" class="form-control" />
+				</div>
+			</div>
+            <div class="row">
+                <div class="form-group col-sm-6 bw-required">
+                    <label for="email" class="control-label">Email</label>
+                    <input type="text" nome="email" class="form-control">
+                </div>    
+                <div class="form-group col-sm-3">
+                    <label for="dataNasc">Data de Nascimento</label>
+                    <input type="text" nome="dataNasc" class="form-control">
+                </div>    
+            </div>
+			<div class="row">
+                <div class="form-group col-sm-3">
+                    <label for="senha">Senha</label>
+                    <input type="password" nome="senha" class="form-control">
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="confirm">Confirmar Senha</label>
+                    <input type="password" nome="confirm" class="form-control">
+                </div>
+                <div class="form-group col-sm-3">
+					<label for="sabor" class="ml-2">Ativo</label>
+					<div>
+						<div class="checkbox checkbox-inline d-inline-block ml-2">
+							<input type="checkbox" name="ativo" class="js-ativo" 
+                                data-on-text="Sim" data-off-text="Não" data-on-color="success" 
+                                data-off-color="danger" data-size="large" />
+						</div>
+					</div>
+                </div>
+			</div>
+			<div class="row">
+                <div class="form-group col-sm-12">
+					<label for="sabor">Grupos</label>
+					<div>
+						<div class="checkbox checkbox-inline d-inline-block ml-2">
+							<input type="checkbox" name="grupos[]"/>
+							<label>Administrador</label>
+						</div>
+						<div class="checkbox checkbox-inline d-inline-block ml-2">
+							<input type="checkbox" name="grupos[]"/>
+							<label>Vendedor</label>
+						</div>
+					</div>
+                </div>    
+			</div>
+			<div class="row">
+                <div class="col-sm-12">
+                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                </div>
+			</div> 
+		</form>
+	</section>
+    <th:block layout:fragment="pageStyles">
+        <link th:href="@{/layout/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css}" type="text/css"/>
+        <style>
+            .js-ativo {
+                height: 18px;
+            }
+        </style>
+    </th:block>
+    <th:block layout:fragment="pageScripts">
+        <script th:src="@{/layout/plugins/bootstrap-switch/js/bootstrap-switch.min.js}"></script>
+        <script>
+            $('.js-ativo').bootstrapSwitch();
+        </script>
+    </th:block>
+</body>
+
+</html>
