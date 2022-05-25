@@ -59,7 +59,7 @@
 					<label for="sabor" class="control-label" brewer:classForError="sabor">Sabor</label>
 					<select th:field="*{sabor}" class="form-control" th:errorclass="is-invalid">
 						<option value="">Selecione o Sabor</option>
-						<option th:each="sabor : ${sabores}" th:value="${sabor}" th:text="${sabor.name}"></option>
+						<option th:each="sabor : ${sabores}" th:value="${sabor}" th:text="${sabor.nome}"></option>
 					</select>
 					<brewer:invalidfeedback field="sabor"/>
 				</div>			

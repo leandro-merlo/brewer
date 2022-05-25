@@ -89,10 +89,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:if="${#lists.isEmpty(cervejas)}" class="text-center" colspan="7">Nenhuma cerveja encontrada</tr>
+                    <tr th:if="${#lists.isEmpty(cervejas)}" class="text-center" >
+                    	<td colspan="7">Nenhuma cerveja encontrada</td>
+                    </tr>
                     <tr th:unless="${#lists.isEmpty(cervejas)}" th:each="cerveja : ${ cervejas }">
                         <td class="text-center">
-                        	<img th:src="@{/fotos/temp/{foto}(foto=${cerveja.foto})}" class="img-responsive"/>                        
+                        	<img th:src="@{/fotos/thumbnail/{foto}(foto=${cerveja.fotoOuMock})}" class="img-responsive"/>                        
                         </td>
                         <td class="text-center" th:text="${ cerveja.sku }"></td>
                         <td class="" th:text="${ cerveja.nome }"></td>

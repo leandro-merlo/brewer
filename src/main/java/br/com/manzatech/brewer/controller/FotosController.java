@@ -37,6 +37,14 @@ public class FotosController {
 	})
 	@ResponseBody
 	public byte[] recuperarFotoTemporaria(@PathVariable String nome) {
-		return this.fotoStorage.recuperarFotoTemporaria(nome);
+		return this.fotoStorage.recuperarFoto(nome, true);
 	}
+	
+	@GetMapping(value = "/thumbnail/{nome:.*}", produces = {
+		MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE
+	})
+	@ResponseBody
+	public byte[] recuperarThumb(@PathVariable String nome) {
+		return this.fotoStorage.recuperarFoto("thumb_" + nome, false);
+	}	
 }
