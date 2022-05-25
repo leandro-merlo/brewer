@@ -237,3 +237,5 @@ nbdist/
 .nb-gradle/
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,intellij,netbeans,java,maven
+
+src/main/webapp/META-INF/context.xml
