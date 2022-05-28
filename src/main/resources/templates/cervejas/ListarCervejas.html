@@ -12,10 +12,10 @@
 <body>
 	<section layout:fragment="pageStyles">
 		<style>
-a.btn {
-	vertical-align: top;
-}
-</style>
+			a.btn {
+				vertical-align: top;
+			}
+		</style>
 	</section>
 	<section layout:fragment="conteudo">
 		<div class="mb-4">
@@ -137,16 +137,19 @@ a.btn {
 				<li class="page-item disabled"><a class="page-link" href="#"
 					tabindex="-1">&laquo;</a></li>
 				
-				<th:block th:each="p : ${#numbers.sequence(1, pagina.totalPages)}">
-					<li class="page-item" th:classappend="${pagina.pageable.pageNumber} == ${p - 1} ? 'active'">
-						<a th:href="|?page=${p - 1}|" class="page-link" th:text="${p}"></a>
+				<th:block th:each="p : ${#numbers.sequence(1, pagina.totalPages)}" 
+					th:with="numeroPagina = ${p-1}, paginaAtual=${pagina.number}">
+					<li class="page-item" th:classappend="${paginaAtual == numeroPagina} ? 'active'">
+						<a th:href="|?page=${numeroPagina}|" class="page-link" th:text="${p}"></a>
 					</li>
 				</th:block>
 					
 					
-				<li class="page-item"><a class="page-link" href="#">&raquo;</a>
+				<li class="page-item">
+					<a class="page-link" href="#">&raquo;</a>
 				</li>
-				<li class="page-item"><a class="page-link" href="#">Último</a>
+				<li class="page-item">
+					<a class="page-link" href="#">Último</a>
 				</li>
 			</ul>
 		</nav>
