@@ -130,26 +130,29 @@
 			</table>
 		</div>
 		
-		<nav aria-label="Page navigation example" th:if="${pagina.totalPages > 1}">
+		<nav aria-label="Page navigation example" th:if="${pagina.totalPages > 1}" 
+			th:with="paginaAtual=${pagina.number}, ultimaPagina=${pagina.totalPages}">
 			<ul class="pagination justify-content-center">
-				<li class="page-item disabled"><a class="page-link" href="#">Primeiro</a>
+				<li class="page-item" th:classappend="${paginaAtual == 0} ? 'disabled'">
+					<a class="page-link" th:href="|?page=0|">Primeiro</a>
 				</li>
-				<li class="page-item disabled"><a class="page-link" href="#"
-					tabindex="-1">&laquo;</a></li>
+				<li class="page-item" th:classappend="${paginaAtual == 0} ? 'disabled'">
+					<a class="page-link" th:href="${paginaAtual != 0} ? |?page=${pagina.number - 1}|" tabindex="-1">&laquo;</a>
+				</li>
 				
-				<th:block th:each="p : ${#numbers.sequence(1, pagina.totalPages)}" 
-					th:with="numeroPagina = ${p-1}, paginaAtual=${pagina.number}">
+				<th:block th:each="p : ${#numbers.sequence(1, ultimaPagina)}" 
+					th:with="numeroPagina = ${p-1}">
 					<li class="page-item" th:classappend="${paginaAtual == numeroPagina} ? 'active'">
 						<a th:href="|?page=${numeroPagina}|" class="page-link" th:text="${p}"></a>
 					</li>
 				</th:block>
 					
 					
-				<li class="page-item">
-					<a class="page-link" href="#">&raquo;</a>
+				<li class="page-item" th:classappend="${paginaAtual == ultimaPagina - 1} ? 'disabled'">
+					<a class="page-link" th:href="${paginaAtual != ultimaPagina - 1} ? |?page=${paginaAtual+1}|">&raquo;</a>
 				</li>
-				<li class="page-item">
-					<a class="page-link" href="#">Último</a>
+				<li class="page-item" th:classappend="${paginaAtual == ultimaPagina - 1} ? 'disabled'">
+					<a class="page-link" th:href="${paginaAtual != ultimaPagina - 1} ? |?page=${ultimaPagina-1}|">Último</a>
 				</li>
 			</ul>
 		</nav>
