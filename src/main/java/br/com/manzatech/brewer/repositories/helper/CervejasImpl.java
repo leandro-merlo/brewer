@@ -12,6 +12,9 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.util.StringUtils;
 
 import br.com.manzatech.brewer.model.Cerveja;
@@ -24,12 +27,30 @@ public class CervejasImpl implements CervejasQueries {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Cerveja> filtrar(CervejaFilter cervejaFilter) {
+	public Page<Cerveja> filtrar(CervejaFilter cervejaFilter, Pageable pageable) {
 		CriteriaBuilder cb = manager.getCriteriaBuilder();
 		CriteriaQuery<Cerveja> query = cb.createQuery(Cerveja.class);
 		Root<Cerveja> root = query.from(Cerveja.class);
 		root.fetch("estilo", JoinType.INNER);
 		query = query.select(root);
+		query.where(addRestrictions(cervejaFilter, cb, root));
+		
+		
+		Query q = manager.createQuery(query);
+		
+		int size = pageable.getPageSize();
+		int page = pageable.getPageNumber();
+		
+		q.setFirstResult(page * size);
+		q.setMaxResults(size);
+		
+		List<Cerveja> cervejas = q.getResultList();
+		Page<Cerveja> result = new PageImpl<Cerveja>(cervejas, pageable, this.rowCount(cervejaFilter));
+		
+		return result;
+	}
+
+	private Predicate[] addRestrictions(CervejaFilter cervejaFilter, CriteriaBuilder cb, Root<Cerveja> root) {
 		List<Predicate> restrictions = new ArrayList<Predicate>();
 		
 		if (cervejaFilter != null) {
@@ -57,16 +78,24 @@ public class CervejasImpl implements CervejasQueries {
 				restrictions.add(cb.le(root.get("valor"), cervejaFilter.getPrecoAte()));								
 			}
 		}
-		
-		
+
+		Predicate[] array = new Predicate[0];
 		if (!restrictions.isEmpty()) {
-			Predicate[] array = new Predicate[restrictions.size()];
+			array = new Predicate[restrictions.size()];
 			restrictions.toArray(array);
-			query = query.where(array);			
 		}
 		
+		return array;
+	}
+	
+	private Long rowCount(CervejaFilter cervejaFilter) {
+		CriteriaBuilder cb = manager.getCriteriaBuilder();
+		CriteriaQuery<Long> query = cb.createQuery(Long.class);
+		Root<Cerveja> root = query.from(Cerveja.class);
+		query.where(this.addRestrictions(cervejaFilter, cb, root));
+		query = query.select(cb.count(root).alias("count"));
 		Query q = manager.createQuery(query);
-		return q.getResultList();
+		return (Long) q.getSingleResult();		
 	}
 
 }
