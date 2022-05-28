@@ -24,6 +24,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.util.StringUtils;
+
 import br.com.manzatech.brewer.validation.SKU;
 
 @Entity
@@ -189,7 +191,7 @@ public class Cerveja implements Serializable {
 	}
 	
 	public String getFotoOuMock() {
-		return this.foto.isBlank() ? "mock.png" : this.foto;
+		return !StringUtils.hasText(this.foto) ? "mock.png" : this.foto;
 	}
 
 	public void setFoto(String foto) {

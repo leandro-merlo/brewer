@@ -21,6 +21,7 @@ import br.com.manzatech.brewer.model.Origem;
 import br.com.manzatech.brewer.model.Sabor;
 import br.com.manzatech.brewer.repositories.Cervejas;
 import br.com.manzatech.brewer.repositories.Estilos;
+import br.com.manzatech.brewer.repositories.filter.CervejaFilter;
 import br.com.manzatech.brewer.service.CadastroCervejaService;;
 
 @Controller
@@ -62,13 +63,14 @@ public class CervejasController {
 	}
 	
 	@GetMapping
-	public ModelAndView listar() {
+	public ModelAndView listar(CervejaFilter cervejaFilter) {
 		ModelAndView mv = new ModelAndView("cervejas/ListarCervejas");
 		mv.addObject("title", "Listagem de Cervejas");
 		mv.addObject("sabores", Sabor.values());
 		mv.addObject("estilos", this.estilos.findAll());
 		mv.addObject("origens", Origem.values());
-		mv.addObject("cervejas", cervejas.findAll());
+		mv.addObject("cervejas", cervejas.filtrar(cervejaFilter));
+//		mv.addObject("cervejaFilter", cervejaFilter);
 		return mv;
 	}
 		

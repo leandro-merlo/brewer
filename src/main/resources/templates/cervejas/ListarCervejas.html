@@ -8,6 +8,13 @@
 </head>
 
 <body>	
+	<section layout:fragment="pageStyles">
+	<style>
+	a.btn {
+		vertical-align: top;
+	}
+	</style>
+	</section>
 	<section layout:fragment="conteudo">
 		<div class="mb-4">
 			<a th:href="@{/cervejas/nova}" class="btn btn-default">			
@@ -15,28 +22,28 @@
                 &nbsp;Nova
 			</a>
 		</div>
-        <form method="GET">
+        <form method="GET" th:object="${cervejaFilter}">
             <div class="row">
                 <div class="col-sm-6 form-group">
                     <label for="sku" class="control-label">SKU</label>
-                    <input type="text" class="form-control" id="sku" autofocus>
+                    <input type="text" class="form-control js-sku" th:field="*{sku}" autofocus>
                 </div>
                 <div class="col-sm-6 form-group">
                     <label for="nome" class="control-label">Nome</label>
-                    <input type="text" class="form-control" id="nome" autofocus>
+                    <input type="text" class="form-control" th:field="*{nome}" autofocus>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-6 form-group">
                     <label for="estilo" class="control-label">Estilo</label>
-                    <select name="estilo" id="estilo" class="form-control">
+                    <select th:field="*{estilo}" class="form-control">
                         <option value="">Todos os estilos</option>
                         <option th:each="estilo : ${estilos}" th:value="${estilo.id}" th:text="${estilo.nome}"></option>
                     </select>
                 </div>
                 <div class="col-sm-6 form-group">
                     <label for="sabor" class="control-label">Sabor</label>
-                    <select name="sabor" id="sabor" class="form-control">
+                    <select th:field="*{sabor}" class="form-control">
                         <option value="">Todos os sabores</option>
                         <option th:each="sabor : ${sabores}" th:value="${sabor}" th:text="${sabor.nome}"></option>
                     </select>
@@ -48,12 +55,12 @@
                     <div>
                         <th:block th:each="origem : ${origens}">
                             <div class="radio radio-inline">
-                                <input th:id="${origem}" name="origem" type="radio" th:value="${origem}">
+                                <input th:id="${origem}" th:field="*{origem}" type="radio" th:value="${origem}">
                                 <label th:for="${origem}" th:text="${origem.nome}"></label>
                             </div>
                         </th:block>
                         <div class="radio radio-inline">
-                            <input id="TODAS_ORIGENS" name="origem" type="radio" value="">
+                            <input id="TODAS_ORIGENS" th:checked="*{origem} == null" name="origem" type="radio" value="">
                             <label for="TODAS_ORIGENS">Todas as origens</label>
                         </div>
                     </div>
@@ -61,17 +68,23 @@
                 <div class="form-group col-sm-6 bw-price-filter">
                     <label for="precoDe">Preço unitário</label>
                     <div class="form-inline">
-                        <input type="text" class="form-control js-decimal" id="precoDe">
+                        <input type="text" class="form-control js-decimal" th:field="*{precoDe}">
                         <label for="precoAte" class="bw-label-between">até</label>
-                        <input type="text" class="form-control js-decimal" id="precoAte">
+                        <input type="text" class="form-control js-decimal" th:field="*{precoAte}">
                     </div>
                 </div>
             </div>
             <div class="row">
-                <button type="submit" class="btn btn-primary mb-2 ml-2">
-                    <i class="fa fa-search"></i>                 
-                	Pesquisar
-            	</button>
+            	<div>
+	                <button type="submit" class="btn btn-primary mb-2 ml-2">
+	                    <i class="fa fa-search"></i>                 
+	                	Pesquisar
+	            	</button>
+	            	<a th:href="@{/cervejas}" class="btn btn-outline-secondary">
+	            		<i class="fas fa-filter"></i>
+	                	Limpar            	
+	            	</a>
+            	</div>
             </div>
         </form>
 
