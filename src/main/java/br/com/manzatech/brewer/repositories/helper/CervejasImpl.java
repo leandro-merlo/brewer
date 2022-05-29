@@ -15,6 +15,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.util.StringUtils;
 
 import br.com.manzatech.brewer.model.Cerveja;
@@ -36,13 +37,20 @@ public class CervejasImpl implements CervejasQueries {
 		query.where(addRestrictions(cervejaFilter, cb, root));
 		
 		
+		Sort sort = pageable.getSort();
+		if (null != sort && sort.iterator().hasNext()) {
+			Sort.Order order = sort.iterator().next();
+			String field = order.getProperty();
+			query.orderBy(order.isDescending() ? cb.desc(root.get(field)) : cb.asc(root.get(field)));
+		}
+		
 		Query q = manager.createQuery(query);
 		
 		int size = pageable.getPageSize();
 		int page = pageable.getPageNumber();
 		
 		q.setFirstResult(page * size);
-		q.setMaxResults(size);
+		q.setMaxResults(size);		
 		
 		List<Cerveja> cervejas = q.getResultList();
 		Page<Cerveja> result = new PageImpl<Cerveja>(cervejas, pageable, this.rowCount(cervejaFilter));
