@@ -100,6 +100,7 @@
 						<th class="table-cervejas-col-foto"></th>
 						<th class="table-cervejas-col-sku">SKU</th>
 						<th class="table-cervejas-col-nome">Nome</th>
+						<th class="table-cervejas-col-sabor">Sabor</th>
 						<th class="table-cervejas-col-estilo">Estilo</th>
 						<th class="table-cervejas-col-origem">Origem</th>
 						<th class="table-cervejas-col-valor">Valor</th>
@@ -107,16 +108,17 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:if="${#lists.isEmpty(pagina.content)}" class="text-center">
-						<td colspan="7">Nenhuma cerveja encontrada</td>
+					<tr th:if="${pagina.vazia}" class="text-center">
+						<td colspan="8">Nenhuma cerveja encontrada</td>
 					</tr>
-					<tr th:unless="${#lists.isEmpty(pagina.content)}"
-						th:each="cerveja : ${ pagina.content }">
+					<tr th:unless="${pagina.vazia}"
+						th:each="cerveja : ${ pagina.conteudo }">
 						<td class="text-center"><img
 							th:src="@{/fotos/thumbnail/{foto}(foto=${cerveja.fotoOuMock})}"
 							class="img-responsive" /></td>
 						<td class="text-center" th:text="${ cerveja.sku }"></td>
 						<td class="" th:text="${ cerveja.nome }"></td>
+						<td class="" th:text="${ cerveja.sabor.nome }"></td>
 						<td class="" th:text="${ cerveja.estilo.nome }"></td>
 						<td class="" th:text="${ cerveja.origem.nome }"></td>
 						<td class="text-right" th:text="|R$ ${ cerveja.valor }|"></td>
@@ -130,29 +132,28 @@
 			</table>
 		</div>
 		
-		<nav aria-label="Page navigation example" th:if="${pagina.totalPages > 1}" 
-			th:with="paginaAtual=${pagina.number}, ultimaPagina=${pagina.totalPages}">
+		<nav aria-label="Page navigation example" th:if="${not pagina.vazia}" >
 			<ul class="pagination justify-content-center">
-				<li class="page-item" th:classappend="${paginaAtual == 0} ? 'disabled'">
-					<a class="page-link" th:href="|?page=0|">Primeiro</a>
+				<li class="page-item" th:classappend="${pagina.primeira} ? 'disabled'">
+					<a class="page-link" th:href="${pagina.uriParaPagina(0)}">Primeiro</a>
 				</li>
-				<li class="page-item" th:classappend="${paginaAtual == 0} ? 'disabled'">
-					<a class="page-link" th:href="${paginaAtual != 0} ? |?page=${pagina.number - 1}|" tabindex="-1">&laquo;</a>
+				<li class="page-item" th:classappend="${pagina.primeira} ? 'disabled'">
+					<a class="page-link" th:href="${not pagina.primeira} ? ${pagina.uriParaPagina(pagina.atual - 1)}" tabindex="-1">&laquo;</a>
 				</li>
 				
-				<th:block th:each="p : ${#numbers.sequence(1, ultimaPagina)}" 
+				<th:block th:each="p : ${#numbers.sequence(1, pagina.total)}" 
 					th:with="numeroPagina = ${p-1}">
-					<li class="page-item" th:classappend="${paginaAtual == numeroPagina} ? 'active'">
-						<a th:href="|?page=${numeroPagina}|" class="page-link" th:text="${p}"></a>
+					<li class="page-item" th:classappend="${pagina.atual == numeroPagina} ? 'active'">
+						<a th:href="${pagina.uriParaPagina(numeroPagina)}" class="page-link" th:text="${p}"></a>
 					</li>
 				</th:block>
 					
 					
-				<li class="page-item" th:classappend="${paginaAtual == ultimaPagina - 1} ? 'disabled'">
-					<a class="page-link" th:href="${paginaAtual != ultimaPagina - 1} ? |?page=${paginaAtual+1}|">&raquo;</a>
+				<li class="page-item" th:classappend="${pagina.ultima} ? 'disabled'">
+					<a class="page-link" th:href="${not pagina.ultima} ? ${pagina.uriParaPagina(pagina.atual+1)}">&raquo;</a>
 				</li>
-				<li class="page-item" th:classappend="${paginaAtual == ultimaPagina - 1} ? 'disabled'">
-					<a class="page-link" th:href="${paginaAtual != ultimaPagina - 1} ? |?page=${ultimaPagina-1}|">Último</a>
+				<li class="page-item" th:classappend="${pagina.ultima} ? 'disabled'">
+					<a class="page-link" th:href="${not pagina.ultima} ? ${pagina.uriParaPagina(pagina.total-1)}">Último</a>
 				</li>
 			</ul>
 		</nav>

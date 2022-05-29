@@ -3,6 +3,7 @@ package br.com.manzatech.brewer.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.manzatech.brewer.controller.page.PageWrapper;
 import br.com.manzatech.brewer.model.Breadcrumb;
 import br.com.manzatech.brewer.model.Cerveja;
 import br.com.manzatech.brewer.model.Origem;
@@ -65,14 +67,14 @@ public class CervejasController {
 	}
 	
 	@GetMapping
-	public ModelAndView listar(CervejaFilter cervejaFilter, @PageableDefault(size = 2) Pageable pageable) {
+	public ModelAndView listar(CervejaFilter cervejaFilter, @PageableDefault(size = 2) Pageable pageable, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("cervejas/ListarCervejas");
 		mv.addObject("title", "Listagem de Cervejas");
 		mv.addObject("sabores", Sabor.values());
 		mv.addObject("estilos", this.estilos.findAll());
 		mv.addObject("origens", Origem.values());
-		mv.addObject("pagina", cervejas.filtrar(cervejaFilter, pageable));
-//		mv.addObject("cervejaFilter", cervejaFilter);
+		PageWrapper<Cerveja> wrapper = new PageWrapper<Cerveja>(cervejas.filtrar(cervejaFilter, pageable));
+		mv.addObject("pagina", wrapper);
 		return mv;
 	}
 		
