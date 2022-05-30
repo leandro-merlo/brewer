@@ -3,8 +3,6 @@ package br.com.manzatech.brewer.repositories.helper;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -12,53 +10,16 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.util.StringUtils;
 
 import br.com.manzatech.brewer.model.Cerveja;
 import br.com.manzatech.brewer.repositories.filter.CervejaFilter;
+import br.com.manzatech.brewer.repositories.filter.Filter;
 
-public class CervejasImpl implements CervejasQueries {
+public class CervejasImpl extends AbstractImpl<Cerveja> implements CervejasQueries {
 
-	@PersistenceContext
-	private EntityManager manager;
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public Page<Cerveja> filtrar(CervejaFilter cervejaFilter, Pageable pageable) {
-		CriteriaBuilder cb = manager.getCriteriaBuilder();
-		CriteriaQuery<Cerveja> query = cb.createQuery(Cerveja.class);
-		Root<Cerveja> root = query.from(Cerveja.class);
-		root.fetch("estilo", JoinType.INNER);
-		query = query.select(root);
-		query.where(addRestrictions(cervejaFilter, cb, root));
-		
-		
-		Sort sort = pageable.getSort();
-		if (null != sort && sort.iterator().hasNext()) {
-			Sort.Order order = sort.iterator().next();
-			String field = order.getProperty();
-			query.orderBy(order.isDescending() ? cb.desc(root.get(field)) : cb.asc(root.get(field)));
-		}
-		
-		Query q = manager.createQuery(query);
-		
-		int size = pageable.getPageSize();
-		int page = pageable.getPageNumber();
-		
-		q.setFirstResult(page * size);
-		q.setMaxResults(size);		
-		
-		List<Cerveja> cervejas = q.getResultList();
-		Page<Cerveja> result = new PageImpl<Cerveja>(cervejas, pageable, this.rowCount(cervejaFilter));
-		
-		return result;
-	}
-
-	private Predicate[] addRestrictions(CervejaFilter cervejaFilter, CriteriaBuilder cb, Root<Cerveja> root) {
+	protected Predicate[] addRestrictions(Filter filter, CriteriaBuilder cb, Root<Cerveja> root) {
+		CervejaFilter cervejaFilter = (CervejaFilter) filter;
 		List<Predicate> restrictions = new ArrayList<Predicate>();
 		
 		if (cervejaFilter != null) {
@@ -96,14 +57,20 @@ public class CervejasImpl implements CervejasQueries {
 		return array;
 	}
 	
-	private Long rowCount(CervejaFilter cervejaFilter) {
+	protected Long rowCount(Filter filter) {
 		CriteriaBuilder cb = manager.getCriteriaBuilder();
 		CriteriaQuery<Long> query = cb.createQuery(Long.class);
 		Root<Cerveja> root = query.from(Cerveja.class);
-		query.where(this.addRestrictions(cervejaFilter, cb, root));
+		query.where(this.addRestrictions(filter, cb, root));
 		query = query.select(cb.count(root).alias("count"));
 		Query q = manager.createQuery(query);
 		return (Long) q.getSingleResult();		
 	}
+
+	@Override
+	protected void addFetches(Root<Cerveja> root) {
+		root.fetch("estilo", JoinType.INNER);		
+	}
+
 
 }

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,8 +20,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.manzatech.brewer.controller.page.PageWrapper;
 import br.com.manzatech.brewer.model.Breadcrumb;
 import br.com.manzatech.brewer.model.Estilo;
+import br.com.manzatech.brewer.repositories.Estilos;
+import br.com.manzatech.brewer.repositories.filter.EstiloFilter;
 import br.com.manzatech.brewer.service.CadastroEstiloService;
 import br.com.manzatech.brewer.service.exception.NomeEstiloJaCadastradoException;
 
@@ -29,6 +34,9 @@ public class EstilosController {
 
 	@Autowired
 	private CadastroEstiloService cadastroEstiloService;
+	
+	@Autowired
+	private Estilos estilos;
 	
 	@GetMapping("/novo")
 	public ModelAndView novo(Estilo estilo, Model model) {
@@ -64,5 +72,17 @@ public class EstilosController {
 		}
 		estilo = this.cadastroEstiloService.salvar(estilo);
 		return ResponseEntity.ok(estilo);
+	}
+	
+	@GetMapping
+	public ModelAndView listar(EstiloFilter estiloFilter, @PageableDefault(size = 2) Pageable pageable ) {
+		ModelAndView mv = new ModelAndView("estilos/ListarEstilos");
+		mv.addObject("title", "Listagem de Estilos");
+		ArrayList<Breadcrumb> breadcrumbs = new ArrayList<>();
+		breadcrumbs.add(new Breadcrumb("Estilos", null));	
+		mv.addObject("breadcrumb", breadcrumbs);
+		PageWrapper<Estilo> wrapper = new PageWrapper<Estilo>(estilos.filtrar(estiloFilter, pageable));
+		mv.addObject("pagina", wrapper);
+		return mv;
 	}
 }

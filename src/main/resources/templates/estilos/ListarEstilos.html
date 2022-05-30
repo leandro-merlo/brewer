@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:brewer="http://www.manzatech.com.br/brewer"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/LayoutPadrao}">
+
+<head>
+<meta charset="UTF-8">
+<title>Listagem de Cervejas</title>
+</head>
+
+<body>
+	<section layout:fragment="pageStyles">
+		<style>
+			a.btn {
+				vertical-align: top;
+			}
+		</style>
+	</section>
+	<section layout:fragment="conteudo">
+		<div class="mb-4">
+			<a th:href="@{/estilos/novo}" class="btn btn-default"> <i
+				class="fas fa-plus-square"></i> &nbsp;Novo
+			</a>
+		</div>
+		<form method="GET" th:object="${estiloFilter}">
+			<div class="row">
+				<div class="col-sm-12 form-group">
+					<label for="nome" class="control-label">Nome</label> <input
+						type="text" class="form-control" th:field="*{nome}" autofocus>
+				</div>
+			</div>
+			<div class="row">
+				<div>
+					<button type="submit" class="btn btn-primary mb-2 ml-2">
+						<i class="fa fa-search"></i> Pesquisar
+					</button>
+					<a th:href="@{/estilos}" class="btn btn-outline-secondary"> <i
+						class="fas fa-filter"></i> Limpar
+					</a>
+				</div>
+			</div>
+		</form>
+
+		<div class="table-responsive bw-tabela-simples">
+			<table class="table table-hover table-striped bg-white">
+				<thead>
+					<tr>
+						<th class="table-estilos-col-id">#</th>
+						<th class="table-estilos-col-nome">
+							<brewer:ordenacao pagina="${pagina}" propriedade="nome" texto="Nome" />
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${pagina.vazia}" class="text-center">
+						<td colspan="2">Nenhuma cerveja encontrada</td>
+					</tr>
+					<tr th:unless="${pagina.vazia}"
+						th:each="estilo : ${ pagina.conteudo }">
+						<td class="" th:text="${ estilo.id }"></td>
+						<td class="" th:text="${ estilo.nome }"></td>
+						<td class="text-right">
+							<a class="btn btn-link btn-xs"
+								title="Editar"> <i class="fas fa-pencil-alt"></i>
+							</a> 
+							<a class="btn btn-link btn-xs" title="Excluir"> <i
+									class="fas fa-trash-alt"></i>
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<brewer:paginacao pagina="${pagina}" />
+	</section>
+	
+</body>
+
+</html>

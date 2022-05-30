@@ -3,7 +3,6 @@ package br.com.manzatech.brewer.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,9 +66,12 @@ public class CervejasController {
 	}
 	
 	@GetMapping
-	public ModelAndView listar(CervejaFilter cervejaFilter, @PageableDefault(size = 2) Pageable pageable, HttpServletRequest request) {
+	public ModelAndView listar(CervejaFilter cervejaFilter, @PageableDefault(size = 2) Pageable pageable) {
 		ModelAndView mv = new ModelAndView("cervejas/ListarCervejas");
 		mv.addObject("title", "Listagem de Cervejas");
+		ArrayList<Breadcrumb> breadcrumbs = new ArrayList<Breadcrumb>();
+		breadcrumbs.add(new Breadcrumb("Cervejas", null));
+		mv.addObject("breadcrumb", breadcrumbs);
 		mv.addObject("sabores", Sabor.values());
 		mv.addObject("estilos", this.estilos.findAll());
 		mv.addObject("origens", Origem.values());
