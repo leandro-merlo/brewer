@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
+	xmlns:brewer="http://www.manzatech.com.br/brewer"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/LayoutPadrao}">
 
@@ -99,20 +100,10 @@
 					<tr>
 						<th class="table-cervejas-col-foto"></th>
 						<th class="table-cervejas-col-sku">
-							<span class="dropup" th:remove="not ${pagina.descendente('sku') || pagina.vazia} ? tag">
-								<a th:href="${pagina.urlOrdenada('sku')}" th:remove="${pagina.vazia} ? tag"
-									th:classappend="${pagina.ordenadaPor('sku')} ? 'dropdown-toggle'">
-									<span>SKU</span>							
-								</a>							
-							</span>
+							<brewer:ordenacao pagina="${pagina}" propriedade="sku" texto="SKU" />
 						</th>
 						<th class="table-cervejas-col-nome">
-							<span class="dropup" th:remove="not ${pagina.descendente('nome') || pagina.vazia} ? tag">							
-								<a th:href="${pagina.urlOrdenada('nome')}" th:remove="${pagina.vazia} ? tag"
-									th:classappend="${pagina.ordenadaPor('nome')} ? 'dropdown-toggle'">
-									<span>Nome</span>
-								</a>
-							</span>
+							<brewer:ordenacao pagina="${pagina}" propriedade="nome" texto="Nome" />
 						</th>
 						<th class="table-cervejas-col-sabor">Sabor</th>
 						<th class="table-cervejas-col-estilo">Estilo</th>

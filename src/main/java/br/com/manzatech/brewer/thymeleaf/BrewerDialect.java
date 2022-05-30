@@ -9,6 +9,7 @@ import org.thymeleaf.standard.StandardDialect;
 
 import br.com.manzatech.brewer.thymeleaf.processor.ClassForErrorAttributeTagProcessor;
 import br.com.manzatech.brewer.thymeleaf.processor.InvalidFeedbackTagProcessor;
+import br.com.manzatech.brewer.thymeleaf.processor.OrderElementTagProcessor;
 
 public class BrewerDialect extends AbstractProcessorDialect{
 
@@ -21,6 +22,7 @@ public class BrewerDialect extends AbstractProcessorDialect{
 		HashSet<IProcessor> processors = new HashSet<>();
 		// Attribute Processors
 		processors.add(new ClassForErrorAttributeTagProcessor(dialectPrefix));		
+		processors.add(new OrderElementTagProcessor(dialectPrefix));		
 		// Element Processors
 		processors.add(new InvalidFeedbackTagProcessor(dialectPrefix));
 		return processors;

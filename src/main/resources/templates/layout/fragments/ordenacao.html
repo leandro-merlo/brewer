@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+
+<th:block th:fragment="ordenacao(pagina, propriedade, texto)"> 
+	<span class="dropup" th:remove="not ${pagina.descendente(propriedade) || pagina.vazia} ? tag">
+		<a th:href="${pagina.urlOrdenada(propriedade)}" th:remove="${pagina.vazia} ? tag"
+			th:classappend="${pagina.ordenadaPor(propriedade)} ? 'dropdown-toggle'">
+			<span th:text="${texto}">SKU</span>							
+		</a>							
+	</span>
+</th:block>
+
+</html>
