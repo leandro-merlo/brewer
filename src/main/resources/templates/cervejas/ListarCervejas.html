@@ -98,12 +98,22 @@
 				<thead>
 					<tr>
 						<th class="table-cervejas-col-foto"></th>
-						<th class="table-cervejas-col-sku dropup">
-						<span class="dropdown-toggle" data-toggle="dropdown">
-							SKU
-						</span>
+						<th class="table-cervejas-col-sku">
+							<span class="dropup" th:remove="not ${pagina.descendente('sku') || pagina.vazia} ? tag">
+								<a th:href="${pagina.urlOrdenada('sku')}" th:remove="${pagina.vazia} ? tag"
+									th:classappend="${pagina.ordenadaPor('sku')} ? 'dropdown-toggle'">
+									<span>SKU</span>							
+								</a>							
+							</span>
 						</th>
-						<th class="table-cervejas-col-nome">Nome</th>
+						<th class="table-cervejas-col-nome">
+							<span class="dropup" th:remove="not ${pagina.descendente('nome') || pagina.vazia} ? tag">							
+								<a th:href="${pagina.urlOrdenada('nome')}" th:remove="${pagina.vazia} ? tag"
+									th:classappend="${pagina.ordenadaPor('nome')} ? 'dropdown-toggle'">
+									<span>Nome</span>
+								</a>
+							</span>
+						</th>
 						<th class="table-cervejas-col-sabor">Sabor</th>
 						<th class="table-cervejas-col-estilo">Estilo</th>
 						<th class="table-cervejas-col-origem">Origem</th>
