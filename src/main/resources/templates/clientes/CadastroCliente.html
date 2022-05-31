@@ -20,16 +20,13 @@
 				<div class="form-group col-sm-4">
 					<label for="sabor">Tipo de Pessoa</label>
 					<div>
-						<div class="radio radio-inline d-inline-block">
-							<input id="id_FISICA" type="radio" name="tipoPessoa" class="js-radio-tipo-pessoa" 
-								data-documento="CPF" data-mascara="000.000.000-00" />
-							<label class="control-label" for="id_FISICA">Física</label>
-						</div>
-						<div class="radio radio-inline d-inline-block ml-2">
-							<input id="id_JURIDICA" type="radio" name="tipoPessoa" class="js-radio-tipo-pessoa" 
-								data-documento="CNPJ" data-mascara="009.000.000/0000-00"/>
-							<label class="control-label" for="id_JURIDICA">Jurídica</label>
-						</div>
+						<th:block th:each="tp : ${tiposPessoa}">
+							<div class="radio radio-inline d-inline-block">
+								<input th:id="|id_${tp.nome}|" type="radio" name="tipoPessoa" class="js-radio-tipo-pessoa" 
+									th:data-documento="${tp.documento}" th:data-mascara="${tp.mascara}" />
+								<label class="control-label" th:for="|id_${tp.nome}|" >[[${tp.nome}]]</label>
+							</div>						
+						</th:block>
 					</div>
 				</div>
                 <div class="form-group col-sm-8">
@@ -64,8 +61,8 @@
             <div class="row">
                 <div class="form-group col-sm-4">
                     <label for="cep">CEP</label>
-                    <input type="text" nome="cep" class="form-control">
-                </div>                    
+                    <input type="text" nome="cep" class="form-control js-cep">
+                </div>
                 <div class="form-group col-sm-4">
                     <label for="estado">Estado</label>
                     <select name="estado" class="form-control">
@@ -89,6 +86,7 @@
 	
 	<section layout:fragment="pageScripts">
 		<script th:src="@{/js/cliente.mascara-cpf-cnpj.js}"></script>
+		<script th:src="@{/js/cliente.mascara-cep.js}"></script>
 	</section>
 
 </body>
