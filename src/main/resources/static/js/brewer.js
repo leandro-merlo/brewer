@@ -30,7 +30,31 @@ class MaskMoney {
     }
 }
 
+class MaskPhoneNumber {
+	constructor() {
+		this.phoneNumber = $('.js-phone-number')
+	}
+	
+	enable() {
+		const maskBehavior = (val) => {
+		  return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+		}
+		const maskOtions = {
+		  onKeyPress: function(val, e, field, options) {
+		      field.mask(maskBehavior.apply({}, arguments), options);
+	      },
+          clearIfNotMatch: true
+		}
+		this.phoneNumber.mask(maskBehavior, maskOtions);		
+	}
+	
+
+}
+
+
 (() =>{
     Brewer.MaskMoney = new MaskMoney()
-    Brewer.MaskMoney.enable();  
+    Brewer.MaskMoney.enable()
+    Brewer.MaskPhoneNumber = new MaskPhoneNumber()
+    Brewer.MaskPhoneNumber.enable()
 })();

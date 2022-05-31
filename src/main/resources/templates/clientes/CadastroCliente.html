@@ -21,24 +21,26 @@
 					<label for="sabor">Tipo de Pessoa</label>
 					<div>
 						<div class="radio radio-inline d-inline-block">
-							<input type="radio" name="tipoPessoa"/>
-							<label>Física</label>
+							<input id="id_FISICA" type="radio" name="tipoPessoa" class="js-radio-tipo-pessoa" 
+								data-documento="CPF" data-mascara="000.000.000-00" />
+							<label class="control-label" for="id_FISICA">Física</label>
 						</div>
 						<div class="radio radio-inline d-inline-block ml-2">
-							<input type="radio" name="tipoPessoa"/>
-							<label>Jurídica</label>
+							<input id="id_JURIDICA" type="radio" name="tipoPessoa" class="js-radio-tipo-pessoa" 
+								data-documento="CNPJ" data-mascara="009.000.000/0000-00"/>
+							<label class="control-label" for="id_JURIDICA">Jurídica</label>
 						</div>
 					</div>
 				</div>
                 <div class="form-group col-sm-8">
                     <label for="documento">Documento</label>
-                    <input type="text" nome="documento" class="form-control">
+                    <input type="text" id="documento" nome="documento" class="form-control" disabled>
                 </div>    
             </div>
 			<div class="row">
                 <div class="form-group col-sm-4">
                     <label for="telefone">Telefone</label>
-                    <input type="text" nome="telefone" class="form-control">
+                    <input type="text" nome="telefone" class="form-control js-phone-number">
                 </div>
                 <div class="form-group col-sm-8">
                     <label for="email">Email</label>
@@ -83,6 +85,10 @@
                 </div>
 			</div> 
 		</form>
+	</section>
+	
+	<section layout:fragment="pageScripts">
+		<script th:src="@{/js/cliente.mascara-cpf-cnpj.js}"></script>
 	</section>
 
 </body>
