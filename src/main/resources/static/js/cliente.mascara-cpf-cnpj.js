@@ -7,6 +7,9 @@ class MaskCpfCnpj {
 	
 	enable() {
 		this.radioTipoPessoa.on('change', this.onTipoPessoaChanged.bind(this))
+		this.inputDocumento.val("")
+		this.inputDocumento.attr("disabled", true)
+		this.radioTipoPessoa.prop("checked", false)
 	}
 	
 	onTipoPessoaChanged(event) {
