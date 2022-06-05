@@ -7,19 +7,28 @@ class MaskCpfCnpj {
 	
 	enable() {
 		this.radioTipoPessoa.on('change', this.onTipoPessoaChanged.bind(this))
-		this.inputDocumento.val("")
-		this.inputDocumento.attr("disabled", true)
-		this.radioTipoPessoa.prop("checked", false)
+		let tipoPesssoaSelecionado = this.radioTipoPessoa.filter(':checked')
+		if (tipoPesssoaSelecionado.length != 0) {
+			this.aplicarMascara.call(this, $(tipoPesssoaSelecionado[0]))	
+		} else {
+			this.inputDocumento.val("")
+			this.inputDocumento.attr("disabled", true)
+			this.radioTipoPessoa.prop("checked", false)			
+		}
 	}
 	
 	onTipoPessoaChanged(event) {
 		let tipoSelecionado = $(event.target)
+		this.inputDocumento.val("")
+		this.aplicarMascara.call(this, tipoSelecionado)
+	}
+	
+	aplicarMascara(tipoSelecionado){
 		this.labelCpfCnpj.html(tipoSelecionado.data('documento'))
-		this.inputDocumento.val('')
 		this.inputDocumento.mask(tipoSelecionado.data('mascara'), {
             clearIfNotMatch: true,			
 		})
-		this.inputDocumento.attr('disabled', false)
+		this.inputDocumento.attr('disabled', false)		
 	}
 }
 

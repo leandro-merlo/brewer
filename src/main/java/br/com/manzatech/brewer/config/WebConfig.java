@@ -24,6 +24,8 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import br.com.manzatech.brewer.controller.CervejasController;
+import br.com.manzatech.brewer.controller.converter.CidadeConverter;
+import br.com.manzatech.brewer.controller.converter.EstadoConverter;
 import br.com.manzatech.brewer.controller.converter.EstiloConverter;
 import br.com.manzatech.brewer.thymeleaf.BrewerDialect;
 import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
@@ -77,6 +79,8 @@ public class WebConfig implements WebMvcConfigurer, ApplicationContextAware {
 	public FormattingConversionService mvcConversionService() {
 		DefaultFormattingConversionService conversionService = new DefaultFormattingConversionService();
 		conversionService.addConverter(new EstiloConverter());
+		conversionService.addConverter(new CidadeConverter());
+		conversionService.addConverter(new EstadoConverter());
 		
 		NumberStyleFormatter bigDecimalFormatter = new NumberStyleFormatter("#,##0.00");
 		conversionService.addFormatterForFieldType(BigDecimal.class, bigDecimalFormatter);

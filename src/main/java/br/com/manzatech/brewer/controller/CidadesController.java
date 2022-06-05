@@ -1,6 +1,9 @@
 package br.com.manzatech.brewer.controller;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.manzatech.brewer.model.Breadcrumb;
+import br.com.manzatech.brewer.model.Cidade;
 import br.com.manzatech.brewer.repositories.Cidades;
 
 @Controller
@@ -36,6 +40,7 @@ public class CidadesController {
 	@ResponseBody
 	@GetMapping(consumes = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<?> listarPorCodigoEstadoAjax(@RequestParam(name = "estado", defaultValue = "-1") Long estadoId){
-		return ResponseEntity.ok(cidades.findByEstadoId(estadoId));
+		List<Cidade> cidades = this.cidades.findByEstadoId(estadoId);
+		return ResponseEntity.ok(cidades);
 	}
 }

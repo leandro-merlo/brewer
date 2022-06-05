@@ -132,7 +132,7 @@
             <artifactId>hibernate-validator</artifactId>
             <version>${hibernate-validator.version}</version>
             <scope>compile</scope>
-        </dependency>
+        </dependency>        
         
         <!-- Thymeleaf - Layout Dialect -->
 		<dependency>
