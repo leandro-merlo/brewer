@@ -7,7 +7,7 @@ CREATE TABLE cliente (
 	email VARCHAR(60) NOT NULL,
 	logradouro VARCHAR(60),
 	numero VARCHAR(15),
-	complemenento VARCHAR(20),
+	complemento VARCHAR(20),
 	cep VARCHAR(8),
 	cidade_id BIGINT(20),
 	FOREIGN KEY (cidade_id) REFERENCES cidade(id)

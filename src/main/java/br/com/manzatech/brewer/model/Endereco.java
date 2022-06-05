@@ -2,6 +2,7 @@ package br.com.manzatech.brewer.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -14,6 +15,7 @@ public class Endereco implements Serializable {
 	
 	private String logradouro;
 	private String numero;
+	@Column(name="complemento")
 	private String complemento;
 	private String cep;
 	@ManyToOne

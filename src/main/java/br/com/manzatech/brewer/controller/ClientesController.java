@@ -18,6 +18,7 @@ import br.com.manzatech.brewer.model.Breadcrumb;
 import br.com.manzatech.brewer.model.Cliente;
 import br.com.manzatech.brewer.model.TipoPessoa;
 import br.com.manzatech.brewer.repositories.Estados;
+import br.com.manzatech.brewer.service.CadastroClienteService;
 
 @Controller
 @RequestMapping("/clientes")
@@ -26,6 +27,9 @@ public class ClientesController {
 	@Autowired
 	private Estados estados;
 
+	@Autowired
+	private CadastroClienteService cadastroClienteService;
+	
 	@GetMapping("/novo")
 	public ModelAndView novo(Cliente cliente, Model model) {
 		ModelAndView mv = new ModelAndView("clientes/CadastroCliente");
@@ -44,6 +48,9 @@ public class ClientesController {
 		if (errors.hasErrors()) {
 			return novo(cliente, model);
 		}
+		this.cadastroClienteService.salvar(cliente);
+		ra.addFlashAttribute("message", "Cadastro efetuado com sucesso");
+		ra.addFlashAttribute("messageType", "success");		
 		ModelAndView mv = new ModelAndView("redirect:/clientes/novo");
 		return mv;
 	}

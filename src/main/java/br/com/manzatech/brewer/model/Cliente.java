@@ -11,6 +11,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -19,6 +21,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
 import org.hibernate.validator.group.GroupSequenceProvider;
+import org.springframework.util.StringUtils;
 
 import br.com.manzatech.brewer.model.validation.ClienteGroupSequenceProvider;
 import br.com.manzatech.brewer.model.validation.groups.CnpjGroup;
@@ -128,6 +131,19 @@ public class Cliente implements Serializable {
 			return false;
 		Cliente other = (Cliente) obj;
 		return Objects.equals(id, other.id);
+	}
+	
+	@PrePersist
+	@PreUpdate
+	private void OnPersistUpdate() {
+		this.documento = this.documento.replaceAll("\\.|-|/", "");
+		if (StringUtils.hasText(this.telefone)) {
+			String newPhone = this.telefone.replaceAll("[^0-9]", "");
+			this.telefone= newPhone;
+		}
+		if (null != this.endereco && null != this.endereco.getCep()) {
+			this.endereco.setCep(this.endereco.getCep().replaceAll("\\.|-|", ""));
+		}
 	}
 
 }
