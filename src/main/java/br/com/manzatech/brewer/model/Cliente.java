@@ -91,6 +91,10 @@ public class Cliente implements Serializable {
 	public void setDocumento(String documento) {
 		this.documento = documento;
 	}
+	
+	public String getDocumentoSemFormatacao() {
+		return this.documento.replaceAll("[^0-9]", "");
+	}
 
 	public String getTelefone() {
 		return telefone;

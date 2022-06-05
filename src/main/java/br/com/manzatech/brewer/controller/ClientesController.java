@@ -19,6 +19,7 @@ import br.com.manzatech.brewer.model.Cliente;
 import br.com.manzatech.brewer.model.TipoPessoa;
 import br.com.manzatech.brewer.repositories.Estados;
 import br.com.manzatech.brewer.service.CadastroClienteService;
+import br.com.manzatech.brewer.service.exception.CpfCnpjJaCadastradoException;
 
 @Controller
 @RequestMapping("/clientes")
@@ -48,7 +49,12 @@ public class ClientesController {
 		if (errors.hasErrors()) {
 			return novo(cliente, model);
 		}
-		this.cadastroClienteService.salvar(cliente);
+		try {
+			this.cadastroClienteService.salvar(cliente);			
+		} catch (CpfCnpjJaCadastradoException e) {
+			errors.rejectValue("documento", e.getMessage(), e.getMessage());
+			return novo(cliente, model);
+		}
 		ra.addFlashAttribute("message", "Cadastro efetuado com sucesso");
 		ra.addFlashAttribute("messageType", "success");		
 		ModelAndView mv = new ModelAndView("redirect:/clientes/novo");
