@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:brewer="http://manzatech.com.br/brewer"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/LayoutPadrao}">
 
 <head>
@@ -9,17 +10,32 @@
 
 <body>
 	<section layout:fragment="conteudo">
-		<form method="POST"  >
+	
+		<div class="mb-4">
+			<a th:href="@{/cidades}" class="btn btn-default">			
+				<i class="fas fa-th-list"></i>
+				&nbsp;Listar Cidades
+			</a>
+		</div>
+
+		<th:block th:if="${message} != null">
+			<th:block th:replace="/layout/fragments/mensagem :: message"  />
+		</th:block>
+	
+		<form method="POST"  th:object="${cidade}">
 			<div class="row">
 				<div class="form-group col-sm-4 bw-required">
-					<label for="estado" class="control-label">Estado</label>
-					<select name="estado" class="form-control">
+					<label for="estado" class="control-label" brewer:classForError="estado">Estado</label>
+					<select th:field="*{estado}" class="form-control" th:errorclass="is-invalid">
                         <option value="">Selecione um estado</option>
+                        <option th:each="estado : ${estados}" th:value="${estado.id}" th:text="${estado.nome}">São Paulo</option>                        
                     </select>
+					<brewer:invalidfeedback field="estado" outside/>
 				</div>
 				<div class="form-group col-sm-8 bw-required">
-					<label for="nome" class="control-label">Nome</label>
-					<input type="text" name="nome" class="form-control" />
+					<label for="nome" class="control-label" brewer:classForError="nome">Nome</label>
+					<input type="text" th:field="*{nome}" class="form-control" th:errorclass="is-invalid"/>
+					<brewer:invalidfeedback field="nome" />
 				</div>
 			</div>
 			<div class="row">

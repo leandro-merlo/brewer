@@ -2,12 +2,14 @@ package br.com.manzatech.brewer.repositories.helper;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -43,7 +45,26 @@ public abstract class AbstractImpl<T> implements Queries<T>{
 		if (null != sort && sort.iterator().hasNext()) {
 			Sort.Order order = sort.iterator().next();
 			String field = order.getProperty();
-			query.orderBy(order.isDescending() ? cb.desc(root.get(field)) : cb.asc(root.get(field)));
+			if (field.contains(".")) {
+				String[] split = field.split(Pattern.quote("."));
+				int last = split.length - 1;
+				Join<?, ?> j = null;
+				for (int i = 0; i < split.length; i++) {
+					String f = split[i];
+					if (i == last) {
+						field = f;
+					} else {
+						if (null == j) {
+							j = root.join(f);
+						} else {
+							j.join(f);
+						}						
+					}					
+				}
+				query.orderBy(order.isDescending() ? cb.desc(j.get(field)) : cb.asc(j.get(field)));				
+			} else {
+				query.orderBy(order.isDescending() ? cb.desc(root.get(field)) : cb.asc(root.get(field)));				
+			}
 		}
 		
 		Query q = manager.createQuery(query);

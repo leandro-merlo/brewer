@@ -57,6 +57,17 @@
 	width: 80px;
 }
 
+.table-cidades-col-nome {
+}
+
+.table-cidades-col-estado {
+	width: 250px;
+}
+
+.table-cidades-col-acoes {
+	width: 80px;
+}
+
 .bw-price-filter input#precoDe, .bw-price-filter input#precoAte {
 	width: 30%;
 }

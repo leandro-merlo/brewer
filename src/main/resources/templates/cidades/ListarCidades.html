@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:brewer="http://www.manzatech.com.br/brewer"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/LayoutPadrao}">
+
+<head>
+<meta charset="UTF-8">
+<title>Listagem de Cidades</title>
+</head>
+
+<body>
+	<section layout:fragment="pageStyles">
+		<style>
+			a.btn {
+				vertical-align: top;
+			}
+		</style>
+	</section>
+	<section layout:fragment="conteudo">
+		<div class="mb-4">
+			<a th:href="@{/cidades/nova}" class="btn btn-default"> <i
+				class="fas fa-plus-square"></i> &nbsp;Nova
+			</a>
+		</div>
+		<form method="GET" th:object="${cidadeFilter}">
+			<div class="row">
+				<div class="col-sm-4 form-group">
+					<label for="estado" class="control-label">Estado</label> 
+					<select class="form-control" th:field="*{estado}" >
+						<option value="">Todos os Estados</option>
+						<option th:each="estado : ${estados}" th:value="${estado.id}" th:text="${estado.nome}"></option>
+					</select>
+				</div>
+				<div class="col-sm-8 form-group">
+					<label for="nome" class="control-label">Nome</label> 
+					<input type="text" class="form-control" th:field="*{nome}">
+				</div>
+			</div>
+			<div class="row">
+				<div>
+					<button type="submit" class="btn btn-primary mb-2 ml-2">
+						<i class="fa fa-search"></i> Pesquisar
+					</button>
+					<a th:href="@{/cidades}" class="btn btn-outline-secondary"> <i
+						class="fas fa-filter"></i> Limpar
+					</a>
+				</div>
+			</div>
+		</form>
+
+		<div class="table-responsive bw-tabela-simples">
+			<table class="table table-hover table-striped bg-white">
+				<thead>
+					<tr>
+						<th class="table-cidades-col-nome">
+							<brewer:ordenacao pagina="${pagina}" propriedade="nome" texto="Nome" />						
+						</th>
+						<th class="table-cidades-col-estado">
+							<brewer:ordenacao pagina="${pagina}" propriedade="estado.nome" texto="Estado" />
+						</th>
+						<th class="table-clientes-col-acoes"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${pagina.vazia}" class="text-center">
+						<td colspan="3">Nenhuma cidade encontrada</td>
+					</tr>
+					<tr th:unless="${pagina.vazia}"
+						th:each="cidade : ${ pagina.conteudo }">
+						<td class="" th:text="${ cidade.nome }"></td>
+						<td class="" th:text="${ cidade.estado.nome }"></td>
+						<td class="text-right">
+							<a class="btn btn-link btn-xs" title="Editar"> 
+								<i class="fas fa-pencil-alt"></i>
+							</a> 
+							<a class="btn btn-link btn-xs" title="Excluir"> 
+								<i class="fas fa-trash-alt"></i>
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<brewer:paginacao pagina="${pagina}" />
+	</section>
+</body>
+
+</html>
