@@ -9,12 +9,20 @@
 </head>
 
 <body>
+
+
 	<section layout:fragment="conteudo">
 	
+		<div class="mb-4">
+			<a th:href="@{/clientes}" class="btn btn-default"> <i
+				class="fas fa-th-list"></i> &nbsp;Listar Clientes
+			</a>
+		</div>
+		
 		<th:block th:if="${message} != null">
 			<th:block th:replace="/layout/fragments/mensagem :: message"  />
 		</th:block>
-	
+			
 		<form method="POST"  th:object="${cliente}" th:action="@{/clientes/novo}">
 			<div class="row">
 				<div class="form-group col-sm-12 bw-required">

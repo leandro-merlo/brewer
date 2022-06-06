@@ -39,6 +39,24 @@
 	width: 80px;
 }
 
+.table-clientes-col-nome {
+}
+.table-clientes-col-tipo-pessoa {
+	width: 140px;
+}
+.table-clientes-col-documento {
+	width: 140px;
+}
+.table-clientes-col-telefone {
+	width: 140px;
+}
+.table-clientes-col-cidade-estado {
+	width: 260px;
+}
+.table-clientes-col-acoes {
+	width: 80px;
+}
+
 .bw-price-filter input#precoDe, .bw-price-filter input#precoAte {
 	width: 30%;
 }

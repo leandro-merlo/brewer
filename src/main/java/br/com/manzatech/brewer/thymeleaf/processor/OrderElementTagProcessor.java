@@ -29,7 +29,7 @@ public class OrderElementTagProcessor extends AbstractElementTagProcessor {
 		IAttribute texto = tag.getAttribute("texto");
 		
 		model.add(modelFactory.createStandaloneElementTag(
-				"th:block", "th:replace", String.format("layout/fragments/ordenacao :: ordenacao(%s, %s, %s)", 
+				"th:block", "th:replace", String.format("layout/fragments/ordenacao :: ordenacao(%s, %s, '%s')", 
 						pagina.getValue(), propriedade.getValue(), texto.getValue())));
 		
 		structureHandler.replaceWith(model, true);

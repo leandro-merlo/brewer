@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -14,10 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.manzatech.brewer.controller.page.PageWrapper;
 import br.com.manzatech.brewer.model.Breadcrumb;
 import br.com.manzatech.brewer.model.Cliente;
 import br.com.manzatech.brewer.model.TipoPessoa;
+import br.com.manzatech.brewer.repositories.Clientes;
 import br.com.manzatech.brewer.repositories.Estados;
+import br.com.manzatech.brewer.repositories.filter.ClienteFilter;
 import br.com.manzatech.brewer.service.CadastroClienteService;
 import br.com.manzatech.brewer.service.exception.CpfCnpjJaCadastradoException;
 
@@ -27,6 +32,9 @@ public class ClientesController {
 		
 	@Autowired
 	private Estados estados;
+	
+	@Autowired
+	private Clientes clientes;
 
 	@Autowired
 	private CadastroClienteService cadastroClienteService;
@@ -58,6 +66,18 @@ public class ClientesController {
 		ra.addFlashAttribute("message", "Cadastro efetuado com sucesso");
 		ra.addFlashAttribute("messageType", "success");		
 		ModelAndView mv = new ModelAndView("redirect:/clientes/novo");
+		return mv;
+	}
+	
+	@GetMapping
+	public ModelAndView listar(ClienteFilter clienteFilter, @PageableDefault(size = 2) Pageable pageable){
+		ModelAndView mv = new ModelAndView("clientes/ListarClientes");
+		mv.addObject("title", "Listagem de Cliente");
+		ArrayList<Breadcrumb> breadcrumb = new ArrayList<Breadcrumb>();
+		breadcrumb.add(new Breadcrumb("Clientes", null));
+		mv.addObject("breadcrumb", breadcrumb);
+		PageWrapper<Cliente> pagina = new PageWrapper<Cliente>(this.clientes.filtrar(clienteFilter, pageable));
+		mv.addObject("pagina", pagina);
 		return mv;
 	}
 }

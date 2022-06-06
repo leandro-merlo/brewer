@@ -1,12 +1,35 @@
 package br.com.manzatech.brewer.model;
 
+import org.springframework.util.StringUtils;
+
 import br.com.manzatech.brewer.model.validation.groups.CnpjGroup;
 import br.com.manzatech.brewer.model.validation.groups.CpfGroup;
 
 public enum TipoPessoa {
 
-	PESSOA_FISICA("Física", "CPF", "000.000.000-00", CpfGroup.class), 
-	PESSOA_JURIDICA("Jurídica", "CNPJ", "009.000.000/0000-00", CnpjGroup.class);
+	PESSOA_FISICA("Física", "CPF", "000.000.000-00", CpfGroup.class) {
+		@Override
+		public String formatar(String documento) {
+			if (StringUtils.hasText(documento)) {
+				return documento.replaceAll("(\\d{3})(\\d{3})(\\d{3})", "$1.$2.$3-");
+			}
+			return null;
+		}
+	}, 
+	PESSOA_JURIDICA("Jurídica", "CNPJ", "009.000.000/0000-00", CnpjGroup.class) {
+		@Override
+		public String formatar(String documento) {
+			if (StringUtils.hasLength(documento)) {
+				int size = documento.length();
+				if (size > 14) {
+					return documento.replaceAll("(\\d{3})(\\d{3})(\\d{3})(\\d{4})", "$1.$2.$3/$4-");					
+				} else {
+					return documento.replaceAll("(\\d{2})(\\d{3})(\\d{3})(\\d{4})", "$1.$2.$3/$4-");					
+				}
+			}
+			return null;
+		}
+	};
 	
 	private String nome;
 	private String documento;
@@ -19,6 +42,8 @@ public enum TipoPessoa {
 		this.mascara = mascara;
 		this.group = group;
 	}
+	
+	public abstract String formatar(String documento);
 	
 	public String getDocumento() {
 		return documento;
@@ -35,4 +60,5 @@ public enum TipoPessoa {
 	public Class<?> getGroup() {
 		return group;
 	}
+
 }

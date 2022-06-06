@@ -11,6 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -148,6 +149,24 @@ public class Cliente implements Serializable {
 		if (null != this.endereco && null != this.endereco.getCep()) {
 			this.endereco.setCep(this.endereco.getCep().replaceAll("\\.|-|", ""));
 		}
+	}
+	
+	@PostLoad
+	private void OnPostLoaded() {
+		this.documento = this.tipoPessoa.formatar(documento);
+		this.telefone = this.formatarTelefone();
+	}
+
+	private String formatarTelefone() {
+		if (StringUtils.hasLength(telefone)) {
+			int size = this.telefone.length();
+			if (size > 10) {
+				return this.telefone.replaceAll("(\\d{2})(\\d{5})", "($1) $2-");
+			} else {
+				return this.telefone.replaceAll("(\\d{2})(\\d{4})", "($1) $2-");				
+			}
+		}
+		return null;
 	}
 
 }
