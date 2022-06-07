@@ -3,6 +3,7 @@ package br.com.manzatech.brewer.config;
 import java.math.BigDecimal;
 
 import org.springframework.beans.BeansException;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
@@ -30,6 +31,7 @@ import br.com.manzatech.brewer.controller.converter.EstiloConverter;
 import br.com.manzatech.brewer.thymeleaf.BrewerDialect;
 import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 
+@EnableCaching
 @EnableSpringDataWebSupport
 @EnableWebMvc
 @Configuration
@@ -89,6 +91,11 @@ public class WebConfig implements WebMvcConfigurer, ApplicationContextAware {
 		conversionService.addFormatterForFieldType(Integer.class, integerFormatter);
 		
 		return conversionService;
+	}
+	
+	
+	@Bean
+	public CacheManager cacheManager() {
 	}
 	
 }
