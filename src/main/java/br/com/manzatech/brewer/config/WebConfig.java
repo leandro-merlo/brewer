@@ -1,9 +1,12 @@
 package br.com.manzatech.brewer.config;
 
 import java.math.BigDecimal;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.BeansException;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +26,8 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
+
+import com.github.benmanes.caffeine.cache.Caffeine;
 
 import br.com.manzatech.brewer.controller.CervejasController;
 import br.com.manzatech.brewer.controller.converter.CidadeConverter;
@@ -96,6 +101,12 @@ public class WebConfig implements WebMvcConfigurer, ApplicationContextAware {
 	
 	@Bean
 	public CacheManager cacheManager() {
+		Caffeine<Object, Object> caffeine = Caffeine.newBuilder()
+				.maximumSize(100)
+				.expireAfterAccess(20, TimeUnit.MINUTES);
+		CaffeineCacheManager manager = new CaffeineCacheManager();
+		manager.setCaffeine(caffeine);
+		return manager;
 	}
 	
 }
