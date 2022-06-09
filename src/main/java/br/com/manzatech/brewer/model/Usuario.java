@@ -14,13 +14,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import br.com.manzatech.brewer.validation.AtributoConfirmacao;
+
+@AtributoConfirmacao(atributo = "senha", atributoConfirmacao = "confirmarSenha")
 @Entity
 @Table
 public class Usuario implements Serializable {
@@ -43,12 +45,14 @@ public class Usuario implements Serializable {
 	@Size(max = 120, message = "Deve ter 120 caractéres no máximo")
 	private String senha;
 
+	@Transient
+	private String confirmarSenha;
+	
 	private Boolean ativo = true;
 
 	@Column(name = "data_nascimento")
-	@Temporal(TemporalType.DATE)
 	private LocalDate dataNascimento;
-	
+		
 	@NotNull(message = "Selecione um grupo ao menos")
 	@ManyToMany
 	@JoinTable(name = "usuario_grupo", joinColumns = @JoinColumn(name = "usuario_id"),
@@ -109,6 +113,15 @@ public class Usuario implements Serializable {
 
 	public void setGrupos(List<Grupo> grupos) {
 		this.grupos = grupos;
+	}
+	
+
+	public String getConfirmarSenha() {
+		return confirmarSenha;
+	}
+
+	public void setConfirmarSenha(String confirmarSenha) {
+		this.confirmarSenha = confirmarSenha;
 	}
 
 	@Override
