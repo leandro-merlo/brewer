@@ -30,6 +30,18 @@ class MaskMoney {
     }
 }
 
+class MaskDate {
+    constructor(){
+        this.date = $('.js-date')
+	}
+	enable() {
+        this.date.mask("00/00/0000", {
+            clearIfNotMatch: true,
+            placeholder: '__/__/____'
+        });		
+	}
+}
+
 class MaskPhoneNumber {
 	constructor() {
 		this.phoneNumber = $('.js-phone-number')
@@ -55,6 +67,8 @@ class MaskPhoneNumber {
 (() =>{
     Brewer.MaskMoney = new MaskMoney()
     Brewer.MaskMoney.enable()
+    Brewer.MaskDate = new MaskDate()
+    Brewer.MaskDate.enable()
     Brewer.MaskPhoneNumber = new MaskPhoneNumber()
     Brewer.MaskPhoneNumber.enable()
 })();

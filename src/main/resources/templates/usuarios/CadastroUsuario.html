@@ -35,9 +35,17 @@
                     <input type="text" th:field="*{email}" class="form-control" th:errorclass="is-invalid">
 					<brewer:invalidfeedback field="email"/>
                 </div>    
-                <div class="form-group col-sm-3" brewer:classForError="dataNascimento">
-                    <label for="dataNascimento">Data de Nascimento</label>
-                    <input type="text" th:field="*{dataNascimento}" class="form-control" th:errorclass="is-invalid">
+                <div class="form-group col-sm-3"  brewer:classForError="dataNascimento" >
+                    <label for="dataNascimento" >Data de Nascimento</label>
+					<div class="input-group">
+					    <input type="text" th:field="*{dataNascimento}" class="form-control js-date" th:errorclass="is-invalid" data-provide="datepicker"
+					    	data-date-orientation="bottom" data-date-language="pt-BR" data-date-autoclose="true" autocomplete="false">
+				   		<div class="input-group-append" id="js-date-button">
+                       		<div class="input-group-text">
+	                       		<i class="fa fa-calendar"></i>
+                       		</div>
+                  		</div>
+                  	</div>
 					<brewer:invalidfeedback field="dataNascimento"/>
                 </div>
             </div>
@@ -86,18 +94,33 @@
 			</div> 
 		</form>
 	</section>
+	
+	
     <th:block layout:fragment="pageStyles">
         <link th:href="@{/layout/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css}" type="text/css"/>
         <style>
             .js-ativo {
                 height: 18px;
             }
+            #js-date-button {
+            	cursor: pointer;
+            }
         </style>
     </th:block>
     <th:block layout:fragment="pageScripts">
         <script th:src="@{/layout/plugins/bootstrap-switch/js/bootstrap-switch.min.js}"></script>
         <script>
-            $('.js-ativo').bootstrapSwitch();
+        	$(document).ready(() => {
+        		let showing = false
+                $('.js-ativo').bootstrapSwitch()
+                let datePicker = $("#dataNascimento").datepicker();
+        		datePicker.on('show', () => { showing = true })
+        		datePicker.on('hide', () => { showing = false })
+                $('#js-date-button').on('click', () => {
+                   	$("#dataNascimento").datepicker('show')
+                   	$("#dataNascimento").focus()
+                })
+        	});
         </script>
     </th:block>
 </body>
