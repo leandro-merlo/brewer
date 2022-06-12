@@ -37,6 +37,7 @@ import br.com.manzatech.brewer.controller.CervejasController;
 import br.com.manzatech.brewer.controller.converter.CidadeConverter;
 import br.com.manzatech.brewer.controller.converter.EstadoConverter;
 import br.com.manzatech.brewer.controller.converter.EstiloConverter;
+import br.com.manzatech.brewer.controller.converter.GrupoConverter;
 import br.com.manzatech.brewer.thymeleaf.BrewerDialect;
 import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 
@@ -92,6 +93,7 @@ public class WebConfig implements WebMvcConfigurer, ApplicationContextAware {
 		conversionService.addConverter(new EstiloConverter());
 		conversionService.addConverter(new CidadeConverter());
 		conversionService.addConverter(new EstadoConverter());
+		conversionService.addConverter(new GrupoConverter());
 		
 		NumberStyleFormatter bigDecimalFormatter = new NumberStyleFormatter("#,##0.00");
 		conversionService.addFormatterForFieldType(BigDecimal.class, bigDecimalFormatter);

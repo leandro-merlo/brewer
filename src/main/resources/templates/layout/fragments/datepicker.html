@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+		
+	<th:block th:fragment="datepicker(fieldName, orientation)">
+		<div class="input-group date">
+		    <input type="text" th:field="*{__${fieldName}__}" class="form-control js-date" th:errorclass="is-invalid" 
+		    	th:data-date-orientation="${orientation != 'null'} ? ${orientation} : 'bottom'" data-date-language="pt-BR" data-date-autoclose="true" autocomplete="false">
+	   		<div class="input-group-append" th:id="|js-date-button-${fieldName}|">
+          		<div class="input-group-text">
+           			<i class="fa fa-calendar"></i>
+          		</div>
+			</div>
+       	</div>
+	</th:block>
+
+</html>

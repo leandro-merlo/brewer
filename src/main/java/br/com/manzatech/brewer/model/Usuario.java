@@ -17,14 +17,13 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import br.com.manzatech.brewer.validation.AtributoConfirmacao;
 
 @AtributoConfirmacao(atributo = "senha", atributoConfirmacao = "confirmarSenha")
 @Entity
-@Table
+@Table(name="usuario")
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -53,7 +52,7 @@ public class Usuario implements Serializable {
 	@Column(name = "data_nascimento")
 	private LocalDate dataNascimento;
 		
-	@NotNull(message = "Selecione um grupo ao menos")
+	@Size(min = 1, message = "Selecione um grupo ao menos")
 	@ManyToMany
 	@JoinTable(name = "usuario_grupo", joinColumns = @JoinColumn(name = "usuario_id"),
 			inverseJoinColumns = @JoinColumn(name = "grupo_id"))
@@ -122,6 +121,10 @@ public class Usuario implements Serializable {
 
 	public void setConfirmarSenha(String confirmarSenha) {
 		this.confirmarSenha = confirmarSenha;
+	}
+	
+	public boolean isNovo() {
+		return this.id == null;
 	}
 
 	@Override

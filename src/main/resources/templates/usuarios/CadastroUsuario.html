@@ -37,25 +37,17 @@
                 </div>    
                 <div class="form-group col-sm-3"  brewer:classForError="dataNascimento" >
                     <label for="dataNascimento" >Data de Nascimento</label>
-					<div class="input-group">
-					    <input type="text" th:field="*{dataNascimento}" class="form-control js-date" th:errorclass="is-invalid" data-provide="datepicker"
-					    	data-date-orientation="bottom" data-date-language="pt-BR" data-date-autoclose="true" autocomplete="false">
-				   		<div class="input-group-append" id="js-date-button">
-                       		<div class="input-group-text">
-	                       		<i class="fa fa-calendar"></i>
-                       		</div>
-                  		</div>
-                  	</div>
+                    <brewer:datepicker fieldName="dataNascimento" />
 					<brewer:invalidfeedback field="dataNascimento"/>
                 </div>
             </div>
 			<div class="row">
-                <div class="form-group col-sm-3 bw-required">
+                <div class="form-group col-sm-3" th:classappend="${usuario.novo} ? bw-required">
                     <label for="senha" class="control-label" brewer:classForError="senha">Senha</label>
                     <input type="password" th:field="*{senha}" class="form-control" th:errorclass="is-invalid">
 					<brewer:invalidfeedback field="senha"/>
                 </div>
-                <div class="form-group col-sm-3 bw-required">
+                <div class="form-group col-sm-3" th:classappend="${usuario.novo} ? bw-required">
                     <label for="confirmarSenha" class="control-label" brewer:classForError="confirmarSenha">Confirmar Senha</label>
                     <input type="password" th:field="*{confirmarSenha}" class="form-control" th:errorclass="is-invalid">
 					<brewer:invalidfeedback field="confirmarSenha"/>
@@ -64,7 +56,7 @@
 					<label for="sabor" class="ml-2">Ativo</label>
 					<div>
 						<div class="checkbox checkbox-inline d-inline-block ml-2">
-							<input type="checkbox" name="ativo" class="js-ativo" 
+							<input type="checkbox" th:field="*{ativo}" class="js-ativo" 
                                 data-on-text="Sim" data-off-text="Não" data-on-color="success" 
                                 data-off-color="danger" data-size="large" checked/>
 						</div>
@@ -75,13 +67,9 @@
                 <div class="form-group col-sm-12 bw-required">
 					<label for="grupos" class="control-label" brewer:classForError="grupos">Grupos</label>
 					<div>
-						<div class="checkbox checkbox-inline d-inline-block ml-2">
-							<input type="checkbox" name="grupos[]"/>
-							<label>Administrador</label>
-						</div>
-						<div class="checkbox checkbox-inline d-inline-block ml-2">
-							<input type="checkbox" name="grupos[]"/>
-							<label>Vendedor</label>
+						<div th:each="grupo : ${grupos}" class="custom-control custom-checkbox checkbox d-inline ml-2">
+							<input type="checkbox" class="custom-control-input" th:field="*{grupos}" th:value="${grupo.id}"/>
+							<label th:for="${#ids.prev('grupos')}" class="custom-control-label bw-multi-checkbox" th:text="${grupo.nome}">Administrador</label>
 						</div>
 					</div>
 					<brewer:invalidfeedback field="grupos" outside/>
@@ -102,24 +90,13 @@
             .js-ativo {
                 height: 18px;
             }
-            #js-date-button {
-            	cursor: pointer;
-            }
         </style>
     </th:block>
     <th:block layout:fragment="pageScripts">
         <script th:src="@{/layout/plugins/bootstrap-switch/js/bootstrap-switch.min.js}"></script>
         <script>
         	$(document).ready(() => {
-        		let showing = false
                 $('.js-ativo').bootstrapSwitch()
-                let datePicker = $("#dataNascimento").datepicker();
-        		datePicker.on('show', () => { showing = true })
-        		datePicker.on('hide', () => { showing = false })
-                $('#js-date-button').on('click', () => {
-                   	$("#dataNascimento").datepicker('show')
-                   	$("#dataNascimento").focus()
-                })
         	});
         </script>
     </th:block>

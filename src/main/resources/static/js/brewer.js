@@ -32,14 +32,21 @@ class MaskMoney {
 
 class MaskDate {
     constructor(){
-        this.date = $('.js-date')
+        this.dateinput = $('.js-date')
+        this.datepicker = this.dateinput.datepicker()
+        this.button = this.dateinput.next()
 	}
 	enable() {
-        this.date.mask("00/00/0000", {
+        this.dateinput.mask("00/00/0000", {
             clearIfNotMatch: true,
             placeholder: '__/__/____'
-        });		
+        });
+        this.button.on('click', this.onButtonClick.bind(this))
 	}
+	onButtonClick() {
+       	this.datepicker.datepicker('show')
+       	this.datepicker.focus()
+	}		
 }
 
 class MaskPhoneNumber {

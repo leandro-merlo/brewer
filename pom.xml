@@ -51,6 +51,8 @@
 		
 		<!-- Caffeine - Cache -->
 		<caffeine.version>3.1.1</caffeine.version>
+		
+		<spring-security.version>5.7.1</spring-security.version>
 	</properties>
 
 	<build>
@@ -219,6 +221,12 @@
 		    <version>${caffeine.version}</version>
 		</dependency>
 				
+		<!-- Spring Security Web -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-web</artifactId>
+		    <version>${spring-security.version}</version>
+		</dependency>
 	
 	</dependencies>
 	

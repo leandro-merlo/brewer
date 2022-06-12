@@ -8,6 +8,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import br.com.manzatech.brewer.config.DatabaseConfig;
+import br.com.manzatech.brewer.config.SecurityConfig;
 import br.com.manzatech.brewer.config.ServiceConfig;
 import br.com.manzatech.brewer.config.WebConfig;
 
@@ -15,7 +16,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class<?>[] { DatabaseConfig.class, ServiceConfig.class };
+		return new Class<?>[] { DatabaseConfig.class, ServiceConfig.class, SecurityConfig.class };
 	}
 
 	@Override

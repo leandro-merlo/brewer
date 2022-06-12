@@ -4,6 +4,10 @@
 ################################  
 */
 
+[id^=js-date-button] {
+	cursor: pointer;
+}
+
 .table-cervejas-col-foto {
 	max-width: 50px;
 	width: 50px;
@@ -165,6 +169,15 @@
 
 .bw-tabela-simples table tr td img {
 	max-height: 75px;
+}
+
+.custom-checkbox .custom-control-label::before {
+  border-radius: .25rem;
+  background: #FFFEFE;
+}
+
+.bw-multi-checkbox {
+	font-weight: normal !important;	
 }
 
 /* XS do Bootstrap */

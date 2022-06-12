@@ -8,6 +8,7 @@ import org.thymeleaf.processor.IProcessor;
 import org.thymeleaf.standard.StandardDialect;
 
 import br.com.manzatech.brewer.thymeleaf.processor.ClassForErrorAttributeTagProcessor;
+import br.com.manzatech.brewer.thymeleaf.processor.DatepickerElementTagProcessor;
 import br.com.manzatech.brewer.thymeleaf.processor.InvalidFeedbackTagProcessor;
 import br.com.manzatech.brewer.thymeleaf.processor.OrderElementTagProcessor;
 import br.com.manzatech.brewer.thymeleaf.processor.PaginacaoElementTagProcessor;
@@ -26,7 +27,9 @@ public class BrewerDialect extends AbstractProcessorDialect{
 		// Element Processors
 		processors.add(new InvalidFeedbackTagProcessor(dialectPrefix));
 		processors.add(new OrderElementTagProcessor(dialectPrefix));		
-		processors.add(new PaginacaoElementTagProcessor(dialectPrefix));		
+		processors.add(new PaginacaoElementTagProcessor(dialectPrefix));
+		processors.add(new DatepickerElementTagProcessor(dialectPrefix));
+		
 		return processors;
 	}
 
