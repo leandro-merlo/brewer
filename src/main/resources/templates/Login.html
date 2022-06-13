@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:brewer="http://www.manzatech.com.br/brewer"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/LayoutSemMenu}">
+
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+</head>
+
+<body>
+	<section layout:fragment="pageStyles">
+		<style>
+			.login-form {
+				max-height: 166px;
+				background: white;
+				border-radius: 8px;
+				border: #dcdcdc 1px solid;
+				max-width: 350px;
+				display: inline-block;
+			}
+			.login-form input {
+				padding-right: 36px;
+			}
+			.login-form i {
+				position: absolute;
+				right: 20px;
+				top: 10px;
+				color: #797979;
+			}
+			.login-text {
+				color: #797979;
+				text-align: center;
+				margin: 1rem;			
+			}
+		</style>
+	</section>
+	<section layout:fragment="conteudo">
+
+		<div class="col-sm-4 offset-sm-4 vh-100 d-table">
+			<div class="d-table-cell align-middle text-center">
+				<img th:src="@{/images/logo-gray.png}" alt="Brewer Logo" />
+				<p class="login-text">Por favor, faça o login.</p>
+				<p class="login-text text-danger" th:if="${#bools.isTrue(param.error)}">Credenciais inválidas. Verifique e tente novamente</p>
+				<div class="login-form">
+					<form th:action="@{/login}" method="POST">
+						<div class="container">
+							<div class="row m-0 mt-3">
+								<div class="col-sm-12">
+									<input type="text" class="form-control" name="username" placeholder="Seu email:"/>
+									<i class="fas fa-envelope"></i>
+								</div>
+								<div class="col-sm-12 mt-2 mb-2">
+									<input type="password" class="form-control" name="password" placeholder="Sua senha:"/>
+									<i class="fa fa-lock"></i>
+								</div>
+								<div class="col-sm-12 mb-3">
+									<button type="submit" class="btn btn-primary w-100">Entrar</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>			
+			</div>
+		</div>	
+	</section>	
+</body>
+
+</html>

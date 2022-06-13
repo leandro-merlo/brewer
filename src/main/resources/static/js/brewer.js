@@ -33,15 +33,19 @@ class MaskMoney {
 class MaskDate {
     constructor(){
         this.dateinput = $('.js-date')
-        this.datepicker = this.dateinput.datepicker()
+        if (this.dateinput.length > 0) {
+        	this.datepicker = this.dateinput.datepicker()	
+		}
         this.button = this.dateinput.next()
 	}
 	enable() {
-        this.dateinput.mask("00/00/0000", {
-            clearIfNotMatch: true,
-            placeholder: '__/__/____'
-        });
-        this.button.on('click', this.onButtonClick.bind(this))
+		if (this.dateinput.length > 0) {
+	        this.dateinput.mask("00/00/0000", {
+	            clearIfNotMatch: true,
+	            placeholder: '__/__/____'
+	        });
+	        this.button.on('click', this.onButtonClick.bind(this))			
+		}
 	}
 	onButtonClick() {
        	this.datepicker.datepicker('show')

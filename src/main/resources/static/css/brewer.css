@@ -180,6 +180,11 @@
 	font-weight: normal !important;	
 }
 
+.content-wrapper.sem-menu {
+	margin: 0 !important;
+	transition: none !important;	
+}
+
 /* XS do Bootstrap */
 @media screen and (max-width: 575px) {
 

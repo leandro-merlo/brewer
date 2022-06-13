@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:brewer="http://www.manzatech.com.br/brewer"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" th:href="@{/images/favicon.png}">
+  
+  <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Brewer</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" th:href="@{/layout/plugins/fontawesome-free/css/all.min.css}">
+  <!-- Theme style -->
+  <link rel="stylesheet" th:href="@{/layout/css/adminlte.min.css}">
+    
+  <link rel="stylesheet" th:href="@{/css/brewer.css}">
+
+  <th:block layout:fragment="pageStyles"></th:block>
+</head>
+<body class="hold-transition sidebar-mini"> 
+<div class="wrapper">
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper sem-menu">
+
+    <!-- Main content -->
+    <div class="content">
+      <div class="container-fluid">
+        <section class="js-content" layout:fragment="conteudo">
+        </section>
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script th:src="@{/layout/plugins/jquery/jquery.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/layout/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/layout/js/adminlte.min.js}"></script>
+
+<script th:src="@{/js/vendor/jquery.mask.min.js}"></script>
+
+<script th:src="@{/js/brewer.js}"></script>
+
+<th:block layout:fragment="pageScripts"></th:block>
+
+</body>
+</html>
