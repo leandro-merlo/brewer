@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,7 +32,7 @@ public class Grupo implements Serializable {
 	private String nome;
 	
 	@NotNull(message = "Selecione uma permissão ao menos")
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "grupo_permissao", joinColumns = @JoinColumn(name = "grupo_id"),
 			inverseJoinColumns = @JoinColumn(name = "permissao_id"))
 	private List<Permissao> permissoes;
