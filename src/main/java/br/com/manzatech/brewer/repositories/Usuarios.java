@@ -10,5 +10,5 @@ import br.com.manzatech.brewer.repositories.helper.UsuariosQueries;
 public interface Usuarios extends JpaRepository<Usuario, Long>, UsuariosQueries {
 
 	Optional<Usuario> findByEmail(String email);
-
+	
 }

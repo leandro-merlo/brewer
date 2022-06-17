@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:brewer="http://www.manzatech.com.br/brewer"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/LayoutSemMenu}">
+
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+</head>
+
+<body>
+	<section layout:fragment="conteudo">
+		<div class="col-sm-3 offset-sm-5 vh-100 d-table error-page">
+			<div class="d-table-cell align-middle text-center">
+				<div><i class="fa fa-lock fa-4x"></i></div>
+				<h3>Acesso negado</h3>
+				<p class="mt-4 mb-4">Desculpe, você não está autorizado a acessar a página que solicitou. 
+				Se acha que isso é isso um engano, entre em contato com a gente.
+				</p>
+				<a class="btn btn-primary js-back" href="javascript:void(0)" >Voltar para onde estava</a>
+			</div>
+		</div>	
+	</section>	
+	<section layout:fragment="pageScripts">
+		<script>
+			$('.js-back').on('click', () => {
+				window.history.go('-1')
+			})
+		</script>
+	</section>
+	
+</body>
+
+</html>

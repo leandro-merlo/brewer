@@ -16,6 +16,7 @@ import br.com.manzatech.brewer.repositories.filter.Filter;
 
 public class UsuariosImpl extends AbstractImpl<Usuario> implements UsuariosQueries {
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Optional<Usuario> porEmailEAtivo(String email) {
 		CriteriaBuilder cb = manager.getCriteriaBuilder();
@@ -55,6 +56,15 @@ public class UsuariosImpl extends AbstractImpl<Usuario> implements UsuariosQueri
 	protected void addFetches(Root<Usuario> root) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<String> permissoes(Usuario usuario) {
+		return 
+			manager.createQuery("select distinct p.nome from Usuario u inner join u.grupos g "
+					+ "inner join g.permissoes p where u = :usuario", String.class).
+			setParameter("usuario", usuario).
+			getResultList();
 	}
 
 }

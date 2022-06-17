@@ -183,7 +183,47 @@
 .content-wrapper.sem-menu {
 	margin: 0 !important;
 	transition: none !important;	
+	margin-top: -20px !important;
 }
+
+.login-form {
+	max-height: 166px;
+	background: white;
+	border-radius: 8px;
+	border: #dcdcdc 1px solid;
+	max-width: 350px;
+	display: inline-block;
+}
+.login-form input {
+	padding-right: 36px;
+}
+.login-form i {
+	position: absolute;
+	right: 20px;
+	top: 10px;
+	color: #797979;
+}
+.login-text {
+	color: #797979;
+	text-align: center;
+	margin: 1rem;			
+}
+
+.error-page {
+	color: #dcdcdc;
+}
+.error-page h3{
+	margin: 1rem 0;
+	color: #797979;
+	font-weight: bolder;
+}
+
+.error-page p{
+	color: #797979;
+	font-size: 14px;
+	font-weight: 500;	
+}
+
 
 /* XS do Bootstrap */
 @media screen and (max-width: 575px) {

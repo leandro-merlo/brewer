@@ -1,9 +1,13 @@
 package br.com.manzatech.brewer.service;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,7 +27,14 @@ public class AppUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		Optional<Usuario> usuario = usuarios.porEmailEAtivo(email);
 		Usuario u = usuario.orElseThrow(() -> new UsernameNotFoundException("Credenciais inválidas. Tente novamente"));
-		return new User(u.getEmail(), u.getSenha(), new HashSet<>());
+		return new User(u.getEmail(), u.getSenha(), getPermissoes(u));
+	}
+
+	private Collection<? extends GrantedAuthority> getPermissoes(Usuario u) {
+		return new HashSet<SimpleGrantedAuthority>(
+			this.usuarios.permissoes(u).
+			stream().map((s) -> new SimpleGrantedAuthority(s)).collect(Collectors.toList())
+		);
 	}
 
 }
