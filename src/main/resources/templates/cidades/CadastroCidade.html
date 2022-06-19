@@ -22,7 +22,7 @@
 			<th:block th:replace="/layout/fragments/mensagem :: message"  />
 		</th:block>
 	
-		<form method="POST"  th:object="${cidade}">
+		<form method="POST"  th:object="${cidade}" th:action="@{/cidades/nova}">
 			<div class="row">
 				<div class="form-group col-sm-4 bw-required">
 					<label for="estado" class="control-label" brewer:classForError="estado">Estado</label>

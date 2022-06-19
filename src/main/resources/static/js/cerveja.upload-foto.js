@@ -6,7 +6,9 @@ class UploadFoto {
         this.wrapper = $("#wrapper")
         this.inputFoto = $("#inputFoto")
         this.url = $('#upload').data('url')
-
+        this.csrfToken = $("meta[name='_csrf']").attr("content")
+		this.csrfHeader = $("meta[name='_csrf_header']").attr("content")
+		
         this.upload = new Dropzone("#upload", {
             dictRemoveFile: 'Remover',
             previewTemplate: `
@@ -16,7 +18,10 @@ class UploadFoto {
                 </div>
             </div>
             `,
-            url: this.url,
+            url: this.url,            
+            headers: {
+				[this.csrfHeader]: this.csrfToken
+			},
             uploadMultiple: false,
             maxFiles: 1,
             paramName: "files",

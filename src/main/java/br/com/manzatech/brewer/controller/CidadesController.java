@@ -56,7 +56,7 @@ public class CidadesController {
 		return mv;
 	}
 	
-	@CacheEvict(value = "cidades", key = "#cidade.estado.codigo", condition = "#cidade.temEstado()")
+	@CacheEvict(value = "cidades", key = "#cidade.estado.id", condition = "#cidade.temEstado()")
 	@PostMapping("/nova")
 	public ModelAndView salvar(@Valid Cidade cidade, Errors errors, RedirectAttributes ra) {
 		if (errors.hasErrors()) {

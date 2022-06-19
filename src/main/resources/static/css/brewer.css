@@ -4,6 +4,10 @@
 ################################  
 */
 
+body {
+	background-color: #f4f6f9;
+}
+
 [id^=js-date-button] {
 	cursor: pointer;
 }
@@ -200,7 +204,7 @@
 .login-form i {
 	position: absolute;
 	right: 20px;
-	top: 10px;
+	top: 10px;	
 	color: #797979;
 }
 .login-text {

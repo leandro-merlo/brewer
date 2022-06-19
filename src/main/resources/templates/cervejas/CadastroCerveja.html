@@ -22,7 +22,7 @@
 			<th:block th:replace="/layout/fragments/mensagem :: message"  />
 		</th:block>
 	
-		<form method="POST" th:object="${cerveja}" >
+		<form method="POST" th:object="${cerveja}" th:action="@{/cervejas/nova}">
 			<div class="row">
 				<div class="form-group col-sm-2 bw-required">
 					<label for="sku" class="control-label" brewer:classForError="sku">SKU</label>

@@ -71,11 +71,25 @@ class MaskPhoneNumber {
 		this.phoneNumber.mask(maskBehavior, maskOtions);		
 	}
 	
+}
 
+class Security {
+	constructor() {
+		this.token = $("meta[name='_csrf']").attr("content");
+		this.header = $("meta[name='_csrf_header']").attr("content");		
+	}
+	
+	enable() {
+		$(document).ajaxSend((event, jqxhr, settings) => {
+			jqxhr.setRequestHeader(this.header, this.token)
+		})
+	}
 }
 
 
 (() =>{
+	Brewer.Security = new Security()
+	Brewer.Security.enable()
     Brewer.MaskMoney = new MaskMoney()
     Brewer.MaskMoney.enable()
     Brewer.MaskDate = new MaskDate()

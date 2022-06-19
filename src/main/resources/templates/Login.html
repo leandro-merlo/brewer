@@ -43,7 +43,10 @@
 			<div class="d-table-cell align-middle text-center">
 				<img th:src="@{/images/logo-gray.png}" alt="Brewer Logo" />
 				<p class="login-text">Por favor, faça o login.</p>
+				<p class="login-text text-success" th:if="${#bools.isTrue(param.logout)}">Logout efetuado com sucesso!</p>
+				<p class="login-text text-danger" th:if="${#bools.isTrue(param.expired)}">Credenciais utilizadas em outro lugar. Se acha que não deverias receber esta mensagem, entre e contato com o administrador do sistema</p>
 				<p class="login-text text-danger" th:if="${#bools.isTrue(param.error)}">Credenciais inválidas. Verifique e tente novamente</p>
+				<p class="login-text text-danger" th:if="${#bools.isTrue(param.timeout)}">Sua sessão expirou. Efetue o login novamente</p>
 				<div class="login-form">
 					<form th:action="@{/login}" method="POST">
 						<div class="container">
