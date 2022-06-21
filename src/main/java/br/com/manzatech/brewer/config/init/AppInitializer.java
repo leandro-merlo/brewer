@@ -4,6 +4,9 @@ import javax.servlet.Filter;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletRegistration.Dynamic;
 
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.FrameworkServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import br.com.manzatech.brewer.config.DatabaseConfig;
@@ -38,4 +41,12 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 	protected void customizeRegistration(Dynamic registration) {
 		registration.setMultipartConfig(new MultipartConfigElement(""));
 	}
+	@Override
+	protected FrameworkServlet createDispatcherServlet(WebApplicationContext servletAppContext) {
+		// TODO Auto-generated method stub
+		var dispatcher = (DispatcherServlet) super.createDispatcherServlet(servletAppContext);
+//		dispatcher.setThrowExceptionIfNoHandlerFound(true);
+		return dispatcher;
+	}
+	
 }

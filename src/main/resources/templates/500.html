@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:brewer="http://www.manzatech.com.br/brewer"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/LayoutSemMenu}">
+
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+</head>
+
+<body>
+	<section layout:fragment="pageStyles">
+		<style>
+			p.code {
+				font-size: 72px;
+				color: #dcdcdc;
+			}
+		</style>
+	</section>
+	<section layout:fragment="conteudo">
+		<div class="col-sm-3 offset-sm-5 vh-100 d-table error-page">
+			<div class="d-table-cell align-middle text-center">
+				<div>
+					<i class="fas fa-bomb fa-4x d-inline-block"></i> 
+					<p class="code d-inline-block mb-0 ml-2">500</p> 
+				</div>
+				<h3>Erro no servidor</h3>
+				<p class="mt-4 mb-4">Desculpe, houve um erro interno no servidor ao tentar acessar a página solicitada. 
+				Aguarde um tempo e tente novamente ou, entre em contato com a gente.
+				</p>
+				<a class="btn btn-primary js-back" href="javascript:void(0)" >Voltar para onde estava</a>
+			</div>
+			<p th:text="${exception.message}"></p>
+		</div>	
+	</section>	
+	<section layout:fragment="pageScripts">
+		<script>
+			$('.js-back').on('click', () => {
+				window.history.go('-1')
+			})
+		</script>
+	</section>
+	
+</body>
+
+</html>

@@ -3,6 +3,7 @@ package br.com.manzatech.brewer.config;
 import javax.servlet.Filter;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -19,6 +20,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 
 import br.com.manzatech.brewer.security.AppUserDetailsService;
 
+@ComponentScan(basePackages = "br.com.manzatechh.brewer")
 @EnableWebSecurity
 public class SecurityConfig {
 	

@@ -13,4 +13,5 @@ public class ControllerAdviceExceptionHandler {
 	public ResponseEntity<?> handleNomeEstiloJaCadastradoException(NomeEstiloJaCadastradoException e) {
 		return ResponseEntity.badRequest().body(e.getMessage());	
 	}
+
 }

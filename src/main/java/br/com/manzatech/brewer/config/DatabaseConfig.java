@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import br.com.manzatech.brewer.model.Cerveja;
 import br.com.manzatech.brewer.repositories.Cervejas;
 
-@EnableJpaRepositories(basePackageClasses = { Cervejas.class }, enableDefaultTransactions = false)
+@EnableJpaRepositories(basePackageClasses = { Cervejas.class }, basePackages = "br.com.manzatechh.brewer", enableDefaultTransactions = false)
 @EnableTransactionManagement
 @Configuration
 public class DatabaseConfig {

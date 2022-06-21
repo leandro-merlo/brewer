@@ -9,7 +9,7 @@ import br.com.manzatech.brewer.storage.FotoStorage;
 import br.com.manzatech.brewer.storage.local.FotoStorageLocal;
 
 @Configuration
-@ComponentScan(basePackageClasses = { CadastroCervejaService.class })
+@ComponentScan(basePackageClasses = { CadastroCervejaService.class }, basePackages = "br.com.manzatechh.brewer")
 public class ServiceConfig {
 
 	@Bean
