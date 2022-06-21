@@ -36,6 +36,9 @@
 		<!-- Thymeleaf - Layout Dialect -->
 		<thymeleaf-layout-dialect.version>3.1.0</thymeleaf-layout-dialect.version>
 		
+		<!-- Thymeleaf - Spring Security -->
+		<thymeleaf-extras.version>3.0.4.RELEASE</thymeleaf-extras.version>
+		
 		<!-- Logging -->
 		<log4j.version>2.17.2</log4j.version>
 		<jcl-over-slf4j.version>1.7.36</jcl-over-slf4j.version>
@@ -137,6 +140,14 @@
 			<version>${thymeleaf.version}</version>
 			<scope>compile</scope>
 		</dependency>
+		
+		<!-- Thymeleaf - Spring Security -->		
+		<dependency>
+		    <groupId>org.thymeleaf.extras</groupId>
+		    <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+		    <version>${thymeleaf-extras.version}</version>
+		</dependency>
+		
 		
 		<!-- Bean Validation / Hibernate Validator -->
   		<dependency>

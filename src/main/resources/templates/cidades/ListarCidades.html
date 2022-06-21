@@ -3,6 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:brewer="http://www.manzatech.com.br/brewer"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	layout:decorate="~{layout/LayoutPadrao}">
 
 <head>
@@ -20,8 +21,8 @@
 	</section>
 	<section layout:fragment="conteudo">
 		<div class="mb-4">
-			<a th:href="@{/cidades/nova}" class="btn btn-default"> <i
-				class="fas fa-plus-square"></i> &nbsp;Nova
+			<a th:href="@{/cidades/nova}" class="btn btn-default" sec:authorize="hasRole('ROLE_CADASTRAR_CIDADE')"> 
+				<i class="fas fa-plus-square"></i> &nbsp;Nova
 			</a>
 		</div>
 		<form method="GET" th:object="${cidadeFilter}">
@@ -60,7 +61,7 @@
 						<th class="table-cidades-col-estado">
 							<brewer:ordenacao pagina="${pagina}" propriedade="estado.nome" texto="Estado" />
 						</th>
-						<th class="table-clientes-col-acoes"></th>
+						<th class="table-clientes-col-acoes" sec:authorize="hasRole('ROLE_CADASTRAR_CIDADE')"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -71,7 +72,7 @@
 						th:each="cidade : ${ pagina.conteudo }">
 						<td class="" th:text="${ cidade.nome }"></td>
 						<td class="" th:text="${ cidade.estado.nome }"></td>
-						<td class="text-right">
+						<td class="text-right" sec:authorize="hasRole('ROLE_CADASTRAR_CIDADE')">
 							<a class="btn btn-link btn-xs" title="Editar"> 
 								<i class="fas fa-pencil-alt"></i>
 							</a> 

@@ -8,6 +8,6 @@ public class SecurityInitializer extends AbstractSecurityWebApplicationInitializ
 	@Override
 	protected void beforeSpringSecurityFilterChain(ServletContext servletContext) {
 		super.beforeSpringSecurityFilterChain(servletContext);
-		servletContext.setSessionTimeout(1);
+		servletContext.setSessionTimeout(20);
 	}
 }
