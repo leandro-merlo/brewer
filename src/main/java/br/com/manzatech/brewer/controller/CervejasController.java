@@ -3,6 +3,7 @@ package br.com.manzatech.brewer.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,8 @@ import br.com.manzatech.brewer.model.Sabor;
 import br.com.manzatech.brewer.repositories.Cervejas;
 import br.com.manzatech.brewer.repositories.Estilos;
 import br.com.manzatech.brewer.repositories.filter.CervejaFilter;
-import br.com.manzatech.brewer.service.CadastroCervejaService;;
+import br.com.manzatech.brewer.service.CadastroCervejaService;
+import br.com.manzatech.brewer.utils.MenuUtils;;
 
 @Controller
 @RequestMapping("/cervejas")

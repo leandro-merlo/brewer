@@ -22,6 +22,7 @@ public class ClassForErrorAttributeTagProcessor extends AbstractAttributeTagProc
 	protected void doProcess(ITemplateContext context, IProcessableElementTag tag, AttributeName attributeName,
 			String attributeValue, IElementTagStructureHandler structureHandler) {
 		String field = attributeValue;
+				
 		boolean temErro = FieldUtils.hasErrors(context, field);
 		if (temErro) {
 			String classesExistentes = tag.getAttributeValue("class");
