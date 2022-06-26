@@ -7,7 +7,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Listagem de Cervejas</title>
+<title>Listagem de Estilos</title>
 </head>
 
 <body>
@@ -55,7 +55,7 @@
 				</thead>
 				<tbody>
 					<tr th:if="${pagina.vazia}" class="text-center">
-						<td colspan="2">Nenhuma cerveja encontrada</td>
+						<td colspan="2">Nenhum estilo encontrado</td>
 					</tr>
 					<tr th:unless="${pagina.vazia}"
 						th:each="estilo : ${ pagina.conteudo }">

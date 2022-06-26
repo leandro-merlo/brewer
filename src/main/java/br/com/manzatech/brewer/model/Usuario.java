@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -53,7 +55,7 @@ public class Usuario implements Serializable {
 	private LocalDate dataNascimento;
 		
 	@Size(min = 1, message = "Selecione um grupo ao menos")
-	@ManyToMany
+	@ManyToMany()
 	@JoinTable(name = "usuario_grupo", joinColumns = @JoinColumn(name = "usuario_id"),
 			inverseJoinColumns = @JoinColumn(name = "grupo_id"))
 	private List<Grupo> grupos;
@@ -114,6 +116,10 @@ public class Usuario implements Serializable {
 		this.grupos = grupos;
 	}
 	
+	public List<String> getGruposAsString() {
+		return this.grupos.stream()
+			.map(g -> g.getNome()).collect(Collectors.toList());
+	}
 
 	public String getConfirmarSenha() {
 		return confirmarSenha;

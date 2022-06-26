@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,12 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.manzatech.brewer.controller.page.PageWrapper;
 import br.com.manzatech.brewer.model.Breadcrumb;
+import br.com.manzatech.brewer.model.Cliente;
 import br.com.manzatech.brewer.model.Usuario;
 import br.com.manzatech.brewer.repositories.Grupos;
+import br.com.manzatech.brewer.repositories.Usuarios;
+import br.com.manzatech.brewer.repositories.filter.UsuarioFilter;
 import br.com.manzatech.brewer.service.CadastroUsuarioService;
-import br.com.manzatech.brewer.service.exception.EmailUsuarioJaCadastradoException;
-import br.com.manzatech.brewer.service.exception.SenhaUsuarioObrigatoriaException;
 import br.com.manzatech.brewer.service.exception.ServiceException;
 
 @Controller
@@ -28,6 +31,9 @@ public class UsuariosController {
 
 	@Autowired
 	private CadastroUsuarioService cadastroUsuarioService;
+	
+	@Autowired
+	private Usuarios usuarios;
 	
 	@Autowired
 	private Grupos grupos;
@@ -59,4 +65,19 @@ public class UsuariosController {
 		ra.addFlashAttribute("messageType", "success");		
 		return new ModelAndView("redirect:/usuarios/novo");
 	}
+	
+	
+	@GetMapping
+	public ModelAndView listar(UsuarioFilter usuarioFilter, @PageableDefault(size = 5) Pageable pageable){
+		ModelAndView mv = new ModelAndView("usuarios/ListarUsuarios");
+		mv.addObject("title", "Listagem de Usuários");
+		ArrayList<Breadcrumb> breadcrumb = new ArrayList<Breadcrumb>();
+		breadcrumb.add(new Breadcrumb("Usuários", null));
+		mv.addObject("breadcrumb", breadcrumb);
+		PageWrapper<Usuario> pagina = new PageWrapper<Usuario>(this.usuarios.filtrar(usuarioFilter, pageable));
+		mv.addObject("pagina", pagina);
+		mv.addObject("grupos", grupos.findAll());
+		return mv;
+	}
+	
 }

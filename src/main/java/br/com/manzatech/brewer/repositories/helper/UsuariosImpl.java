@@ -11,8 +11,12 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
+
 import br.com.manzatech.brewer.model.Usuario;
 import br.com.manzatech.brewer.repositories.filter.Filter;
+import br.com.manzatech.brewer.repositories.filter.UsuarioFilter;
 
 public class UsuariosImpl extends AbstractImpl<Usuario> implements UsuariosQueries {
 
@@ -42,20 +46,46 @@ public class UsuariosImpl extends AbstractImpl<Usuario> implements UsuariosQueri
 
 	@Override
 	protected Predicate[] addRestrictions(Filter filter, CriteriaBuilder cb, Root<Usuario> root) {
-		// TODO Auto-generated method stub
-		return null;
+		UsuarioFilter usuarioFilter = (UsuarioFilter) filter;
+		List<Predicate> restrictions = new ArrayList<Predicate>();
+		
+		if (null != usuarioFilter) {
+			if (StringUtils.hasText(usuarioFilter.getNome())) {
+				restrictions.add(cb.like(cb.lower(root.get("nome")), "%" + usuarioFilter.getNome().toLowerCase() +"%"));
+			}			
+			if (StringUtils.hasText(usuarioFilter.getEmail())) {
+				restrictions.add(cb.equal(cb.lower(root.get("email")), usuarioFilter.getNome().toLowerCase()));
+			}
+			if (!ObjectUtils.isEmpty(usuarioFilter.getGrupos())) {
+				usuarioFilter.getGrupos().stream().forEach(g -> {
+					restrictions.add(cb.isMember(g, root.get("grupos")));
+				});
+			}
+		}
+		
+		Predicate[] array = new Predicate[0];
+		if (!restrictions.isEmpty()) {
+			array = new Predicate[restrictions.size()];
+			restrictions.toArray(array);
+		}
+		
+		return array;
 	}
 
 	@Override
 	protected Long rowCount(Filter filter) {
-		// TODO Auto-generated method stub
-		return null;
+		CriteriaBuilder cb = manager.getCriteriaBuilder();
+		CriteriaQuery<Long> query = cb.createQuery(Long.class);
+		Root<Usuario> root = query.from(Usuario.class);
+		query.where(this.addRestrictions(filter, cb, root));
+		query = query.select(cb.count(root).alias("count"));
+		Query q = manager.createQuery(query);
+		return (Long) q.getSingleResult();		
 	}
 
 	@Override
 	protected void addFetches(Root<Usuario> root) {
-		// TODO Auto-generated method stub
-		
+		root.fetch("grupos", JoinType.INNER);		
 	}
 
 	@Override
