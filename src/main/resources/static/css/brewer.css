@@ -76,6 +76,11 @@ body {
 	width: 80px;
 }
 
+.table-usuarios-col-checkbox {
+	width: 30px;
+	text-align: center;
+}
+
 .bw-price-filter input#precoDe, .bw-price-filter input#precoAte {
 	width: 30%;
 }

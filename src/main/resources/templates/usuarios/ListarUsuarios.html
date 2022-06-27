@@ -68,18 +68,33 @@
 				</div>
 			</div>
 		</form>
+		
+		<div class="mt-2">
+			<button class="btn btn-default btn-xs js-multiselect-action disabled" data-name="ATIVAR" th:data-url="@{/usuarios/atualiza-status}">
+				Ativar
+			</button>
+			<button class="btn btn-default btn-xs js-multiselect-action disabled" data-name="DESATIVAR" th:data-url="@{/usuarios/atualiza-status}">
+				Desativar
+			</button>
+		</div>
 
 		<div class="table-responsive bw-tabela-simples">
 			<table class="table table-hover table-striped bg-white">
 				<thead>
 					<tr>
+						<th class="table-usuarios-col-checkbox">
+							<div class="checkbox">
+								<input type="checkbox" class="js-selecionar-todos"/>
+								<label></label>
+							</div>
+						</th>
 						<th class="table-usuarios-col-nome">
 							<brewer:ordenacao pagina="${pagina}" propriedade="nome" texto="Nome" />
 						</th>
 						<th class="table-usuarios-col-email">
 							<brewer:ordenacao pagina="${pagina}" propriedade="email" texto="Email" />
 						</th>
-						<th class="table-usuarios-col-email">
+						<th class="table-usuarios-col-grupos">
 							Grupos
 						</th>
 						<th class="table-usuarios-col-ativo">
@@ -90,10 +105,16 @@
 				</thead>
 				<tbody>
 					<tr th:if="${pagina.vazia}" class="text-center">
-						<td colspan="5">Nenhum usuário encontrado</td>
+						<td colspan="6">Nenhum usuário encontrado</td>
 					</tr>
 					<tr th:unless="${pagina.vazia}"
 						th:each="usuario : ${ pagina.conteudo }">
+						<td>
+							<div class="checkbox" th:if="${#authentication.principal.usuario.id != usuario.id}">
+								<input type="checkbox" class="js-selecao" th:data-id="${usuario.id}"/>
+								<label></label>
+							</div>						
+						</td>
 						<td class="" th:text="${ usuario.nome }"></td>
 						<td class="" th:text="${ usuario.email }"></td>
 						<td class="" th:text="${ #strings.listJoin(usuario.getGruposAsString(), ', ') }"></td>
@@ -116,7 +137,9 @@
 		
 		<brewer:paginacao pagina="${pagina}" />
 	</section>
-	
+	<section layout:fragment="pageScripts">
+		<script type="text/javascript" th:src="@{/js/multiselecao.js}"></script>
+	</section>
 </body>
 
 </html>

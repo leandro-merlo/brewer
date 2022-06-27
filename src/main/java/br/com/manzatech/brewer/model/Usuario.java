@@ -8,21 +8,24 @@ import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import br.com.manzatech.brewer.validation.AtributoConfirmacao;
 
+@DynamicUpdate
 @AtributoConfirmacao(atributo = "senha", atributoConfirmacao = "confirmarSenha")
 @Entity
 @Table(name="usuario")
@@ -133,6 +136,11 @@ public class Usuario implements Serializable {
 		return this.id == null;
 	}
 
+	@PreUpdate
+	public void onPreUpdate() {
+		this.confirmarSenha = this.senha;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

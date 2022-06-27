@@ -38,4 +38,9 @@ public class CadastroUsuarioService {
 		}
 		this.usuarios.save(usuario);
 	}
+	
+	@Transactional
+	public void alterarStatus(Long[] ids, StatusUsuario status) {
+		status.executar(ids, this.usuarios);
+	}
 }

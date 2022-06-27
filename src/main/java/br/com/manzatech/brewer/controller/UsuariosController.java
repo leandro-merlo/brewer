@@ -1,17 +1,22 @@
 package br.com.manzatech.brewer.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -23,6 +28,7 @@ import br.com.manzatech.brewer.repositories.Grupos;
 import br.com.manzatech.brewer.repositories.Usuarios;
 import br.com.manzatech.brewer.repositories.filter.UsuarioFilter;
 import br.com.manzatech.brewer.service.CadastroUsuarioService;
+import br.com.manzatech.brewer.service.StatusUsuario;
 import br.com.manzatech.brewer.service.exception.ServiceException;
 
 @Controller
@@ -78,6 +84,12 @@ public class UsuariosController {
 		mv.addObject("pagina", pagina);
 		mv.addObject("grupos", grupos.findAll());
 		return mv;
+	}
+	
+	@PutMapping("/atualiza-status")
+	@ResponseStatus(code = HttpStatus.OK)
+	public void atualizaStatus(@RequestParam("ids[]") Long[] ids, @RequestParam("status") StatusUsuario status) {
+		this.cadastroUsuarioService.alterarStatus(ids, status);	
 	}
 	
 }
